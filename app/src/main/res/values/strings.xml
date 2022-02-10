@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RusalFood</string>
+    <string name="app_name">Rusal Food</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
@@ -10,4 +10,9 @@
     <string name="email_hint">E-mail</string>
     <string name="password_hint">Пароль</string>
     <string name="Next_button">Далее</string>
+
+    // Main
+
+    <string name="main_header">Заказ с собой</string>
+
 </resources>

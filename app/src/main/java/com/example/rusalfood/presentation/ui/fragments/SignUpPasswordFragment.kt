@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.rusalfood.R
 import com.example.rusalfood.databinding.SignUpPasswordFragmentBinding
 
@@ -30,7 +31,7 @@ class SignUpPasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.nextButton.setOnClickListener {
             //слушает дату, если ок, то дальше
-            Navigation.findNavController(view).navigate(R.id.to_main_screen)
+            findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMainFragment())
         }
 
         super.onViewCreated(view, savedInstanceState)
