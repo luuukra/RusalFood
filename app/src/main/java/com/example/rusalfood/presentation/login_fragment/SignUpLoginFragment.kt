@@ -1,4 +1,4 @@
-package com.example.rusalfood.presentation.ui.fragments
+package com.example.rusalfood.presentation.login_fragment
 
 
 import android.os.Bundle

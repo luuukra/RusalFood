@@ -1,4 +1,4 @@
-package com.example.rusalfood.presentation.viewmodels
+package com.example.rusalfood.presentation.login_fragment
 
 import androidx.lifecycle.ViewModel
 

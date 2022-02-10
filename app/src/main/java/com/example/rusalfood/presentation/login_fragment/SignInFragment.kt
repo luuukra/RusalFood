@@ -1,4 +1,4 @@
-package com.example.rusalfood.presentation.ui.fragments
+package com.example.rusalfood.presentation.login_fragment
 
 
 import android.os.Bundle
@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.rusalfood.R
 import com.example.rusalfood.databinding.SignInFragmentBinding
-import com.example.rusalfood.presentation.viewmodels.SignInViewModel
 
 class SignInFragment : Fragment() {
 

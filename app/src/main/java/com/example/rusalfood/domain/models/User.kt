@@ -1,6 +1,6 @@
 package com.example.rusalfood.domain.models
 
-interface User {
-    var email: String?
-    var token: String?
-}
+data class User(
+    var email: String? = null,
+    var token: String? = null
+)

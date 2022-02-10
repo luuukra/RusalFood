@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.example.rusalfood.presentation.ui.fragments.SignInFragment"
+        android:name="com.example.rusalfood.presentation.login_fragment.SignInFragment"
         android:label="login_fragment"
         tools:layout="@layout/sign_in_fragment">
         <action
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/signUpLoginFragment"
-        android:name="com.example.rusalfood.presentation.ui.fragments.SignUpLoginFragment"
+        android:name="com.example.rusalfood.presentation.login_fragment.SignUpLoginFragment"
         android:label="sign_up_login_fragment"
         tools:layout="@layout/sign_up_login_fragment">
         <action
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/signUpPasswordFragment"
-        android:name="com.example.rusalfood.presentation.ui.fragments.SignUpPasswordFragment"
+        android:name="com.example.rusalfood.presentation.login_fragment.SignUpPasswordFragment"
         android:label="sign_up_password_fragment"
         tools:layout="@layout/sign_up_password_fragment">
         <action
