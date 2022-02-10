@@ -1,4 +1,4 @@
-package com.example.rusalfood.presentation.ui
+package com.example.rusalfood.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
