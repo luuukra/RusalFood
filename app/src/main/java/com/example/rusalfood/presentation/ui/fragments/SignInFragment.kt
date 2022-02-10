@@ -36,7 +36,7 @@ class SignInFragment : Fragment() {
         viewModel = ViewModelProvider(this)[SignInViewModel::class.java]
         // TODO: Use the ViewModel
         binding.continueGuestButton.setOnClickListener {
-            findNavController().navigate(R.id.to_main_screen)
+            findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMainFragment())
         }
         binding.signUpButton.setOnClickListener {
             findNavController().navigate(R.id.to_signUpLogin_screen)
