@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/signInFragment">
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.rusalfood.presentation.ui.fragments.SignInFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/sign_in_fragment">
+        <action
+            android:id="@+id/to_signUpLogin_screen"
+            app:destination="@id/signUpLoginFragment" />
+        <action
+            android:id="@+id/to_main_screen"
+            app:destination="@id/mainFragmentMock" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpLoginFragment"
+        android:name="com.example.rusalfood.presentation.ui.fragments.SignUpLoginFragment"
+        android:label="sign_up_login_fragment"
+        tools:layout="@layout/sign_up_login_fragment">
+        <action
+            android:id="@+id/to_signUpPassword_screen"
+            app:destination="@id/signUpPasswordFragment" />
+        <action
+            android:id="@+id/to_signIn_screen"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpPasswordFragment"
+        android:name="com.example.rusalfood.presentation.ui.fragments.SignUpPasswordFragment"
+        android:label="sign_up_password_fragment"
+        tools:layout="@layout/sign_up_password_fragment">
+        <action
+            android:id="@+id/to_signUpPassword_screen"
+            app:destination="@id/signUpLoginFragment" />
+        <action
+            android:id="@+id/to_main_screen"
+            app:destination="@id/mainFragmentMock" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragmentMock"
+        android:name="com.example.rusalfood.presentation.ui.fragments.MainFragmentMock"
+        android:label="MainFragmentMock" />
+</navigation>
