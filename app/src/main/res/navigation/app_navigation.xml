@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/signInFragment">
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.rusalfood.presentation.login_fragment.SignInFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/sign_in_fragment">
+        <action
+            android:id="@+id/to_signUpLogin_screen"
+            app:destination="@id/signUpLoginFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpLoginFragment"
+        android:name="com.example.rusalfood.presentation.login_fragment.SignUpLoginFragment"
+        android:label="sign_up_login_fragment"
+        tools:layout="@layout/sign_up_login_fragment">
+        <action
+            android:id="@+id/to_signUpPassword_screen"
+            app:destination="@id/signUpPasswordFragment" />
+        <action
+            android:id="@+id/to_signIn_screen"
+            app:destination="@id/signInFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpPasswordFragment"
+        android:name="com.example.rusalfood.presentation.login_fragment.SignUpPasswordFragment"
+        android:label="sign_up_password_fragment"
+        tools:layout="@layout/sign_up_password_fragment">
+        <action
+            android:id="@+id/to_signUpPassword_screen"
+            app:destination="@id/signUpLoginFragment" />
+        <action
+            android:id="@+id/action_signUpPasswordFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.rusalfood.presentation.main_fragment.MainFragment"
+        android:label="@string/main_header"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_placeFragment"
+            app:destination="@id/placeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/placeFragment"
+        android:name="com.example.rusalfood.presentation.place_fragment.PlaceFragment"
+        android:label="{placeName}"
+        tools:layout="@layout/fragment_place">
+        <action
+            android:id="@+id/action_placeFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <argument
+            android:name="placeName"
+            app:argType="string" />
+        <argument
+            android:name="placeId"
+            app:argType="integer" />
+    </fragment>
+
+
+</navigation>
