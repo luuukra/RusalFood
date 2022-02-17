@@ -6,7 +6,7 @@ import com.example.rusalfood.data.network.MockData
 import com.example.rusalfood.data.repositories.MainRepositoryImpl
 import com.example.rusalfood.domain.usecases.DisplayAllPlacesUseCase
 
-class MainViewModelFactory(private val mockData: MockData) : ViewModelProvider.Factory {
+class MainViewModelFactory(private val mockData : MockData) : ViewModelProvider.Factory {
 
     private val mainRepository = MainRepositoryImpl(mockData)
     private val displayAllPlacesUseCase = DisplayAllPlacesUseCase(mainRepository)

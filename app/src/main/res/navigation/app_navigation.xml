@@ -7,20 +7,20 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.example.rusalfood.presentation.sign_in_fragment.SignInFragment"
+        android:name="com.example.rusalfood.presentation.login_fragment.SignInFragment"
         android:label="login_fragment"
         tools:layout="@layout/sign_in_fragment">
         <action
             android:id="@+id/to_signUpLogin_screen"
             app:destination="@id/signUpLoginFragment" />
         <action
-            android:id="@+id/to_mainFragment"
+            android:id="@+id/action_signInFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/signUpLoginFragment"
-        android:name="com.example.rusalfood.presentation.sign_up_fragment.SignUpLoginFragment"
+        android:name="com.example.rusalfood.presentation.login_fragment.SignUpLoginFragment"
         android:label="sign_up_login_fragment"
         tools:layout="@layout/sign_up_login_fragment">
         <action
@@ -33,18 +33,15 @@
 
     <fragment
         android:id="@+id/signUpPasswordFragment"
-        android:name="com.example.rusalfood.presentation.sign_up_fragment.SignUpPasswordFragment"
+        android:name="com.example.rusalfood.presentation.login_fragment.SignUpPasswordFragment"
         android:label="sign_up_password_fragment"
         tools:layout="@layout/sign_up_password_fragment">
         <action
-            android:id="@+id/to_signUpLogin_screen"
+            android:id="@+id/to_signUpPassword_screen"
             app:destination="@id/signUpLoginFragment" />
         <action
-            android:id="@+id/to_mainFragment"
+            android:id="@+id/action_signUpPasswordFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
-        <argument
-            android:name="email"
-            app:argType="string" />
     </fragment>
 
     <fragment
@@ -55,10 +52,6 @@
         <action
             android:id="@+id/action_mainFragment_to_placeFragment"
             app:destination="@id/placeFragment" />
-        <argument
-            android:name="isAuthorized"
-            app:argType="boolean"
-            android:defaultValue="false" />
     </fragment>
 
     <fragment
