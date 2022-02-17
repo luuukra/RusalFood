@@ -7,41 +7,32 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rusalfood.data.network.MockData
 import com.example.rusalfood.databinding.FragmentMainBinding
+import com.example.rusalfood.di.appComponent
 
-class MainFragment : Fragment(), MainAdapter.OnItemClickListener {
+class MainFragment: Fragment(), MainAdapter.onItemClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private lateinit var mainAdapter: MainAdapter
-    private lateinit var mainViewModelFactory: MainViewModelFactory
-    private lateinit var mainViewModel: MainViewModel
-    private lateinit var mockData: MockData
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private val mainViewModel: MainViewModel by viewModels { requireContext().appComponent.mainViewModelFactory() }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        (requireActivity() as AppCompatActivity).supportActionBar?.show()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupViewModel()
-        setAuthorizationFlag()
+        (requireActivity() as AppCompatActivity).supportActionBar?.show()
         setupRecyclerView()
         setupObserving()
-    }
-
-    private fun setAuthorizationFlag() {
-        mainViewModel.isAuthorized.value = requireArguments().getBoolean("isAuthorized")
     }
 
     override fun onDestroyView() {
@@ -49,17 +40,15 @@ class MainFragment : Fragment(), MainAdapter.OnItemClickListener {
         _binding = null
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+
     private fun setupObserving() {
-        mainViewModel.listPlaces.observe(viewLifecycleOwner) {
-            mainAdapter.places = it
-            mainAdapter.notifyDataSetChanged()
-        }
+        mainViewModel.listPlaces.observe(viewLifecycleOwner, {
+            mainAdapter.diffUtilPlaces.submitList(it)
+        })
 
         mainViewModel.isAuthorized.observe(viewLifecycleOwner) {
-            //todo add to cart button enabled\disabled depending on it
+            //todo add to cart enabled\disabled button
         }
-
     }
 
     private fun setupRecyclerView() {
@@ -69,15 +58,9 @@ class MainFragment : Fragment(), MainAdapter.OnItemClickListener {
         binding.mainRv.adapter = mainAdapter
     }
 
-    override fun onItemClick(position: Int, placeName: String, placeId: Int) {
+    override fun onItemClick(positionn: Int, placeName: String, placeId: Int) {
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToPlaceFragment(placeName, placeId)
         )
-    }
-
-    private fun setupViewModel() {
-        mockData = MockData()
-        mainViewModelFactory = MainViewModelFactory(mockData)
-        mainViewModel = ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
     }
 }

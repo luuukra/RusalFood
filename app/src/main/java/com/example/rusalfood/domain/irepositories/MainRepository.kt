@@ -6,4 +6,6 @@ interface MainRepository {
 
     suspend fun displayAllPlaces() : List<Place>
 
+    suspend fun getIntoPlace(placeId: Int) : Place
+
 }

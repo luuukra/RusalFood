@@ -1,19 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:background="#cccccc"
-        android:id="@+id/pager"
+    <RelativeLayout
+        android:id="@+id/rel"
         android:layout_width="match_parent"
-        android:layout_height="150dp" />
+        android:layout_height="180dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:layout_marginStart="16dp"
-        android:id="@+id/placeTvAddress"
-        android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/placeTvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/viewPager"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="-26dp"
+            android:hint="@string/place_address_h"/>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+        </androidx.viewpager2.widget.ViewPager2>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:translationX="20dp"
+            android:translationY="116dp"
+            app:cardBackgroundColor="#DADADA"
+            app:cardCornerRadius="3dp">
+
+            <TextView
+                android:id="@+id/viewPagerCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/place_counter_m"
+                android:textColor="@color/black" />
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/ivBurger"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="address" />
-</LinearLayout>
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rel"
+        app:srcCompat="@drawable/ic_burger" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/categoriesRv"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_height="36dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@id/ivBurger"
+        app:layout_constraintTop_toTopOf="@id/ivBurger"
+        app:layout_constraintBottom_toBottomOf="@id/ivBurger" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

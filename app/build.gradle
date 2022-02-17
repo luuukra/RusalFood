@@ -83,7 +83,8 @@ dependencies {
     // Dagger 2
     implementation 'com.google.dagger:dagger:2.41'
     kapt 'com.google.dagger:dagger-compiler:2.41'
+    kapt 'com.google.dagger:dagger-android-processor:2.38.1'
 
-    // Java Faker
-    implementation 'com.github.javafaker:javafaker:1.0.2'
+    // Splash Screen
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
 }
