@@ -87,4 +87,7 @@ dependencies {
 
     // Splash Screen
     implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
+
+    // Shimmer Skeletons
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 }
