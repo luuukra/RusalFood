@@ -18,6 +18,8 @@ class MainViewModel(
 
     private val _listPlaces = MutableLiveData<List<Place>>()
     var listPlaces: MutableLiveData<List<Place>> = _listPlaces
+    private var _isAuthorized = MutableLiveData<Boolean>()
+    var isAuthorized = _isAuthorized
 
     private fun displayAllPlaces() = viewModelScope.launch(Dispatchers.IO) {
         val places = displayAllPlacesUseCase.execute()
