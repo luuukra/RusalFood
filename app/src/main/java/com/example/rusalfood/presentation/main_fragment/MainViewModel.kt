@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val displayAllPlacesUseCase: DisplayAllPlacesUseCase
+    private val displayAllPlacesUseCase: DisplayAllPlacesUseCase,
 ) : ViewModel() {
 
     init {
@@ -17,9 +17,10 @@ class MainViewModel(
     }
 
     private val _listPlaces = MutableLiveData<List<Place>>()
-    var listPlaces: MutableLiveData<List<Place>> = _listPlaces
-    private var _isAuthorized = MutableLiveData<Boolean>()
-    var isAuthorized = _isAuthorized
+    val listPlaces: MutableLiveData<List<Place>> = _listPlaces
+
+    private val _isAuthorized = MutableLiveData<Boolean>()
+    val isAuthorized = _isAuthorized
 
     private fun displayAllPlaces() = viewModelScope.launch(Dispatchers.IO) {
         val places = displayAllPlacesUseCase.execute()

@@ -10,12 +10,13 @@ class RusalApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        //todo если авторизован, показывать главный экран
         setupDagger()
     }
 
     private fun setupDagger() {
-        appComponent = DaggerAppComponent.create()
+        appComponent = DaggerAppComponent
+            .builder()
+            .build()
     }
 }
 

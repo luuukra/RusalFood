@@ -14,6 +14,12 @@
     // Main
     <string name="main_header">Takeaway order</string>
 
+    // Place
+    <string name="place_counter_m" translatable="false">1/22</string>
+    <string name="place_name_h">Name</string>
+    <string name="place_address_h">Address</string>
+    <string name="place_category_h">Category</string>
+
     //Bottom Nav Bar
     <string name="bottom_nav_main">Main</string>
     <string name="bottom_nav_orders_history">My orders</string>
