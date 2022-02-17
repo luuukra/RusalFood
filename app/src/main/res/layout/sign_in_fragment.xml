@@ -8,20 +8,27 @@
     android:orientation="vertical"
     tools:context=".presentation.sign_in_fragment.SignInFragment">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/r_a_logo_main"/>
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/login_fragment_header"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginVertical="40dp"
         android:layout_weight="0.5"
         android:drawablePadding="2dp"
-        android:text="@string/app_name"
+        android:text="@string/login_screen_logo_caption"
         style="@style/font_bold"
-        android:textSize="25sp"
-        app:drawableStartCompat="@drawable/ic_ra"
-        tools:background="@color/purple_200" />
+        android:textSize="20sp" />
+
+
 
     <Space
         android:layout_width="match_parent"
