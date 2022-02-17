@@ -1,9 +1,11 @@
 package com.example.rusalfood.presentation.main_fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -11,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rusalfood.data.network.MockData
 import com.example.rusalfood.databinding.FragmentMainBinding
 
-class MainFragment: Fragment(), MainAdapter.onItemClickListener {
+class MainFragment : Fragment(), MainAdapter.OnItemClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -20,16 +22,26 @@ class MainFragment: Fragment(), MainAdapter.onItemClickListener {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var mockData: MockData
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
+        (requireActivity() as AppCompatActivity).supportActionBar?.show()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViewModel()
+        setAuthorizationFlag()
         setupRecyclerView()
         setupObserving()
+    }
+
+    private fun setAuthorizationFlag() {
+        mainViewModel.isAuthorized.value = requireArguments().getBoolean("isAuthorized")
     }
 
     override fun onDestroyView() {
@@ -37,10 +49,17 @@ class MainFragment: Fragment(), MainAdapter.onItemClickListener {
         _binding = null
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setupObserving() {
-        mainViewModel.listPlaces.observe(viewLifecycleOwner, {
+        mainViewModel.listPlaces.observe(viewLifecycleOwner) {
             mainAdapter.places = it
-        })
+            mainAdapter.notifyDataSetChanged()
+        }
+
+        mainViewModel.isAuthorized.observe(viewLifecycleOwner) {
+            //todo add to cart button enabled\disabled depending on it
+        }
+
     }
 
     private fun setupRecyclerView() {
@@ -50,7 +69,7 @@ class MainFragment: Fragment(), MainAdapter.onItemClickListener {
         binding.mainRv.adapter = mainAdapter
     }
 
-    override fun onItemClick(positionn: Int, placeName: String, placeId: Int) {
+    override fun onItemClick(position: Int, placeName: String, placeId: Int) {
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToPlaceFragment(placeName, placeId)
         )
