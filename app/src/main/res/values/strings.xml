@@ -16,6 +16,13 @@
     // Main
     <string name="main_header">Заказ с собой</string>
 
+    // Place
+    <string name="place_counter_m" translatable="false">1/22</string>
+    <string name="place_name_h">Название</string>
+    <string name="place_address_h">Адрес</string>
+    <string name="place_category_h">Категория</string>
+
+
     //Bottom Nav Bar
     <string name="bottom_nav_main">Главная</string>
     <string name="bottom_nav_orders_history">Мои заказы</string>
