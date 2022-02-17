@@ -1,4 +1,3 @@
 <resources>
     <dimen name="btns_text_size">18sp</dimen>
-    <dimen name="basic_btn_radius">12dp</dimen>
 </resources>
