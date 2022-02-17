@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //SignIn\SignUp screens
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_up_email_instruction">Enter your e-mail</string>
+    <string name="password_hint">Password</string>
+    <string name="Next_button">Next</string>
+    <string name="sign_in_btn_txt">Sign in</string>
+    <string name="sign_up_btn_txt">Sign up</string>
+    <string name="continue_as_a_guest_btn_txt">Continue as a guest</string>
+    <string name="sign_up_password_instruction">Password must be at least \n9 characters</string>
+    <string name="privacy_policy_text">By clicking \"next\" you accept the terms \nof Public Offer Agreement</string>
+
+    // Main
+    <string name="main_header">Takeaway order</string>
+
+    //Bottom Nav Bar
+    <string name="bottom_nav_main">Main</string>
+    <string name="bottom_nav_orders_history">My orders</string>
+    <string name="bottom_nav_rakhmet">Rakhmet</string>
+</resources>
