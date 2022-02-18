@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -44,6 +45,7 @@ class SignUpLoginFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.nextButton.setOnClickListener {
+            binding.loginProgressBar.visibility = ProgressBar.VISIBLE
             signUpViewModel.checkIfEmailAvailable(binding.signUpLoginField.text.toString())
         }
     }
@@ -54,12 +56,13 @@ class SignUpLoginFragment : Fragment() {
         }
 
         signUpViewModel.emailCheckResponse.observe(viewLifecycleOwner) {
-            if (it) {
+            if (it)
                 findNavController()
                     .navigate(SignUpLoginFragmentDirections.toSignUpPasswordScreen(binding.signUpLoginField.text.toString()))
-            } else Toast.makeText(
-                context, EMAIL_CHECK_ERROR, Toast.LENGTH_SHORT
-            ).show()
+            else {
+                Toast.makeText(context, EMAIL_CHECK_ERROR, Toast.LENGTH_SHORT).show()
+                binding.loginProgressBar.visibility = ProgressBar.GONE
+            }
         }
     }
 

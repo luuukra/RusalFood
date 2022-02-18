@@ -6,13 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.rusalfood.data.network.MockLoginData
 import com.example.rusalfood.databinding.SignInFragmentBinding
 import com.example.rusalfood.di.appComponent
 
@@ -20,7 +19,7 @@ class SignInFragment : Fragment() {
 
     private var _binding: SignInFragmentBinding? = null
     private val binding get() = _binding!!
-    private val signInViewModel: SignInViewModel by viewModels{requireContext().appComponent.signInViewModelFactory()}
+    private val signInViewModel: SignInViewModel by viewModels { requireContext().appComponent.signInViewModelFactory() }
 
     companion object {
         fun newInstance() = SignInFragment()
@@ -50,6 +49,7 @@ class SignInFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.signInButton.setOnClickListener {
+            binding.loginProgressBar.visibility = ProgressBar.VISIBLE
             signInViewModel.signIn(
                 binding.signInLoginField.text.toString(),
                 binding.signInPasswordField.text.toString()
@@ -72,8 +72,12 @@ class SignInFragment : Fragment() {
         }
 
         signInViewModel.response.observe(viewLifecycleOwner) {
-            if (it.equals(AUTH_OK)) findNavController().navigate(SignInFragmentDirections.toMainFragment(true))
-            else Toast.makeText(context, signInViewModel.response.value, Toast.LENGTH_SHORT).show()
+            if (it.equals(AUTH_OK))
+                findNavController().navigate(SignInFragmentDirections.toMainFragment(true))
+            else {
+                Toast.makeText(context, signInViewModel.response.value, Toast.LENGTH_SHORT).show()
+                binding.loginProgressBar.visibility = ProgressBar.GONE
+            }
         }
     }
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rusalfood.domain.usecases.SignInUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -39,6 +40,7 @@ class SignInViewModel(private val signInUseCase: SignInUseCase) : ViewModel() {
     }
 
     fun signIn(login: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
+        delay(2000)//todo delete after api implementation
         response.postValue(signInUseCase.signIn(login, password))
     }
 
