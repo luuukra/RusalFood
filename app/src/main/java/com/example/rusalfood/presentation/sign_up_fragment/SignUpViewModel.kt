@@ -12,11 +12,14 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 class SignUpViewModel(private val signUpUseCase: SignUpUseCase) : ViewModel() {
-    val emailCheckResponse =
-        MutableLiveData<Boolean>()//data is request status response: ok, or error
-    val signUpResponse = MutableLiveData<String>()
-    val isEmailInputCorrect = MutableLiveData<Boolean>()
-    val isPasswordInputCorrect = MutableLiveData<Boolean>()
+    private val _emailCheckResponse = MutableLiveData<Boolean>()//data is request status response: ok, or error
+    val emailCheckResponse: MutableLiveData<Boolean> = _emailCheckResponse
+    private val _signUpResponse = MutableLiveData<String>()
+    val signUpResponse: MutableLiveData<String> = _signUpResponse
+    private val _isEmailInputCorrect = MutableLiveData<Boolean>()
+    val isEmailInputCorrect: MutableLiveData<Boolean> = _isEmailInputCorrect
+    private val _isPasswordInputCorrect = MutableLiveData<Boolean>()
+    val isPasswordInputCorrect: MutableLiveData<Boolean> = _isPasswordInputCorrect
 
     val loginAfterTextChangedListener = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
