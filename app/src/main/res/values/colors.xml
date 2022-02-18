@@ -11,4 +11,5 @@
     <color name="red">#DE2D49</color>
     <color name="light_grey">#C6C6C6</color>
     <color name="dark_grey">#202020</color>
+    <color name="place_name_color">#000000</color>
 </resources>
