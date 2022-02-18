@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rusalfood.data.network.MockData
 import com.example.rusalfood.databinding.FragmentMainBinding
 import com.example.rusalfood.di.appComponent
+import com.example.rusalfood.domain.models.Resource
 
 class MainFragment: Fragment(), MainAdapter.onItemClickListener {
 
@@ -42,13 +44,25 @@ class MainFragment: Fragment(), MainAdapter.onItemClickListener {
 
 
     private fun setupObserving() {
-        mainViewModel.listPlaces.observe(viewLifecycleOwner, {
-            mainAdapter.diffUtilPlaces.submitList(it)
-        })
-
-        mainViewModel.isAuthorized.observe(viewLifecycleOwner) {
-            //todo add to cart enabled\disabled button
+        mainViewModel.apply {
+            listPlaces.observe(viewLifecycleOwner, Observer { status ->
+                when (status) {
+                    is Resource.Loading -> { binding.shimmerLayout.startShimmer() }
+                    is Resource.Success -> { status.data?.let {
+                        mainAdapter.diffUtilPlaces.submitList(it)
+                        showRecyclerView()
+                    }}
+                }
+            })
         }
+    }
+
+    private fun showRecyclerView() {
+        binding.shimmerLayout.apply {
+            stopShimmer()
+            visibility = View.INVISIBLE
+        }
+        binding.mainRv.visibility = View.VISIBLE
     }
 
     private fun setupRecyclerView() {

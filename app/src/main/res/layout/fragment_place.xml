@@ -12,7 +12,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <TextView
             android:id="@+id/placeTvAddress"
@@ -22,6 +23,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginBottom="-26dp"
             android:hint="@string/place_address_h"/>
+
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
@@ -33,6 +35,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
+
         </androidx.viewpager2.widget.ViewPager2>
 
         <androidx.cardview.widget.CardView
