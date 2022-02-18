@@ -1,24 +1,29 @@
 package com.example.rusalfood.presentation.main_fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rusalfood.data.network.MockData
 import com.example.rusalfood.databinding.FragmentMainBinding
+import com.example.rusalfood.di.appComponent
+import com.example.rusalfood.domain.models.Resource
 
 class MainFragment: Fragment(), MainAdapter.onItemClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private lateinit var mainAdapter: MainAdapter
-    private lateinit var mainViewModelFactory: MainViewModelFactory
-    private lateinit var mainViewModel: MainViewModel
-    private lateinit var mockData: MockData
+
+    private val mainViewModel: MainViewModel by viewModels { requireContext().appComponent.mainViewModelFactory() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
@@ -27,8 +32,9 @@ class MainFragment: Fragment(), MainAdapter.onItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupViewModel()
+        (requireActivity() as AppCompatActivity).supportActionBar?.show()
         setupRecyclerView()
+        setAuthorizationFlag()
         setupObserving()
     }
 
@@ -37,10 +43,30 @@ class MainFragment: Fragment(), MainAdapter.onItemClickListener {
         _binding = null
     }
 
+    private fun setAuthorizationFlag() {
+        mainViewModel.isAuthorized.value = requireArguments().getBoolean("isAuthorized")
+    }
+
     private fun setupObserving() {
-        mainViewModel.listPlaces.observe(viewLifecycleOwner, {
-            mainAdapter.places = it
-        })
+        mainViewModel.apply {
+            listPlaces.observe(viewLifecycleOwner, Observer { status ->
+                when (status) {
+                    is Resource.Loading -> { binding.shimmerLayout.startShimmer() }
+                    is Resource.Success -> { status.data?.let {
+                        mainAdapter.diffUtilPlaces.submitList(it)
+                        showRecyclerView()
+                    }}
+                }
+            })
+        }
+    }
+
+    private fun showRecyclerView() {
+        binding.shimmerLayout.apply {
+            stopShimmer()
+            visibility = View.INVISIBLE
+        }
+        binding.mainRv.visibility = View.VISIBLE
     }
 
     private fun setupRecyclerView() {
@@ -54,11 +80,5 @@ class MainFragment: Fragment(), MainAdapter.onItemClickListener {
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToPlaceFragment(placeName, placeId)
         )
-    }
-
-    private fun setupViewModel() {
-        mockData = MockData()
-        mainViewModelFactory = MainViewModelFactory(mockData)
-        mainViewModel = ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
     }
 }
