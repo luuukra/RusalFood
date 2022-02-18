@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.sign_up_fragment.SignUpLoginFragment">
+    tools:context=".presentation.login_fragment.SignUpLoginFragment">
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -22,8 +22,8 @@
             android:text="@string/sign_up"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="22sp"
-            style="@style/font_bold" />
+            android:textSize="22dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/sing_up_instructions"
@@ -32,20 +32,31 @@
             android:layout_marginBottom="10dp"
             android:text="@string/sign_up_email_instruction"
             android:textAlignment="center"
-            android:textSize="18sp"
-            style="@style/font_bold" />
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/sign_up_txt_inp_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
             android:layout_marginBottom="5dp"
-            style="@style/input_field_text_input_layout_style"
+            android:hint="@string/email_hint"
+            android:orientation="vertical"
+            app:boxBackgroundColor="#79E8E8E8"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusTopStart="15dp"
             app:startIconDrawable="@android:drawable/sym_action_email">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/sign_up_login_field"
-                style="@style/email_input_field_text_input_edit_text_style" />
+                android:id="@+id/sign_up_login_password_field"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textEmailAddress"
+                android:textStyle="bold" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -54,8 +65,8 @@
             android:layout_height="wrap_content"
             android:text="@string/privacy_policy_text"
             android:textAlignment="center"
-            android:textSize="14sp"
-            style="@style/font_bold" />
+            android:textSize="14dp"
+            android:textStyle="bold" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -78,9 +89,12 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="20dp"
             android:enabled="false"
-            android:text="@string/Next_button"
-            style="@style/basic_mtrl_btn_style"
-            app:backgroundTint="@color/mtrl_btn_red_bg_color_selector" />
+            android:text="Далее"
+            android:textAllCaps="false"
+            android:textSize="@dimen/btns_text_size"
+            android:textStyle="bold"
+            app:backgroundTint="@color/mtrl_btn_red_bg_color_selector"
+            app:cornerRadius="12dp" />
 
     </FrameLayout>
 
