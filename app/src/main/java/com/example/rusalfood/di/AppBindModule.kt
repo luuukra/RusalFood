@@ -11,8 +11,14 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class AppModules {
+interface AppBindModule {
 
+    @Singleton
+    @Binds
+    fun bindLoginRepositoryImplToLoginRepository(loginRepositoryImpl: LoginRepositoryImpl) : LoginRepository
 
+    @Singleton
+    @Binds
+    fun bindMainRepositoryImplToMainRepository(mainRepositoryImpl: MainRepositoryImpl) : MainRepository
 
 }
