@@ -34,6 +34,7 @@ class MainFragment: Fragment(), MainAdapter.onItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
         setupRecyclerView()
+        setAuthorizationFlag()
         setupObserving()
     }
 
@@ -42,6 +43,9 @@ class MainFragment: Fragment(), MainAdapter.onItemClickListener {
         _binding = null
     }
 
+    private fun setAuthorizationFlag() {
+        mainViewModel.isAuthorized.value = requireArguments().getBoolean("isAuthorized")
+    }
 
     private fun setupObserving() {
         mainViewModel.apply {

@@ -1,8 +1,9 @@
 package com.example.rusalfood.domain.usecases
 
 import com.example.rusalfood.domain.irepositories.LoginRepository
+import javax.inject.Inject
 
-class SignInUseCase(private val loginRepository: LoginRepository) {
+class SignInUseCase @Inject constructor (private val loginRepository: LoginRepository) {
     companion object {
         const val AUTH_OK = "Authentication successful"
         const val AUTH_ERROR = "Authentication error: incorrect email or login"

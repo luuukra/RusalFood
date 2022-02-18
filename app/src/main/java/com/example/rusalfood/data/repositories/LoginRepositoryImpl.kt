@@ -2,8 +2,9 @@ package com.example.rusalfood.data.repositories
 
 import com.example.rusalfood.data.network.MockLoginData
 import com.example.rusalfood.domain.irepositories.LoginRepository
+import javax.inject.Inject
 
-class LoginRepositoryImpl(private val mockLoginData: MockLoginData) : LoginRepository {
+class LoginRepositoryImpl @Inject constructor (private val mockLoginData: MockLoginData) : LoginRepository {
 
     override suspend fun getAuthToken(login: String, password: String): String? {
         return mockLoginData.checkPasswordAndGetToken(login, password)
