@@ -46,13 +46,13 @@ class PlaceFragment: Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun launchObserving() {
-        placeViewModel.currentPlace.observe(viewLifecycleOwner, {
+        placeViewModel.currentPlace.observe(viewLifecycleOwner) {
             placeViewPagerAdapter.vpImages = it.gallery // Картинки в слайдере
             binding.placeTvAddress.text = it.address // Адрес заведения
             placeCategoriesAdapter.categories = it.categoryList // Горизонтальный список категорий
             placeViewPagerAdapter.notifyDataSetChanged()
             placeCategoriesAdapter.notifyDataSetChanged()
-        })
+        }
     }
 
     private fun setupCurrentPlace() {

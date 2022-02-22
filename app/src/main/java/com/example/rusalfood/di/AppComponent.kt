@@ -8,7 +8,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [(AppModules::class)])
+@Component(modules = [ViewModelFactoriesModule::class, UseCasesModule::class])
 interface AppComponent {
 
     fun signInViewModelFactory(): SignInViewModelFactory

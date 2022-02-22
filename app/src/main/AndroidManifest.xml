@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_ra_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RusalFood.">
+        android:theme="@style/Theme.RusalFood">
         <activity
             android:name=".presentation.MainActivity"
             android:screenOrientation="userPortrait"

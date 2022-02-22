@@ -14,8 +14,8 @@ class MainAdapter (private val listener: onItemClickListener) : RecyclerView.Ada
 
     //Adapter
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
-        val layoutinflater = LayoutInflater.from(parent.context)
-        val binding = ItemRecyclerviewPlaceBinding.inflate(layoutinflater, parent, false)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ItemRecyclerviewPlaceBinding.inflate(layoutInflater, parent, false)
         return MainViewHolder(binding)
     }
 
@@ -41,19 +41,19 @@ class MainAdapter (private val listener: onItemClickListener) : RecyclerView.Ada
             itemView.setOnClickListener(this)
         }
         override fun onClick(p0: View?) {
-            val positionn: Int = bindingAdapterPosition
-            if (positionn != RecyclerView.NO_POSITION) {
+            val position: Int = bindingAdapterPosition
+            if (position != RecyclerView.NO_POSITION) {
                 listener.onItemClick(
-                    positionn,
-                    diffUtilPlaces.currentList[positionn].name,
-                    diffUtilPlaces.currentList[positionn].id
+                    position,
+                    diffUtilPlaces.currentList[position].name,
+                    diffUtilPlaces.currentList[position].id
                 )
             }
         }
     }
 
     interface onItemClickListener {
-        fun onItemClick(positionn: Int, placeName: String, placeId: Int)
+        fun onItemClick(position: Int, placeName: String, placeId: Int)
     }
 
 

@@ -76,6 +76,11 @@
             android:name="placeId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/myOrdersFragment"
+        android:name="com.example.rusalfood.presentation.my_orders_fragment.MyOrdersFragment"
+        android:label="@string/bottom_nav_orders_history"
+        tools:layout="@layout/orders_history_fragment"/>
 
 
 </navigation>

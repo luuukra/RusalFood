@@ -49,15 +49,15 @@ class MainFragment: Fragment(), MainAdapter.onItemClickListener {
 
     private fun setupObserving() {
         mainViewModel.apply {
-            listPlaces.observe(viewLifecycleOwner, Observer { status ->
+            listPlaces.observe(viewLifecycleOwner) { status ->
                 when (status) {
-                    is Resource.Loading -> { binding.shimmerLayout.startShimmer() }
+                    //is Resource.Loading -> { binding.shimmerLayout.startShimmer() }
                     is Resource.Success -> { status.data?.let {
                         mainAdapter.diffUtilPlaces.submitList(it)
                         showRecyclerView()
                     }}
                 }
-            })
+            }
         }
     }
 
@@ -76,7 +76,7 @@ class MainFragment: Fragment(), MainAdapter.onItemClickListener {
         binding.mainRv.adapter = mainAdapter
     }
 
-    override fun onItemClick(positionn: Int, placeName: String, placeId: Int) {
+    override fun onItemClick(position: Int, placeName: String, placeId: Int) {
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToPlaceFragment(placeName, placeId)
         )
