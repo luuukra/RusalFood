@@ -6,6 +6,6 @@ data class Place(
     val address: String,
     val mainImage: String,
     val gallery: List<String>,
-    val categoryList: List<String>,
-    val foodList: List<Food>,
+    //val categoryList: List<String>,
+    //val foodList: List<Food.FoodItem>,
 )
