@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="place_name_color">#F3EEEE</color>
+    <color name="edit_text_text_and_hint_color">#F8E1DCDC</color>
+    <color name="txt_input_filled_stroke_color">#F8E1DCDC</color>
+
 </resources>

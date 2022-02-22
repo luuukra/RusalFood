@@ -12,4 +12,7 @@
     <color name="light_grey">#C6C6C6</color>
     <color name="dark_grey">#202020</color>
     <color name="place_name_color">#000000</color>
+    <color name="edit_text_text_and_hint_color">#F25E5959</color>
+    <color name="txt_input_filled_stroke_color">#F25E5959</color>
+    <color name="bottom_nav_unchecked_item_color">#434040</color>
 </resources>
