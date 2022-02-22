@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <Button
-        android:id="@+id/tvCtg"
+        android:id="@+id/horisontal_categories_rv_button"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:backgroundTint="#DADADA"
