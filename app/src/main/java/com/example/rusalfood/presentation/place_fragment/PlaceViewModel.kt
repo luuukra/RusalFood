@@ -23,9 +23,9 @@ class PlaceViewModel(
     var listOfFoodWithCategories: MutableLiveData<List<Food>> = _listOfFoodWithCategories
 
     //list of categories and its' indexes in full list of food and categories
-    private val _listOfCategoriesWithIndexes = MutableLiveData<List<Pair<Int, Food.FoodCategory>>>()
-    var listOfCategoriesWithIndexes: MutableLiveData<List<Pair<Int, Food.FoodCategory>>> =
-        _listOfCategoriesWithIndexes
+    private val _listOfCategoriesIndexes = MutableLiveData<List<Int>>()
+    var listOfCategoriesIndexes: MutableLiveData<List<Int>> =
+        _listOfCategoriesIndexes
 
     //list of categories for horizontal categories rv
     private val _listOfCategories = MutableLiveData<List<Food.FoodCategory>>()
@@ -38,10 +38,13 @@ class PlaceViewModel(
 
     fun getFoodListById(placeId: Int) = viewModelScope.launch(Dispatchers.IO) {
         val foodListResponse = getFoodListUseCase.getFoodList(placeId)
-        listOfFoodWithCategories.postValue(FoodListResponseConverter.toFoodItemsAndCategoriesList(foodListResponse))
-        listOfCategoriesWithIndexes.postValue(FoodListResponseConverter.toCategoriesWithIndexesList())
+        listOfFoodWithCategories.postValue(
+            FoodListResponseConverter.toFoodItemsAndCategoriesList(
+                foodListResponse
+            )
+        )
+        listOfCategoriesIndexes.postValue(FoodListResponseConverter.toCategoriesIndexesList())
         listOfCategories.postValue(FoodListResponseConverter.toCategoriesList(foodListResponse))
 
     }
-
 }
