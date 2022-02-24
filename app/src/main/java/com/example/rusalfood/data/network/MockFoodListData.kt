@@ -18,28 +18,28 @@ class MockFoodListData @Inject constructor() {
 
 /**Mock Products**/
 var products = listOf<Product>(
-    Product(0, "a", "b", "image", 1000),
-    Product(1, "a", "b", "image", 1000),
-    Product(2, "a", "b", "image", 1000),
-    Product(3, "a", "b", "image", 1000),
-    Product(4, "a", "b", "image", 1000)
+    Product(0, "a", "b", "https://images.pexels.com/photos/704571/pexels-photo-704571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 1000),
+    Product(1, "a", "b", "https://images.pexels.com/photos/4128502/pexels-photo-4128502.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 1000),
+    Product(2, "a", "b", "https://images.pexels.com/photos/704571/pexels-photo-704571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 1000),
+    Product(3, "a", "b", "https://images.pexels.com/photos/4128502/pexels-photo-4128502.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 1000),
+    Product(4, "a", "b", "https://images.pexels.com/photos/704571/pexels-photo-704571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 1000)
 )
 
 var products1 = listOf<Product>(
-    Product(0, "r", "R", "image", 2000),
-    Product(1, "r", "R", "image", 2000),
-    Product(2, "r", "R", "image", 2000),
-    Product(3, "r", "R", "image", 2000),
+    Product(0, "r", "R", "https://images.pexels.com/photos/704571/pexels-photo-704571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 2000),
+    Product(1, "r", "R", "https://images.pexels.com/photos/4128502/pexels-photo-4128502.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 2000),
+    Product(2, "r", "R", "https://images.pexels.com/photos/704571/pexels-photo-704571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 2000),
+    Product(3, "r", "R", "https://images.pexels.com/photos/4128502/pexels-photo-4128502.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 2000),
 )
 
 var products2 = listOf<Product>(
-    Product(0, "T", "t", "image", 3000),
-    Product(1, "T", "t", "image", 3000),
-    Product(2, "T", "t", "image", 3000),
-    Product(3, "T", "t", "image", 3000),
-    Product(4, "T", "t", "image", 3000),
-    Product(5, "T", "t", "image", 3000),
-    Product(6, "T", "t", "image", 3000)
+    Product(0, "T", "t", "https://images.pexels.com/photos/704571/pexels-photo-704571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 3000),
+    Product(1, "T", "t", "https://images.pexels.com/photos/4128502/pexels-photo-4128502.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 3000),
+    Product(2, "T", "t", "https://images.pexels.com/photos/704571/pexels-photo-704571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 3000),
+    Product(3, "T", "t", "https://images.pexels.com/photos/4128502/pexels-photo-4128502.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 3000),
+    Product(4, "T", "t", "https://images.pexels.com/photos/704571/pexels-photo-704571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 3000),
+    Product(5, "T", "t", "https://images.pexels.com/photos/4128502/pexels-photo-4128502.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 3000),
+    Product(6, "T", "t", "https://images.pexels.com/photos/704571/pexels-photo-704571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 3000)
 )
 
 

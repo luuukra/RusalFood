@@ -5,6 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
     <RelativeLayout
         android:id="@+id/rel"
         android:layout_width="match_parent"
@@ -12,23 +26,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintBottom_toTopOf="@id/barrier"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/placeTvAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/viewPager"
+            android:layout_below="@+id/viewPager"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="-26dp"
-            android:hint="@string/place_address_h"/>
+            android:hint="@string/place_address_h" />
 
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:layout_marginBottom="7dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -39,7 +54,7 @@
         </androidx.viewpager2.widget.ViewPager2>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+            android:id="@+id/card_view"
             android:layout_width="40dp"
             android:layout_height="20dp"
             android:translationX="20dp"
@@ -58,26 +73,61 @@
 
     </RelativeLayout>
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="rel"
+        app:barrierDirection="bottom"/>
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:constraint_referenced_ids="ivBurger, categories_rv"
+        app:layout_constraintBottom_toTopOf="@id/barrier1"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/barrier"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintVertical_bias="0.0"
+        app:flow_horizontalStyle="packed"
+        app:flow_horizontalAlign="start"/>
+
     <ImageView
         android:id="@+id/ivBurger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.041"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rel"
+        android:layout_marginTop="16dp"
         app:srcCompat="@drawable/ic_burger" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/categoriesRv"
-        android:layout_width="wrap_content"
+        android:id="@+id/categories_rv"
+        android:layout_width="0dp"
         android:layout_marginStart="20dp"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
-        app:layout_constraintStart_toEndOf="@id/ivBurger"
-        app:layout_constraintTop_toTopOf="@id/ivBurger"
-        app:layout_constraintBottom_toBottomOf="@id/ivBurger" />
+        tools:itemCount="1"
+        tools:listitem="@layout/item_recyclerview_category"/>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="food_items_rv"
+        app:barrierDirection="top"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/food_items_rv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/barrier1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        tools:itemCount="25" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
