@@ -1,6 +1,5 @@
 package com.example.rusalfood.presentation.main_fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,16 +7,13 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.rusalfood.data.network.MockData
 import com.example.rusalfood.databinding.FragmentMainBinding
 import com.example.rusalfood.di.appComponent
 import com.example.rusalfood.domain.models.Resource
 
-class MainFragment: Fragment(), MainAdapter.onItemClickListener {
+class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -51,7 +47,7 @@ class MainFragment: Fragment(), MainAdapter.onItemClickListener {
         mainViewModel.apply {
             listPlaces.observe(viewLifecycleOwner) { status ->
                 when (status) {
-                    //is Resource.Loading -> { binding.shimmerLayout.startShimmer() }
+                    //is Resource.Loading -> { binding.shimmerLayout.startShimmer() }  //fixme FLOW
                     is Resource.Success -> { status.data?.let {
                         mainAdapter.diffUtilPlaces.submitList(it)
                         showRecyclerView()

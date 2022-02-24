@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.rusalfood.databinding.ItemRecyclerviewPlaceBinding
 import com.example.rusalfood.domain.models.Place
 
-class MainAdapter (private val listener: onItemClickListener) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+class MainAdapter (private val listener: OnItemClickListener) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
     //Adapter
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
@@ -52,7 +52,7 @@ class MainAdapter (private val listener: onItemClickListener) : RecyclerView.Ada
         }
     }
 
-    interface onItemClickListener {
+    interface OnItemClickListener {
         fun onItemClick(position: Int, placeName: String, placeId: Int)
     }
 

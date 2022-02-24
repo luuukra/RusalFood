@@ -23,54 +23,64 @@
         android:id="@+id/description_flow"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
         android:orientation="vertical"
-        app:constraint_referenced_ids="tv_name, tv_address"
+        app:constraint_referenced_ids="food_name, food_description, food_price"
         app:flow_verticalGap="8dp"
         app:flow_verticalStyle="packed"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guideline_end"
-        app:layout_constraintStart_toEndOf="@id/card_view"
+        app:layout_constraintEnd_toStartOf="@id/card_view"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_name"
-        style="@style/common_rv_item_name"
+        android:id="@+id/food_name"
+        style="@style/font_bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/card_view"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Название" />
+        android:textColor="@color/rv_item_name_color"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="Food Name" />
 
     <TextView
-        android:id="@+id/tv_address"
-        style="@style/common_rv_item_description"
+        android:id="@+id/food_description"
+        style="@style/font_normal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tv_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name"
-        tools:text="адрес" />
+        android:textSize="12sp"
+        tools:ignore="MissingConstraints"
+        tools:text="food description" />
+
+    <TextView
+        android:id="@+id/food_price"
+        style="@style/font_normal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blue"
+        android:textSize="18sp"
+        tools:ignore="MissingConstraints"
+        tools:text="price" />
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="90dp"
         android:layout_height="90dp"
         app:cardCornerRadius="16dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@id/description_flow"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/iv_photo"
+            android:id="@+id/food_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            tools:ignore="ContentDescription"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
     </androidx.cardview.widget.CardView>
@@ -80,4 +90,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline_end"
         app:layout_constraintStart_toEndOf="@id/guideline_start" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
