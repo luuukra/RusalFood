@@ -3,6 +3,7 @@ package com.example.rusalfood.presentation.place_fragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
@@ -16,6 +17,7 @@ class PlaceFoodListAdapter :
     RecyclerView.Adapter<PlaceFoodListAdapter.PlaceFoodListHolder>() {
 
     var foodList = emptyList<Food>()
+    var foodCategories = MutableLiveData<List<Food.FoodCategory>>()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceFoodListHolder {

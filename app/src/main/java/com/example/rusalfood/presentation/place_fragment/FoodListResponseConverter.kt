@@ -28,10 +28,10 @@ object FoodListResponseConverter {
         return foodItemsAndCategories
     }
 
-    fun toCategoriesWithIndexesList(): List<Pair<Int, FoodCategory>> {
+    fun toCategoriesIndexesList(): List<Int> {
         return foodItemsAndCategories.withIndex().filterNot {
             it.value is Food.FoodItem
-        }.map { Pair(it.index, it.value as FoodCategory) }
+        }.map { it.index }
     }
 
 
