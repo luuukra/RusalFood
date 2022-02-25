@@ -1,6 +1,7 @@
 package com.example.rusalfood.presentation.place_fragment
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
@@ -88,7 +89,8 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel) :
                     foodName.text = foodItem.foodName
                     foodDescription.text = foodItem.foodDesc
                     foodPrice.text = foodItem.foodPrice.toString()
-                    Glide.with(foodImage.context)
+                    if(foodItem.foodImage == "") cardView.visibility = View.GONE
+                    else Glide.with(foodImage.context)
                         .load(foodItem.foodImage)
                         .into(foodImage)
 
