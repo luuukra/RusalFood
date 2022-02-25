@@ -27,6 +27,7 @@
         app:constraint_referenced_ids="food_name, food_description, food_price"
         app:flow_verticalGap="8dp"
         app:flow_verticalStyle="packed"
+        app:layout_goneMarginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/card_view"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
