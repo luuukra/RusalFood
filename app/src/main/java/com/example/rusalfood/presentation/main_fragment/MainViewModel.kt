@@ -25,8 +25,7 @@ class MainViewModel(
     val isAuthorized = _isAuthorized
 
     private fun displayAllPlaces() = viewModelScope.launch(Dispatchers.IO) {
-        //listPlaces.postValue(Resource.Loading())
-        delay(2000) // skeletons ;)
+        delay(1000) // skeletons ;)
         val places = displayAllPlacesUseCase.execute()
         listPlaces.postValue(Resource.Success(places))
     }

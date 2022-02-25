@@ -20,6 +20,18 @@
     <string name="place_address_h">Address</string>
     <string name="place_category_h">Category</string>
 
+    // Basket
+    <string name="basket_basket">Basket</string>
+    <string name="basket_header">My order</string>
+    <string name="basket_total_h">Total</string>
+    <string name="basket_pay_button">Pay</string>
+
+    <string name="basket_food_name_h">Product</string>
+    <string name="basket_food_desc_h">Products description</string>
+    <string name="basket_food_price_h">Price</string>
+
+    <string name="basket_button_template_amount">2 pc.</string>
+
     //Bottom Nav Bar
     <string name="bottom_nav_main">Main</string>
     <string name="bottom_nav_orders_history">My orders</string>
