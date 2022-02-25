@@ -41,7 +41,7 @@ class SignInViewModel(private val signInUseCase: SignInUseCase) : ViewModel() {
 
     fun signIn(login: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
         delay(2000)//todo delete after api implementation
-        response.postValue(signInUseCase.signIn(login, password))
+        _response.postValue(signInUseCase.signIn(login, password))
     }
 
 }

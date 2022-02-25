@@ -66,11 +66,11 @@ class SignUpViewModel(private val signUpUseCase: SignUpUseCase) : ViewModel() {
 
     fun checkIfEmailAvailable(email: String) = viewModelScope.launch(Dispatchers.IO) {
         delay(2000)//todo delete after api implementation
-        emailCheckResponse.postValue(signUpUseCase.checkEmail(email))
+        _emailCheckResponse.postValue(signUpUseCase.checkEmail(email))
     }
 
     fun signUpAndGetToken(login: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
         delay(2000)//todo delete after api implementation
-        signUpResponse.postValue(signUpUseCase.signUpAndGetToken(login, password))
+        _signUpResponse.postValue(signUpUseCase.signUpAndGetToken(login, password))
     }
 }
