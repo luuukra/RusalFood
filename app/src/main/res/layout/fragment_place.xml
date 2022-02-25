@@ -46,10 +46,8 @@
             android:layout_marginBottom="7dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toTopOf="parent">
 
         </androidx.viewpager2.widget.ViewPager2>
 
@@ -106,12 +104,12 @@
         android:id="@+id/tab_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:elevation="8dp"
         android:orientation="horizontal"
         app:tabIndicatorAnimationMode="elastic"
-        app:tabMode="scrollable" />
+        app:tabMode="scrollable"
+        app:tabTextColor="@color/tab_text_color_selector"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="190dp" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier1"
