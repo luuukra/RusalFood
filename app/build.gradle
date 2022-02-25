@@ -90,4 +90,8 @@ dependencies {
 
     // Shimmer Skeletons
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    // Tab sync with RV
+    implementation 'io.github.ahmad-hamwi:tabsync:1.0.1'
+
 }

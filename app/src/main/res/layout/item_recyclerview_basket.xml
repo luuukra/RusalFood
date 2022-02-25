@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/description_flow"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:constraint_referenced_ids="basket_food_name, basket_food_price"
+        app:flow_verticalGap="8dp"
+        app:flow_verticalStyle="packed"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/rel"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/basket_food_name"
+        style="@style/font_bold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/rv_item_name_color"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="Food Name" />
+
+    <TextView
+        android:id="@+id/basket_food_price"
+        style="@style/font_normal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blue"
+        android:textSize="18sp"
+        tools:ignore="MissingConstraints"
+        tools:text="price" />
+
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@id/description_flow"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp">
+
+            <ImageView
+                android:id="@+id/basket_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageView
+                android:id="@+id/buttons_background_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_button_background"
+                android:background="@color/white"
+                android:layout_gravity="bottom|center"
+                android:layout_marginVertical="1dp"
+                >
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/basket_button_plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:background="@null"
+                android:src="@drawable/ic_button_increase"
+                android:layout_marginHorizontal="2dp"
+
+
+                >
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/basket_button_minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:background="@null"
+                android:src="@drawable/ic_button_decrease"
+                android:layout_marginHorizontal="2dp"
+                >
+            </ImageView>
+
+            <TextView
+                android:id="@+id/basket_text_view_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="@string/basket_sum_h_2"
+                android:layout_gravity="bottom|center"
+                android:layout_marginVertical="5dp"
+                android:layout_marginStart="2dp"
+                >
+            </TextView>
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+    <View
+        style="@style/divider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@id/guideline_start" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

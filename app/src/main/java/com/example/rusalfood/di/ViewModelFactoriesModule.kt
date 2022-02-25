@@ -4,23 +4,21 @@ import com.example.rusalfood.data.repositories.LoginRepositoryImpl
 import com.example.rusalfood.data.repositories.MainRepositoryImpl
 import com.example.rusalfood.domain.irepositories.LoginRepository
 import com.example.rusalfood.domain.irepositories.MainRepository
+import com.example.rusalfood.presentation.main_fragment.MainAdapter
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class AppModules {
+interface ViewModelFactoriesModule {
 
     @Singleton
-    @Provides
-    fun provideMainRepository(mainRepository: MainRepositoryImpl) : MainRepository {
-        return mainRepository
-    }
+    @Binds
+    fun bindLoginRepositoryImplToLoginRepository(loginRepositoryImpl: LoginRepositoryImpl) : LoginRepository
 
     @Singleton
-    @Provides
-    fun provideLoginRepository(loginRepository: LoginRepositoryImpl) : LoginRepository {
-        return loginRepository
-    }
+    @Binds
+    fun bindMainRepositoryImplToMainRepository(mainRepositoryImpl: MainRepositoryImpl) : MainRepository
 
 }

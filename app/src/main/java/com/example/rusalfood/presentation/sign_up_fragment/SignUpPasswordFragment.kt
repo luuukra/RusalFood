@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -45,6 +46,7 @@ class SignUpPasswordFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.nextButton.setOnClickListener {
+            binding.loginProgressBar.visibility = ProgressBar.VISIBLE
             signUpViewModel.signUpAndGetToken(
                 requireArguments().getString("email").toString(),
                 binding.signUpPasswordField.text.toString()
@@ -61,6 +63,7 @@ class SignUpPasswordFragment : Fragment() {
             Toast.makeText(
                 activity, signUpViewModel.signUpResponse.value, Toast.LENGTH_SHORT
             ).show()
+            //binding.loginProgressBar.visibility = ProgressBar.VISIBLE todo when real error reply will be available
 
             if (it.equals(AUTH_OK))
                 findNavController()

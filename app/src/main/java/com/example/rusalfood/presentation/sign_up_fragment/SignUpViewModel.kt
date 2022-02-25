@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rusalfood.domain.usecases.SignUpUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -64,10 +65,12 @@ class SignUpViewModel(private val signUpUseCase: SignUpUseCase) : ViewModel() {
     }
 
     fun checkIfEmailAvailable(email: String) = viewModelScope.launch(Dispatchers.IO) {
-        emailCheckResponse.postValue(signUpUseCase.checkEmail(email))
+        delay(2000)//todo delete after api implementation
+        _emailCheckResponse.postValue(signUpUseCase.checkEmail(email))
     }
 
     fun signUpAndGetToken(login: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
-        signUpResponse.postValue(signUpUseCase.signUpAndGetToken(login, password))
+        delay(2000)//todo delete after api implementation
+        _signUpResponse.postValue(signUpUseCase.signUpAndGetToken(login, password))
     }
 }
