@@ -7,11 +7,11 @@ sealed class Food {
         val foodName: String,
         val foodPrice: Int,
         val foodDesc: String,
-        val foodImage: String
+        val foodImage: String,
+        var foodAmount: Int
     ) : Food()
 
     data class FoodCategory(
         val categoryName: String,
-        var isChecked: Boolean
     ) : Food()
 }

@@ -1,5 +1,6 @@
 package com.example.rusalfood.presentation.place_fragment
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -36,15 +37,17 @@ class PlaceViewModel(
         currentPlace.postValue(place)
     }
 
+    @SuppressLint("NullSafeMutableLiveData")
     fun getFoodListById(placeId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        val foodListResponse = getFoodListUseCase.getFoodList(placeId)
-        listOfFoodWithCategories.postValue(
-            FoodListResponseConverter.toFoodItemsAndCategoriesList(
-                foodListResponse
-            )
-        )
-        listOfCategoriesIndexes.postValue(FoodListResponseConverter.toCategoriesIndexesList())
-        listOfCategories.postValue(FoodListResponseConverter.toCategoriesList(foodListResponse))
+        val foodAndFoodCatList = getFoodListUseCase.getFoodAndCategoriesList(placeId)
+        _listOfFoodWithCategories.postValue(foodAndFoodCatList.first)
+        _listOfCategoriesIndexes.postValue(toCategoriesIndexesList(foodAndFoodCatList.first))
+        _listOfCategories.postValue(foodAndFoodCatList.second)
+    }
 
+    private fun toCategoriesIndexesList(foodItemsAndCategories: List<Food>): List<Int> {
+        return foodItemsAndCategories.withIndex().filterNot {
+            it.value is Food.FoodItem
+        }.map { it.index }
     }
 }
