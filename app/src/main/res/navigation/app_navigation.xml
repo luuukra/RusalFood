@@ -75,12 +75,31 @@
         <argument
             android:name="placeId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_placeFragment_to_basketFragment"
+            app:destination="@id/basketFragment" />
     </fragment>
     <fragment
         android:id="@+id/myOrdersFragment"
         android:name="com.example.rusalfood.presentation.my_orders_fragment.MyOrdersFragment"
         android:label="@string/bottom_nav_orders_history"
         tools:layout="@layout/orders_history_fragment"/>
+
+    <fragment
+        android:id="@+id/basketFragment"
+        android:name="com.example.rusalfood.presentation.basket_fragment.BasketFragment"
+        android:label="BasketFragment"
+        tools:layout="@layout/fragment_basket">
+        <action
+            android:id="@+id/action_basketFragment_to_placeFragment"
+            app:destination="@id/placeFragment" />
+        <argument
+            android:name="placeName"
+            app:argType="string" />
+        <argument
+            android:name="placeAddress"
+            app:argType="string" />
+    </fragment>
 
 
 </navigation>

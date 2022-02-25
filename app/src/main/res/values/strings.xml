@@ -23,6 +23,20 @@
     <string name="place_address_h">Адрес</string>
     <string name="place_category_h">Категория</string>
 
+    // Basket
+    <string name="basket_basket">Корзина</string>
+    <string name="basket_header">Мой заказ</string>
+    <string name="basket_total_h">Итого</string>
+    <string name="basket_sum_h" translatable="false">9 999</string>
+    <string name="basket_sum_h_2" translatable="false">0</string>
+    <string name="basket_pay_button">Оплатить</string>
+
+    <string name="basket_food_name_h">Продукт</string>
+    <string name="basket_food_desc_h">Описание продукта</string>
+    <string name="basket_food_price_h">Цена</string>
+
+    <string name="basket_button_template_amount">2 шт.</string>
+    <string name="basket_button_template_sum" translatable="false">1 600 ₸</string>
 
     //Bottom Nav Bar
     <string name="bottom_nav_main">Главная</string>

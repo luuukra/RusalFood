@@ -62,14 +62,14 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
             stopShimmer()
             visibility = View.INVISIBLE
         }
-        binding.mainRv.visibility = View.VISIBLE
+        binding.mainRecyclerView.visibility = View.VISIBLE
     }
 
     private fun setupRecyclerView() {
         mainAdapter = MainAdapter(this)
         val layoutManager = LinearLayoutManager(requireContext())
-        binding.mainRv.layoutManager = layoutManager
-        binding.mainRv.adapter = mainAdapter
+        binding.mainRecyclerView.layoutManager = layoutManager
+        binding.mainRecyclerView.adapter = mainAdapter
     }
 
     override fun onItemClick(position: Int, placeName: String, placeId: Int) {
