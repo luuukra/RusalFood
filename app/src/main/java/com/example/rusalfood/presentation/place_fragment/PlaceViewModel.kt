@@ -1,6 +1,7 @@
 package com.example.rusalfood.presentation.place_fragment
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,16 +22,16 @@ class PlaceViewModel(
 
     //full list of food by categories for restaurant menu
     private val _listOfFoodWithCategories = MutableLiveData<List<Food>>()
-    var listOfFoodWithCategories: MutableLiveData<List<Food>> = _listOfFoodWithCategories
+    val listOfFoodWithCategories: LiveData<List<Food>> = _listOfFoodWithCategories
 
     //list of categories and its' indexes in full list of food and categories
     private val _listOfCategoriesIndexes = MutableLiveData<List<Int>>()
-    var listOfCategoriesIndexes: MutableLiveData<List<Int>> =
+    val listOfCategoriesIndexes: LiveData<List<Int>> =
         _listOfCategoriesIndexes
 
     //list of categories for horizontal categories rv
     private val _listOfCategories = MutableLiveData<List<Food.FoodCategory>>()
-    var listOfCategories: MutableLiveData<List<Food.FoodCategory>> = _listOfCategories
+    val listOfCategories: LiveData<List<Food.FoodCategory>> = _listOfCategories
 
     fun getIntoPlace(placeId: Int) = viewModelScope.launch(Dispatchers.IO) {
         val place = getIntoPlaceUseCase.execute(placeId)
@@ -50,4 +51,38 @@ class PlaceViewModel(
             it.value is Food.FoodItem
         }.map { it.index }
     }
+
+
+    // Basket Clicks & Food Amounts
+    val countedFoodList = MutableLiveData<List<Food.FoodItem>>()
+
+    fun setCountedList()  {
+        countedFoodList.value = _listOfFoodWithCategories.value!!.filterNot { it is Food.FoodCategory }
+            .map { it as Food.FoodItem }
+            .filter { it.foodAmount > 0 }
+    }
+
+    fun amountIncrease(currentPosition: Int) {
+        _listOfFoodWithCategories.value!![currentPosition].apply {
+            if (this is Food.FoodItem) {
+                this.foodAmount += 1
+                setCountedList()
+            }
+        }
+    }
+
+    fun amountDecrease(currentPosition: Int) {
+        _listOfFoodWithCategories.value!![currentPosition].apply {
+            if (this is Food.FoodItem) {
+                if (this.foodAmount <= 0) {
+                    this.foodAmount = 0
+                    setCountedList()
+                } else {
+                    this.foodAmount -= 1
+                    setCountedList()
+                }
+            }
+        }
+    }
+
 }

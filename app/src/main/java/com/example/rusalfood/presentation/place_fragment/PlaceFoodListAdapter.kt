@@ -14,7 +14,7 @@ import com.example.rusalfood.databinding.ItemRecyclerviewFoodItemCategoryBinding
 import com.example.rusalfood.domain.models.Food
 
 
-class PlaceFoodListAdapter :
+class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel) :
     RecyclerView.Adapter<PlaceFoodListAdapter.PlaceFoodListHolder>() {
 
     var foodList = emptyList<Food>()
@@ -35,7 +35,7 @@ class PlaceFoodListAdapter :
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                )
+                ), placeViewModel = placeViewModel,
             )
             else -> throw IllegalArgumentException("Invalid type")
         }
@@ -79,7 +79,10 @@ class PlaceFoodListAdapter :
             }
         }
 
-        class PlaceFoodItemsHolder(private val binding: ItemRecyclerviewFoodItemBinding) :
+        class PlaceFoodItemsHolder(
+            private val binding: ItemRecyclerviewFoodItemBinding,
+            private val placeViewModel: PlaceViewModel
+            ) :
             PlaceFoodListHolder(binding) {
             fun bind(foodItem: Food.FoodItem) {
                 binding.apply {
@@ -90,6 +93,22 @@ class PlaceFoodListAdapter :
                     else Glide.with(foodImage.context)
                         .load(foodItem.foodImage)
                         .into(foodImage)
+
+                    placeViewModel.listOfFoodWithCategories.value!![bindingAdapterPosition].apply {
+                        if (this is Food.FoodItem) {
+                            foodTextViewAmount.text = this.foodAmount.toString()
+                        }
+                    }
+
+                    foodButtonPlus.setOnClickListener {
+                        placeViewModel.amountIncrease(bindingAdapterPosition)
+                        bindingAdapter?.notifyItemChanged(bindingAdapterPosition)
+                    }
+
+                    foodButtonMinus.setOnClickListener {
+                        placeViewModel.amountDecrease(bindingAdapterPosition)
+                        bindingAdapter?.notifyItemChanged(bindingAdapterPosition)
+                    }
                 }
             }
         }

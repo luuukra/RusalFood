@@ -93,4 +93,5 @@ dependencies {
 
     // Tab sync with RV
     implementation 'io.github.ahmad-hamwi:tabsync:1.0.1'
+
 }

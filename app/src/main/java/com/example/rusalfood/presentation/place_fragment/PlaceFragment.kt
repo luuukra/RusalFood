@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +24,7 @@ class PlaceFragment : Fragment() {
     private lateinit var placeViewPagerAdapter: PlaceSliderAdapter
     private lateinit var placeFoodListAdapter: PlaceFoodListAdapter
 
-    private val placeViewModel: PlaceViewModel by viewModels { requireContext().appComponent.placeViewModelFactory() }
+    private val placeViewModel: PlaceViewModel by activityViewModels { requireContext().appComponent.placeViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +42,7 @@ class PlaceFragment : Fragment() {
         setupViewPager()
         setupFoodListRecyclerView()
         launchObserving()
+        setupBasketButton()
 
     }
 
@@ -52,7 +55,7 @@ class PlaceFragment : Fragment() {
     private fun launchObserving() {
         placeViewModel.currentPlace.observe(viewLifecycleOwner) {
             placeViewPagerAdapter.vpImages = it.gallery // Картинки в слайдере
-            binding.placeTvAddress.text = it.address // Адрес заведения
+            binding.placeTextViewAddress.text = it.address // Адрес заведения
             placeViewPagerAdapter.notifyDataSetChanged()
         }
 
@@ -65,17 +68,19 @@ class PlaceFragment : Fragment() {
     private fun setupCurrentPlace() {
         val placeId = args.placeId
         placeViewModel.getIntoPlace(placeId)
-        placeViewModel.getFoodListById(placeId)
+        if (placeViewModel.listOfFoodWithCategories.value.isNullOrEmpty()) {
+            placeViewModel.getFoodListById(placeId)
+        }
     }
 
 
     private fun setupViewPager() {
         placeViewPagerAdapter = PlaceSliderAdapter()
-        binding.viewPager.adapter = placeViewPagerAdapter
+        binding.placeViewPager.adapter = placeViewPagerAdapter
     }
 
     private fun setupFoodListRecyclerView() {
-        placeFoodListAdapter = PlaceFoodListAdapter()
+        placeFoodListAdapter = PlaceFoodListAdapter(placeViewModel)
         val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.foodItemsRv.layoutManager = layoutManager
         binding.foodItemsRv.adapter = placeFoodListAdapter
@@ -100,6 +105,21 @@ class PlaceFragment : Fragment() {
                 it,
                 true
             ).attach()
+        }
+    }
+
+    private fun setupBasketButton() {
+        binding.basketButtonTemplate.apply {
+            basketButtonInc.setOnClickListener {
+                val placeName = placeViewModel.currentPlace.value?.name
+                val placeAddress = placeViewModel.currentPlace.value?.address
+                findNavController().navigate(
+                    PlaceFragmentDirections.actionPlaceFragmentToBasketFragment(
+                        placeName.toString(),
+                        placeAddress.toString()
+                    )
+                )
+            }
         }
     }
 }
