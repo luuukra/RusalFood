@@ -87,9 +87,10 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel) :
             fun bind(foodItem: Food.FoodItem) {
                 binding.apply {
                     foodName.text = foodItem.foodName
-                    foodDescription.text = foodItem.foodDesc
+                    if(foodItem.foodDesc.isNullOrEmpty()) foodDescription.visibility = View.GONE
+                    else foodDescription.text = foodItem.foodDesc
                     foodPrice.text = foodItem.foodPrice.toString()
-                    if(foodItem.foodImage == "") cardView.visibility = View.GONE
+                    if(foodItem.foodImage.isNullOrEmpty()) cardView.visibility = View.GONE
                     else Glide.with(foodImage.context)
                         .load(foodItem.foodImage)
                         .into(foodImage)
