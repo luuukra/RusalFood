@@ -12,10 +12,10 @@ interface GetFoodListUseCase {
 class GetFoodListUseCaseImpl @Inject constructor(private val mainRepository: MainRepository) :
     GetFoodListUseCase {
     override suspend fun getFoodAndCategoriesList(placeId: Int): Pair<List<Food>, List<Food.FoodCategory>> {
-        return responseToFoodAndFoodCatList(mainRepository.getPlaceFoodList(placeId))
+        return responseListToFoodAndFoodCatList(mainRepository.getPlaceFoodList(placeId))
     }
 
-    private fun responseToFoodAndFoodCatList(responseList: List<ProductCategory>): Pair<List<Food>, List<Food.FoodCategory>> {
+    private fun responseListToFoodAndFoodCatList(responseList: List<ProductCategory>): Pair<List<Food>, List<Food.FoodCategory>> {
         return Pair(toFoodItemsAndCategoriesList(responseList), toCategoriesList(responseList))
     }
 

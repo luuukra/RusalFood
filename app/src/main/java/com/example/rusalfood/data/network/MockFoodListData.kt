@@ -74,6 +74,6 @@ var productCategory9 = ProductCategory(9, "sushi", products3)
 var productCategoriesList =
     listOf(productCategory, productCategory1, productCategory2, productCategory3, productCategory4, productCategory5)
 var productCategoriesList1 =
-    listOf(productCategory6, productCategory7, productCategory7, productCategory8, productCategory9)
+    listOf(productCategory6, productCategory7, productCategory5, productCategory8, productCategory9)
 var productCategoriesList2 =
-    listOf(productCategory, productCategory1, productCategory2, productCategory3, productCategory4)
+    listOf(productCategory7, productCategory1, productCategory2, productCategory3, productCategory4)

@@ -17,7 +17,7 @@ import com.example.rusalfood.domain.models.Food
 class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel) :
     RecyclerView.Adapter<PlaceFoodListAdapter.PlaceFoodListHolder>() {
 
-    var foodList = emptyList<Food>()
+    var foodList = mutableListOf<Food>()
     var foodCategories = MutableLiveData<List<Food.FoodCategory>>()
 
 
@@ -59,7 +59,12 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel) :
         }
     }
 
-
+    fun setData(newFoodList: List<Food>){
+        foodList.apply {
+            clear()
+            addAll(newFoodList)
+        }
+    }
     /*fun setData(newFoodCategoryList: List<FoodCategory>){
         val diffUtils = FoodCatDiffUtils(foodCategoryList, newFoodCategoryList)
         val diffResult = DiffUtil.calculateDiff(diffUtils)
