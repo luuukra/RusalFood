@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,17 +37,11 @@ class PlaceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupCurrentPlace()
+        launchObserving()
         initTabLayout()
         setupViewPager()
         setupFoodListRecyclerView()
-        launchObserving()
         setupBasketButton()
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -60,7 +53,7 @@ class PlaceFragment : Fragment() {
         }
 
         placeViewModel.listOfFoodWithCategories.observe(viewLifecycleOwner) {
-            placeFoodListAdapter.foodList = it// Меню ресторана с категориями
+            placeFoodListAdapter.setData(it)// Меню ресторана с категориями
             placeFoodListAdapter.notifyDataSetChanged()
         }
     }
@@ -68,11 +61,8 @@ class PlaceFragment : Fragment() {
     private fun setupCurrentPlace() {
         val placeId = args.placeId
         placeViewModel.getIntoPlace(placeId)
-        if (placeViewModel.listOfFoodWithCategories.value.isNullOrEmpty()) {
-            placeViewModel.getFoodListById(placeId)
-        }
+        placeViewModel.getFoodListById(placeId)
     }
-
 
     private fun setupViewPager() {
         placeViewPagerAdapter = PlaceSliderAdapter()
@@ -88,25 +78,27 @@ class PlaceFragment : Fragment() {
 
     private fun initTabLayout() {
         placeViewModel.listOfCategories.observe(viewLifecycleOwner) {
+            binding.tabLayout.removeAllTabs()
             it.forEach { category ->
                 binding.tabLayout.addTab(
                     binding.tabLayout.newTab().setText(category.categoryName)
                 )
             }
-            initMediator()
+            initMediator(placeViewModel.getCategoriesIndexesList())
         }
     }
 
-    private fun initMediator() {
-        placeViewModel.listOfCategoriesIndexes.observe(viewLifecycleOwner) {
-            TabbedListMediator(
-                binding.foodItemsRv,
-                binding.tabLayout,
-                it,
-                true
-            ).attach()
-        }
+    private fun initMediator(newIndices: List<Int>) {
+        val tabbedListMediator = TabbedListMediator(
+            binding.foodItemsRv,
+            binding.tabLayout,
+            newIndices,
+            true
+        )
+        tabbedListMediator.attach()
+        tabbedListMediator.updateMediatorWithNewIndices(newIndices)
     }
+
 
     private fun setupBasketButton() {
         binding.basketButtonTemplate.apply {
@@ -121,6 +113,11 @@ class PlaceFragment : Fragment() {
                 )
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
 
