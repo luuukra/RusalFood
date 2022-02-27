@@ -24,11 +24,6 @@ class PlaceViewModel(
     private val _listOfFoodWithCategories = MutableLiveData<List<Food>>()
     val listOfFoodWithCategories: LiveData<List<Food>> = _listOfFoodWithCategories
 
-    //list of categories and its' indexes in full list of food and categories
-    private val _listOfCategoriesIndexes = MutableLiveData<List<Int>>()
-    val listOfCategoriesIndexes: LiveData<List<Int>> =
-        _listOfCategoriesIndexes
-
     //list of categories for horizontal categories rv
     private val _listOfCategories = MutableLiveData<List<Food.FoodCategory>>()
     val listOfCategories: LiveData<List<Food.FoodCategory>> = _listOfCategories
@@ -40,14 +35,14 @@ class PlaceViewModel(
 
     @SuppressLint("NullSafeMutableLiveData")
     fun getFoodListById(placeId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        val foodAndFoodCatList = getFoodListUseCase.getFoodAndCategoriesList(placeId)
+        var foodAndFoodCatList = getFoodListUseCase.getFoodAndCategoriesList(placeId)
         _listOfFoodWithCategories.postValue(foodAndFoodCatList.first)
-        _listOfCategoriesIndexes.postValue(toCategoriesIndexesList(foodAndFoodCatList.first))
         _listOfCategories.postValue(foodAndFoodCatList.second)
     }
 
-    private fun toCategoriesIndexesList(foodItemsAndCategories: List<Food>): List<Int> {
-        return foodItemsAndCategories.withIndex().filterNot {
+    //list of indexes in full list of food and categories for TabbedListMediator
+    fun getCategoriesIndexesList(): List<Int> {
+        return listOfFoodWithCategories.value!!.withIndex().filterNot {
             it.value is Food.FoodItem
         }.map { it.index }
     }
@@ -56,10 +51,11 @@ class PlaceViewModel(
     // Basket Clicks & Food Amounts
     val countedFoodList = MutableLiveData<List<Food.FoodItem>>()
 
-    fun setCountedList()  {
-        countedFoodList.value = _listOfFoodWithCategories.value!!.filterNot { it is Food.FoodCategory }
-            .map { it as Food.FoodItem }
-            .filter { it.foodAmount > 0 }
+    fun setCountedList() {
+        countedFoodList.value =
+            _listOfFoodWithCategories.value!!.filterNot { it is Food.FoodCategory }
+                .map { it as Food.FoodItem }
+                .filter { it.foodAmount > 0 }
     }
 
     fun amountIncrease(currentPosition: Int) {
