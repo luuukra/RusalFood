@@ -7,7 +7,7 @@
         android:icon="@android:drawable/ic_menu_directions"
         android:title="@string/bottom_nav_main"/>
     <item
-        android:id="@+id/myOrdersFragment"
+        android:id="@+id/ordersFragment"
         android:enabled="true"
         android:icon="@android:drawable/ic_menu_delete"
         android:title="@string/bottom_nav_orders_history" />

@@ -1,15 +1,17 @@
 package com.example.rusalfood.presentation.basket_fragment
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.rusalfood.databinding.ItemRecyclerviewBasketBinding
 import com.example.rusalfood.domain.models.Food
 import com.example.rusalfood.presentation.place_fragment.PlaceViewModel
 
-class BasketAdapter(private val placeViewModel: PlaceViewModel) : RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
+class BasketAdapter(private val placeViewModel: PlaceViewModel, private val context: Context) : RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
 
     var basketList: List<Food.FoodItem> = emptyList()
         @SuppressLint("NotifyDataSetChanged")
@@ -39,13 +41,13 @@ class BasketAdapter(private val placeViewModel: PlaceViewModel) : RecyclerView.A
             // TO FIX..
 
             basketButtonPlus.setOnClickListener {
-                placeViewModel.amountIncrease(position + 1)
-                notifyItemChanged(position + 1)
+                placeViewModel.amountIncreaseInb(position)
+                notifyItemChanged(position)
             }
 
             basketButtonMinus.setOnClickListener {
-                placeViewModel.amountDecrease(position + 1)
-                notifyItemChanged(position + 1)
+                placeViewModel.amountDecreaseInb(position)
+                notifyItemChanged(position)
             }
         }
     }

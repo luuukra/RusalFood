@@ -1,6 +1,7 @@
 package com.example.rusalfood.presentation.place_fragment
 
 import android.annotation.SuppressLint
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -42,6 +43,10 @@ class PlaceFragment : Fragment() {
         setupViewPager()
         setupFoodListRecyclerView()
         setupBasketButton()
+
+
+
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -61,7 +66,9 @@ class PlaceFragment : Fragment() {
     private fun setupCurrentPlace() {
         val placeId = args.placeId
         placeViewModel.getIntoPlace(placeId)
-        placeViewModel.getFoodListById(placeId)
+        if (placeViewModel.listOfFoodWithCategories.value.isNullOrEmpty()) {
+            placeViewModel.getFoodListById(placeId)
+        }
     }
 
     private fun setupViewPager() {
@@ -70,7 +77,7 @@ class PlaceFragment : Fragment() {
     }
 
     private fun setupFoodListRecyclerView() {
-        placeFoodListAdapter = PlaceFoodListAdapter(placeViewModel)
+        placeFoodListAdapter = PlaceFoodListAdapter(placeViewModel, requireContext())
         val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.foodItemsRv.layoutManager = layoutManager
         binding.foodItemsRv.adapter = placeFoodListAdapter
@@ -101,6 +108,14 @@ class PlaceFragment : Fragment() {
 
 
     private fun setupBasketButton() {
+        placeViewModel.countedFoodList.observe(viewLifecycleOwner) {
+            if (it.isNullOrEmpty()) {
+                binding.basketButtonTemplate.basketFullButton.visibility = View.GONE
+            } else {
+                binding.basketButtonTemplate.basketFullButton.visibility = View.VISIBLE
+            }
+        }
+
         binding.basketButtonTemplate.apply {
             basketButtonInc.setOnClickListener {
                 val placeName = placeViewModel.currentPlace.value?.name

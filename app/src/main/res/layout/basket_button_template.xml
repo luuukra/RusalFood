@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="72dp">
+    android:layout_height="72dp"
+    android:id="@+id/basket_full_button"
+    android:visibility="gone"
+    >
 
     <TextView
         android:id="@+id/amount_inc"

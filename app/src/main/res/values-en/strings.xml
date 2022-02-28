@@ -32,6 +32,18 @@
 
     <string name="basket_button_template_amount">2 pc.</string>
 
+    // Orders
+    <string name="orders_header">My orders</string>
+    <string name="orders_status_h">Status - </string>
+    <string name="orders_status_pending">Pending</string>
+    <string name="orders_status_in_kitchen">In kitchen</string>
+    <string name="orders_status_ready">Ready</string>
+    <string name="orders_status_finished">Finished</string>
+
+    <string name="orders_sign_in">Sign in to your account</string>
+    <string name="orders_sign_in_req">Please, sign in to see your orders history</string>
+    <string name="orders_sign_in_btn">Sign in</string>
+
     //Bottom Nav Bar
     <string name="bottom_nav_main">Main</string>
     <string name="bottom_nav_orders_history">My orders</string>

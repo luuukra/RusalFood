@@ -50,7 +50,7 @@ class BasketFragment: Fragment() {
     }
 
     private fun setupRecyclerView() {
-        basketAdapter = BasketAdapter(placeViewModel)
+        basketAdapter = BasketAdapter(placeViewModel, requireContext())
         val layoutManagers = LinearLayoutManager(requireContext())
         binding.basketRecyclerView.apply {
             layoutManager = layoutManagers

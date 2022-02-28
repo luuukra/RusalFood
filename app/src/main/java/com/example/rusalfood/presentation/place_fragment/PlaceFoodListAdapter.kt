@@ -1,9 +1,11 @@
 package com.example.rusalfood.presentation.place_fragment
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
@@ -14,7 +16,7 @@ import com.example.rusalfood.databinding.ItemRecyclerviewFoodItemCategoryBinding
 import com.example.rusalfood.domain.models.Food
 
 
-class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel) :
+class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel, private val context: Context) :
     RecyclerView.Adapter<PlaceFoodListAdapter.PlaceFoodListHolder>() {
 
     var foodList = mutableListOf<Food>()
@@ -36,6 +38,7 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel) :
                     parent,
                     false
                 ), placeViewModel = placeViewModel,
+                context = context
             )
             else -> throw IllegalArgumentException("Invalid type")
         }
@@ -86,13 +89,14 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel) :
 
         class PlaceFoodItemsHolder(
             private val binding: ItemRecyclerviewFoodItemBinding,
-            private val placeViewModel: PlaceViewModel
+            private val placeViewModel: PlaceViewModel,
+            private val context: Context
             ) :
             PlaceFoodListHolder(binding) {
             fun bind(foodItem: Food.FoodItem) {
                 binding.apply {
                     foodName.text = foodItem.foodName
-                    if(foodItem.foodDesc.isNullOrEmpty()) foodDescription.visibility = View.GONE
+                    if (foodItem.foodDesc.isNullOrEmpty()) foodDescription.visibility = View.GONE
                     else foodDescription.text = foodItem.foodDesc
                     foodPrice.text = foodItem.foodPrice.toString()
                     if(foodItem.foodImage.isNullOrEmpty()) cardView.visibility = View.GONE
@@ -100,20 +104,21 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel) :
                         .load(foodItem.foodImage)
                         .into(foodImage)
 
-                    placeViewModel.listOfFoodWithCategories.value!![bindingAdapterPosition].apply {
+                    placeViewModel.listOfFoodWithCategories.value!![position].apply {
                         if (this is Food.FoodItem) {
                             foodTextViewAmount.text = this.foodAmount.toString()
                         }
                     }
 
                     foodButtonPlus.setOnClickListener {
-                        placeViewModel.amountIncrease(bindingAdapterPosition)
-                        bindingAdapter?.notifyItemChanged(bindingAdapterPosition)
+                        placeViewModel.amountIncrease(position)
+
+                        bindingAdapter?.notifyItemChanged(position)
                     }
 
                     foodButtonMinus.setOnClickListener {
-                        placeViewModel.amountDecrease(bindingAdapterPosition)
-                        bindingAdapter?.notifyItemChanged(bindingAdapterPosition)
+                        placeViewModel.amountDecrease(position)
+                        bindingAdapter?.notifyItemChanged(position)
                     }
                 }
             }

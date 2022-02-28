@@ -47,9 +47,8 @@ class PlaceViewModel(
         }.map { it.index }
     }
 
-
     // Basket Clicks & Food Amounts
-    val countedFoodList = MutableLiveData<List<Food.FoodItem>>()
+    var countedFoodList = MutableLiveData<List<Food.FoodItem>>()
 
     fun setCountedList() {
         countedFoodList.value =
@@ -67,6 +66,13 @@ class PlaceViewModel(
         }
     }
 
+    fun amountIncreaseInb(currentPosition: Int) {
+        countedFoodList.value!![currentPosition].apply {
+                this.foodAmount += 1
+                setCountedList()
+        }
+    }
+
     fun amountDecrease(currentPosition: Int) {
         _listOfFoodWithCategories.value!![currentPosition].apply {
             if (this is Food.FoodItem) {
@@ -78,6 +84,18 @@ class PlaceViewModel(
                     setCountedList()
                 }
             }
+        }
+    }
+
+    fun amountDecreaseInb(currentPosition: Int) {
+        countedFoodList.value!![currentPosition].apply {
+                if (this.foodAmount <= 0) {
+                    this.foodAmount = 0
+                    setCountedList()
+                } else {
+                    this.foodAmount -= 1
+                    setCountedList()
+                }
         }
     }
 
