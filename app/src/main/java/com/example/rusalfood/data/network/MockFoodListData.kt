@@ -19,7 +19,7 @@ class MockFoodListData @Inject constructor() {
 /**Mock Products**/
 var products = listOf(
     Product(0, "Product One", "Food description", "https://images.pexels.com/photos/704571/pexels-photo-704571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 1200),
-    Product(1, "Product Two", "", "https://images.pexels.com/photos/2097090/pexels-photo-2097090.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 1500),
+    Product(1, "Product Two", "", "https://media.baamboozle.com/uploads/images/221598/1608102785_81663", 1500),
     Product(2, "Product Three", "Another description", "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 2000),
     Product(3, "Another Product", "", "", 890),
     Product(4, "One More Product", "Long interesting description of a product", "https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", 3200)

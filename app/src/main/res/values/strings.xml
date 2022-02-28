@@ -38,6 +38,20 @@
     <string name="basket_button_template_amount">2 шт.</string>
     <string name="basket_button_template_sum" translatable="false">1 600 ₸</string>
 
+    // Orders
+    <string name="orders_header">Мои заказы</string>
+    <string name="orders_price_h" translatable="false">6 520 тг.</string>
+    <string name="orders_status_h">Статус - </string>
+    <string name="orders_status_pending">В обработке</string>
+    <string name="orders_status_in_kitchen">На кухне</string>
+    <string name="orders_status_ready">Готов</string>
+    <string name="orders_status_finished">Завершен</string>
+    <string name="orders_data_h" translatable="false">15.12.2021, 10:44</string>
+
+    <string name="orders_sign_in">Войдите в свой аккаунт</string>
+    <string name="orders_sign_in_req">Необходимо войти в свой аккаунт, чтобы увидеть историю заказов</string>
+    <string name="orders_sign_in_btn">Войти</string>
+
     //Bottom Nav Bar
     <string name="bottom_nav_main">Главная</string>
     <string name="bottom_nav_orders_history">Мои заказы</string>

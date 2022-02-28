@@ -59,6 +59,9 @@
             android:name="isAuthorized"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_mainFragment_to_ordersFragment"
+            app:destination="@id/ordersFragment" />
     </fragment>
 
     <fragment
@@ -78,12 +81,8 @@
         <action
             android:id="@+id/action_placeFragment_to_basketFragment"
             app:destination="@id/basketFragment" />
+
     </fragment>
-    <fragment
-        android:id="@+id/myOrdersFragment"
-        android:name="com.example.rusalfood.presentation.my_orders_fragment.MyOrdersFragment"
-        android:label="@string/bottom_nav_orders_history"
-        tools:layout="@layout/orders_history_fragment"/>
 
     <fragment
         android:id="@+id/basketFragment"
@@ -99,6 +98,16 @@
         <argument
             android:name="placeAddress"
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="com.example.rusalfood.presentation.my_orders_fragment.OrdersFragment"
+        android:label="@string/orders_header"
+        tools:layout="@layout/fragment_orders">
+        <action
+            android:id="@+id/action_ordersFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
 
 

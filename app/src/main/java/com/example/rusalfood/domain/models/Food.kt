@@ -8,7 +8,7 @@ sealed class Food {
         val foodPrice: Int,
         val foodDesc: String,
         val foodImage: String,
-        var foodAmount: Int
+        var foodAmount: Int = 0,
     ) : Food()
 
     data class FoodCategory(
