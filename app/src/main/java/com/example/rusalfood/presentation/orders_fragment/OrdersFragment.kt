@@ -1,6 +1,5 @@
-package com.example.rusalfood.presentation.my_orders_fragment
+package com.example.rusalfood.presentation.orders_fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 import com.example.rusalfood.databinding.FragmentOrdersBinding
-import com.example.rusalfood.databinding.FragmentPlaceBinding
-import com.example.rusalfood.di.appComponent
-import com.example.rusalfood.presentation.place_fragment.*
 
 class OrdersFragment : Fragment() {
 

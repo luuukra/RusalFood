@@ -4,16 +4,16 @@
     <item
         android:id="@+id/mainFragment"
         android:enabled="true"
-        android:icon="@android:drawable/ic_menu_directions"
+        android:icon="@drawable/ic_bottom_navbar_main"
         android:title="@string/bottom_nav_main"/>
     <item
         android:id="@+id/ordersFragment"
         android:enabled="true"
-        android:icon="@android:drawable/ic_menu_delete"
+        android:icon="@drawable/ic_bottom_navbar_orders"
         android:title="@string/bottom_nav_orders_history" />
     <item
         android:id="@+id/profile"
         android:enabled="true"
-        android:icon="@android:drawable/ic_menu_camera"
+        android:icon="@drawable/ic_bottom_navbar_choco"
         android:title="@string/bottom_nav_rakhmet" />
 </menu>
