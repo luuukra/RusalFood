@@ -112,7 +112,6 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel, private v
 
                     foodButtonPlus.setOnClickListener {
                         placeViewModel.amountIncrease(position)
-
                         bindingAdapter?.notifyItemChanged(position)
                     }
 

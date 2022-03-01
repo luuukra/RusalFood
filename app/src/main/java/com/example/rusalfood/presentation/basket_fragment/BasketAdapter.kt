@@ -38,8 +38,6 @@ class BasketAdapter(private val placeViewModel: PlaceViewModel, private val cont
                 .load(currBasketFood.foodImage)
                 .into(basketImage)
 
-            // TO FIX..
-
             basketButtonPlus.setOnClickListener {
                 placeViewModel.amountIncreaseInb(position)
                 notifyItemChanged(position)

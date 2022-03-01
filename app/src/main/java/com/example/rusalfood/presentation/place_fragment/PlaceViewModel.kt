@@ -50,6 +50,15 @@ class PlaceViewModel(
     // Basket Clicks & Food Amounts
     var countedFoodList = MutableLiveData<List<Food.FoodItem>>()
 
+    var totalAmount = MutableLiveData<Int>()
+
+    fun setTotalAmount() {
+
+
+    }
+
+
+
     fun setCountedList() {
         countedFoodList.value =
             _listOfFoodWithCategories.value!!.filterNot { it is Food.FoodCategory }

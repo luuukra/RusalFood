@@ -102,7 +102,7 @@
 
     <fragment
         android:id="@+id/ordersFragment"
-        android:name="com.example.rusalfood.presentation.my_orders_fragment.OrdersFragment"
+        android:name="com.example.rusalfood.presentation.orders_fragment.OrdersFragment"
         android:label="@string/orders_header"
         tools:layout="@layout/fragment_orders">
         <action

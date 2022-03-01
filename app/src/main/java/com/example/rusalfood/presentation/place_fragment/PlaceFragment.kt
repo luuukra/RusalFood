@@ -16,6 +16,13 @@ import com.ahmadhamwi.tabsync.TabbedListMediator
 import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
 
+import android.R
+import android.transition.Fade
+import android.transition.Transition
+import android.transition.TransitionManager
+import kotlinx.coroutines.NonDisposableHandle.parent
+
+
 class PlaceFragment : Fragment() {
 
     private var _binding: FragmentPlaceBinding? = null
@@ -106,14 +113,25 @@ class PlaceFragment : Fragment() {
         tabbedListMediator.updateMediatorWithNewIndices(newIndices)
     }
 
-
     private fun setupBasketButton() {
+
         placeViewModel.countedFoodList.observe(viewLifecycleOwner) {
+            val transition: Transition = Fade()
+            transition.duration = 300
+            transition.addTarget(binding.basketButtonTemplate.basketFullButton)
+            TransitionManager.beginDelayedTransition(binding.root, transition)
+
             if (it.isNullOrEmpty()) {
                 binding.basketButtonTemplate.basketFullButton.visibility = View.GONE
             } else {
                 binding.basketButtonTemplate.basketFullButton.visibility = View.VISIBLE
             }
+        }
+
+        placeViewModel.totalAmount.observe(viewLifecycleOwner) {
+
+            binding.basketButtonTemplate.amountInc.text = it.toString()
+
         }
 
         binding.basketButtonTemplate.apply {
