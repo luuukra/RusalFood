@@ -1,9 +1,5 @@
 package com.example.rusalfood.di
 
-import com.example.rusalfood.data.repositories.LoginRepositoryImpl
-import com.example.rusalfood.data.repositories.MainRepositoryImpl
-import com.example.rusalfood.domain.irepositories.LoginRepository
-import com.example.rusalfood.domain.irepositories.MainRepository
 import com.example.rusalfood.domain.usecases.*
 import dagger.Binds
 import dagger.Module
@@ -13,22 +9,18 @@ import javax.inject.Singleton
 interface UseCasesModule {
     @Singleton
     @Binds
-    fun bindDisplayAllPlacesUseCaseImplToDisplayAllPlacesUseCase(displayAllPlacesUseCaseImpl: DisplayAllPlacesUseCaseImpl) : DisplayAllPlacesUseCase
+    fun bindDisplayAllPlacesUseCaseImplToDisplayAllPlacesUseCase(getAllPlacesUseCaseImpl: GetAllPlacesUseCaseImpl): GetAllPlacesUseCase
 
     @Singleton
     @Binds
-    fun bindGetIntoPlaceUseCaseImplToGetIntoPlaceUseCase(getIntoPlaceUseCaseImpl: GetIntoPlaceUseCaseImpl) : GetIntoPlaceUseCase
+    fun bindSignInUseCaseImplToSignInUseCase(signInUseCaseImpl: SignInUseCaseImpl): SignInUseCase
 
     @Singleton
     @Binds
-    fun bindSignInUseCaseImplToSignInUseCase(signInUseCaseImpl: SignInUseCaseImpl) : SignInUseCase
+    fun bindSignUpUseCaseImplToSignUpUseCase(signUpUseCaseImpl: SignUpUseCaseImpl): SignUpUseCase
 
     @Singleton
     @Binds
-    fun bindSignUpUseCaseImplToSignUpUseCase(signUpUseCaseImpl: SignUpUseCaseImpl) : SignUpUseCase
-
-    @Singleton
-    @Binds
-    fun bindGetFoodListUseCaseImplToGetFoodListUseCase(etFoodListUseCaseImpl: GetFoodListUseCaseImpl) : GetFoodListUseCase
+    fun bindGetFoodListUseCaseImplToGetFoodListUseCase(etFoodListUseCaseImpl: GetFoodListUseCaseImpl): GetFoodListUseCase
 
 }

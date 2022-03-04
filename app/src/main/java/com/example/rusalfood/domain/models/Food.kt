@@ -2,7 +2,7 @@ package com.example.rusalfood.domain.models
 
 sealed class Food {
 
-   data class FoodItem(
+    data class FoodItem(
         val id: Int,
         val foodName: String,
         val foodPrice: Int,
@@ -13,5 +13,6 @@ sealed class Food {
 
     data class FoodCategory(
         val categoryName: String,
+        val catFoodAmount: Int
     ) : Food()
 }

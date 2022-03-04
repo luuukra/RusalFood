@@ -76,8 +76,8 @@
             android:name="placeName"
             app:argType="string" />
         <argument
-            android:name="placeId"
-            app:argType="integer" />
+            android:name="place"
+            app:argType="com.example.rusalfood.domain.models.Place" />
         <action
             android:id="@+id/action_placeFragment_to_basketFragment"
             app:destination="@id/basketFragment" />
