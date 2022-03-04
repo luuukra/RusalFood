@@ -9,7 +9,14 @@ import com.example.rusalfood.databinding.ItemViewpagerGalleryBinding
 class PlaceSliderAdapter(
 ) : RecyclerView.Adapter<PlaceSliderAdapter.ViewPagerViewHolder>() {
 
-    var vpImages : List<String> = emptyList()
+    fun setData(data: List<String>){
+        gallery.apply {
+            clear()
+            addAll(data)
+        }
+    }
+
+    private val gallery = mutableListOf<String>()
 
     inner class ViewPagerViewHolder(val binding: ItemViewpagerGalleryBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -20,7 +27,7 @@ class PlaceSliderAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int) {
-        val currentImage = vpImages[position]
+        val currentImage = gallery[position]
         holder.binding.apply {
             Glide.with(ivImage.context)
                 .load(currentImage)
@@ -30,6 +37,6 @@ class PlaceSliderAdapter(
     }
 
     override fun getItemCount(): Int {
-        return vpImages.size
+        return gallery.size
     }
 }

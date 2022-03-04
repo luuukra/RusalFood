@@ -34,7 +34,7 @@
         android:id="@+id/food_description"
         style="@style/font_normal"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:textSize="12sp"
         tools:ignore="MissingConstraints"
         tools:text="food description" />
@@ -99,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="@string/basket_sum_h_2"
+                android:text="@string/hints_sum_2"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"

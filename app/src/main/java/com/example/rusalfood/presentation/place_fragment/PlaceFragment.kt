@@ -15,8 +15,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmadhamwi.tabsync.TabbedListMediator
+import com.example.rusalfood.R
 import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
+import com.example.rusalfood.domain.models.Food
 
 
 class PlaceFragment : Fragment() {
@@ -46,12 +48,28 @@ class PlaceFragment : Fragment() {
         setupViewPager()
         setupFoodListRecyclerView()
         setupBasketButton()
+        setOnDestinationChangeListener()
+    }
+
+
+
+    private fun setOnDestinationChangeListener() {
+        findNavController().addOnDestinationChangedListener {_, destination, _->
+            if (destination.id == R.id.mainFragment) {
+                placeViewModel.listOfFoodWithCategories.value!!.filterNot { it is Food.FoodCategory }
+                    .map {
+                        it as Food.FoodItem
+                    }.forEach {
+                        it.foodAmount = 0
+                    }
+            }
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun launchObserving() {
         placeViewModel.currentPlace.observe(viewLifecycleOwner) {
-            placeViewPagerAdapter.vpImages = it.gallery // Картинки в слайдере
+            placeViewPagerAdapter.setData(it.gallery) // Картинки в слайдере
             binding.placeTextViewAddress.text = it.address // Адрес заведения
             placeViewPagerAdapter.notifyDataSetChanged()
         }
@@ -106,24 +124,28 @@ class PlaceFragment : Fragment() {
     }
 
     private fun setupBasketButton() {
-
         placeViewModel.countedFoodList.observe(viewLifecycleOwner) {
             val transition: Transition = Fade()
             transition.duration = 300
             transition.addTarget(binding.basketButtonTemplate.basketFullButton)
             TransitionManager.beginDelayedTransition(binding.root, transition)
 
-            if (it.isNullOrEmpty()) {
-                binding.basketButtonTemplate.basketFullButton.visibility = View.GONE
-            } else {
-                binding.basketButtonTemplate.basketFullButton.visibility = View.VISIBLE
+            binding.basketButtonTemplate.basketFullButton.apply {
+                visibility = if (it.isNullOrEmpty()) {
+                    View.GONE
+                } else {
+                    View.VISIBLE
+                }
             }
         }
 
-        placeViewModel.totalAmount.observe(viewLifecycleOwner) {
-
-            binding.basketButtonTemplate.amountInc.text = it.toString()
-
+        placeViewModel.apply {
+            totalAmount.observe(viewLifecycleOwner) {
+                binding.basketButtonTemplate.amountInc.text = it.toString()
+            }
+            totalSum.observe(viewLifecycleOwner) {
+                binding.basketButtonTemplate.sumInc.text = it.toString()
+            }
         }
 
         binding.basketButtonTemplate.apply {

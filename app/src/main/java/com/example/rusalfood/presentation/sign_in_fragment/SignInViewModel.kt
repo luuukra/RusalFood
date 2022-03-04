@@ -2,6 +2,7 @@ package com.example.rusalfood.presentation.sign_in_fragment
 
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,9 +15,9 @@ import java.util.regex.Pattern
 
 class SignInViewModel(private val signInUseCase: SignInUseCase) : ViewModel() {
     private val _response = MutableLiveData<String>()//data is request status response: ok, or error
-    val response: MutableLiveData<String> = _response
+    val response: LiveData<String> = _response
     private val _isLoginInputCorrect = MutableLiveData<Boolean>()
-    val isLoginInputCorrect: MutableLiveData<Boolean> = _isLoginInputCorrect
+    val isLoginInputCorrect: LiveData<Boolean> = _isLoginInputCorrect
 
     val loginAfterTextChangedListener = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -26,7 +27,7 @@ class SignInViewModel(private val signInUseCase: SignInUseCase) : ViewModel() {
         }
 
         override fun afterTextChanged(s: Editable) {
-            isLoginInputCorrect.value = checkEmailInput(s)
+            _isLoginInputCorrect.value = checkEmailInput(s)
         }
     }
 

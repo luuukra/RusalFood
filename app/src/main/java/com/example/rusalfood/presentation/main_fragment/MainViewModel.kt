@@ -1,5 +1,6 @@
 package com.example.rusalfood.presentation.main_fragment
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,18 +19,17 @@ class MainViewModel(
     }
 
     private val _placesList = MutableLiveData<Resource<List<Place>>>()
-    val placesList: MutableLiveData<Resource<List<Place>>> = _placesList
+    val placesList: LiveData<Resource<List<Place>>> = _placesList
 
     private val _isAuthorized = MutableLiveData<Boolean>()
     val isAuthorized = _isAuthorized
 
     private fun displayAllPlaces() = viewModelScope.launch(Dispatchers.IO) {
-        //delay(1000) // skeletons ;)
         val response = getAllPlacesUseCase.getAllPlaces()
         if (response.isSuccessful) {
-            placesList.postValue(Resource.Success(response.body()!!.map { it.mapToPlace() }))
+            _placesList.postValue(Resource.Success(response.body()!!.map { it.mapToPlace() }))
         } else {
-            placesList.postValue(Resource.Error(response.message()))
+            _placesList.postValue(Resource.Error(response.message()))
         }
     }
 }

@@ -19,9 +19,7 @@ import com.example.rusalfood.domain.models.Food
 class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel, private val context: Context) :
     RecyclerView.Adapter<PlaceFoodListAdapter.PlaceFoodListHolder>() {
 
-    var foodList = mutableListOf<Food>()
-    var foodCategories = MutableLiveData<List<Food.FoodCategory>>()
-
+    private val foodList = mutableListOf<Food>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceFoodListHolder {
         return when (viewType) {
@@ -68,6 +66,7 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel, private v
             addAll(newFoodList)
         }
     }
+
     /*fun setData(newFoodCategoryList: List<FoodCategory>){
         val diffUtils = FoodCatDiffUtils(foodCategoryList, newFoodCategoryList)
         val diffResult = DiffUtil.calculateDiff(diffUtils)
@@ -104,20 +103,20 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel, private v
                         .load(foodItem.foodImage)
                         .into(foodImage)
 
-                    placeViewModel.listOfFoodWithCategories.value!![position].apply {
+                    placeViewModel.listOfFoodWithCategories.value!![bindingAdapterPosition].apply {
                         if (this is Food.FoodItem) {
                             foodTextViewAmount.text = this.foodAmount.toString()
                         }
                     }
 
                     foodButtonPlus.setOnClickListener {
-                        placeViewModel.amountIncrease(position)
-                        bindingAdapter?.notifyItemChanged(position)
+                        placeViewModel.amountIncreaseInPlace(bindingAdapterPosition)
+                        bindingAdapter?.notifyItemChanged(bindingAdapterPosition)
                     }
 
                     foodButtonMinus.setOnClickListener {
-                        placeViewModel.amountDecrease(position)
-                        bindingAdapter?.notifyItemChanged(position)
+                        placeViewModel.amountDecreaseInPlace(bindingAdapterPosition)
+                        bindingAdapter?.notifyItemChanged(bindingAdapterPosition)
                     }
                 }
             }

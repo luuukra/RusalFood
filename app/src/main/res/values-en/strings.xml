@@ -14,38 +14,43 @@
     // Main
     <string name="main_header">Takeaway order</string>
 
-    // Place
-    <string name="place_counter_m" translatable="false">1/22</string>
-    <string name="place_name_h">Name</string>
-    <string name="place_address_h">Address</string>
-    <string name="place_category_h">Category</string>
-
     // Basket
     <string name="basket_basket">Basket</string>
     <string name="basket_header">My order</string>
-    <string name="basket_total_h">Total</string>
+    <string name="basket_total">Total</string>
     <string name="basket_pay_button">Pay</string>
-
-    <string name="basket_food_name_h">Product</string>
-    <string name="basket_food_desc_h">Products description</string>
-    <string name="basket_food_price_h">Price</string>
-
-    <string name="basket_button_template_amount">2 pc.</string>
 
     // Orders
     <string name="orders_header">My orders</string>
-    <string name="orders_status_h">Status - </string>
-    <string name="orders_status_pending">Pending</string>
-    <string name="orders_status_in_kitchen">In kitchen</string>
-    <string name="orders_status_ready">Ready</string>
-    <string name="orders_status_finished">Finished</string>
+    <string name="orders_status">Status - </string>
+    <string name="orders_date">Date</string>
+    <string name="orders_number">Orders number</string>
+
 
     <string name="orders_sign_in">Sign in to your account</string>
     <string name="orders_sign_in_req">Please, sign in to see your orders history</string>
     <string name="orders_sign_in_btn">Sign in</string>
 
+    // Order Details
+    <string name="order_details_header">Order details</string>
+    <string name="order_details_positions">Order contains</string>
+    <string name="order_details_status">Order status</string>
+
+
     //Bottom Nav Bar
     <string name="bottom_nav_main">Main</string>
     <string name="bottom_nav_orders_history">My orders</string>
     <string name="bottom_nav_rakhmet">Rakhmet</string>
+
+    // Hints
+    <string name="hints_name">Name</string>
+    <string name="hints_address">Address</string>
+    <string name="hints_category">Category</string>
+    <string name="hints_product">Product</string>
+    <string name="hints_description">Description</string>
+    <string name="hints_price">Price</string>
+    <string name="hints_price_count">2 pc.</string>
+    <string name="hints_status_done">Done</string>
+    <string name="hints_status_pending">Pending</string>
+    <string name="hints_range">1.8 km.</string>
 </resources>

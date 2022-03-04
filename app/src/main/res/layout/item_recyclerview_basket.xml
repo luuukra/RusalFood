@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:layout_height="100dp">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_start"
@@ -34,25 +34,23 @@
 
     <TextView
         android:id="@+id/basket_food_name"
-        style="@style/font_bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/rv_item_name_color"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:textSize="18sp"
         tools:text="Food Name" />
 
     <TextView
         android:id="@+id/basket_food_price"
-        style="@style/font_normal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/blue"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:textSize="18sp"
         tools:ignore="MissingConstraints"
         tools:text="price" />
 
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/rel"
         android:layout_width="100dp"
         android:layout_height="70dp"
@@ -96,10 +94,7 @@
                 android:layout_gravity="bottom|end"
                 android:background="@null"
                 android:src="@drawable/ic_button_increase"
-                android:layout_marginHorizontal="2dp"
-
-
-                >
+                android:layout_marginHorizontal="2dp">
             </ImageView>
 
             <ImageView
@@ -120,7 +115,7 @@
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:text="@string/basket_sum_h_2"
+                android:text="@string/hints_sum_2"
                 android:layout_gravity="bottom|center"
                 android:layout_marginVertical="5dp"
                 android:layout_marginStart="2dp"
@@ -128,7 +123,7 @@
             </TextView>
 
         </androidx.cardview.widget.CardView>
-    </RelativeLayout>
+    </FrameLayout>
 
     <View
         style="@style/divider"
