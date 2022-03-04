@@ -10,8 +10,11 @@ import com.bumptech.glide.Glide
 import com.example.rusalfood.databinding.ItemRecyclerviewPlaceBinding
 import com.example.rusalfood.domain.models.Place
 
-class MainAdapter(private val listener: OnItemClickListener) :
-    RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+class MainAdapter (private val listener: OnItemClickListener) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+
+    fun setData(data: List<Place>) {
+        diffUtilPlaces.submitList(data)
+    }
 
     //Adapter
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
@@ -37,16 +40,15 @@ class MainAdapter(private val listener: OnItemClickListener) :
 
 
     // View Holder + On Item Clicker
-    inner class MainViewHolder(val binding: ItemRecyclerviewPlaceBinding) :
-        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    inner class MainViewHolder(val binding : ItemRecyclerviewPlaceBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         init {
             itemView.setOnClickListener(this)
         }
-
-        override fun onClick(p0: View?) {
+        override fun onClick(view: View?) {
             val position: Int = bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 listener.onItemClick(
+                    position,
                     diffUtilPlaces.currentList[position].name,
                     diffUtilPlaces.currentList[position].id
                 )
@@ -55,7 +57,7 @@ class MainAdapter(private val listener: OnItemClickListener) :
     }
 
     interface OnItemClickListener {
-        fun onItemClick(placeName: String, placeId: Int)
+        fun onItemClick(position: Int, placeName: String, placeId: Int)
     }
 
 
@@ -71,5 +73,5 @@ class MainAdapter(private val listener: OnItemClickListener) :
         }
     }
 
-    val diffUtilPlaces = AsyncListDiffer(this, differCallback)
+    private val diffUtilPlaces = AsyncListDiffer(this, differCallback)
 }

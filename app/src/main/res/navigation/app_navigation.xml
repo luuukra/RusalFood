@@ -108,6 +108,24 @@
         <action
             android:id="@+id/action_ordersFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_ordersFragment_to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.example.rusalfood.presentation.order_details_fragment.OrderDetailsFragment"
+        android:label="OrderDetailsFragment" >
+        <action
+            android:id="@+id/action_orderDetailsFragment_to_ordersFragment"
+            app:destination="@id/ordersFragment" />
+        <argument
+            android:name="orderId"
+            app:argType="integer" />
+        <argument
+            android:name="orderAddress"
+            app:argType="string" />
     </fragment>
 
 

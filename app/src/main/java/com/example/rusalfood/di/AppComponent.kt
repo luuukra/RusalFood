@@ -2,6 +2,7 @@ package com.example.rusalfood.di
 
 import com.example.rusalfood.data.network.RetrofitService
 import com.example.rusalfood.presentation.main_fragment.MainViewModelFactory
+import com.example.rusalfood.presentation.orders_fragment.OrdersViewModelFactory
 import com.example.rusalfood.presentation.place_fragment.PlaceViewModelFactory
 import com.example.rusalfood.presentation.sign_in_fragment.SignInViewModelFactory
 import com.example.rusalfood.presentation.sign_up_fragment.SignUpViewModelFactory
@@ -19,6 +20,8 @@ interface AppComponent {
     fun mainViewModelFactory(): MainViewModelFactory
 
     fun placeViewModelFactory(): PlaceViewModelFactory
+
+    fun ordersViewModelFactory(): OrdersViewModelFactory
 
     fun retrofitService(): RetrofitService
 }

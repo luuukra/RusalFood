@@ -16,7 +16,7 @@ class PlaceViewModel(
 ) : ViewModel() {
 
     private val _currentPlace = MutableLiveData<Place>()
-    val currentPlace: MutableLiveData<Place> = _currentPlace
+    val currentPlace: LiveData<Place> = _currentPlace
 
     //full list of food by categories for restaurant menu
     private val _listOfFoodWithCategories = MutableLiveData<List<Food>>()
@@ -27,7 +27,7 @@ class PlaceViewModel(
     val listOfCategories: LiveData<List<Food.FoodCategory>> = _listOfCategories
 
     fun getIntoPlace(place: Place) = viewModelScope.launch(Dispatchers.IO) {
-        currentPlace.postValue(place)
+        _currentPlace.postValue(place)
     }
 
     @SuppressLint("NullSafeMutableLiveData")
@@ -45,61 +45,69 @@ class PlaceViewModel(
     }
 
     // Basket Clicks & Food Amounts
-    var countedFoodList = MutableLiveData<List<Food.FoodItem>>()
+    val countedFoodList = MutableLiveData<List<Food.FoodItem>>()
+    val totalAmount = MutableLiveData<Int>()
+    val totalSum = MutableLiveData<Int>()
 
-    var totalAmount = MutableLiveData<Int>()
-
-    fun setTotalAmount() {
-
-
+    private fun setAmountnSum() {
+        totalAmount.value = countedFoodList.value?.sumOf { it.foodAmount }
+        totalSum.value = countedFoodList.value?.sumOf { it.foodAmount * it.foodPrice }
     }
 
-
-    fun setCountedList() {
-        countedFoodList.value =
-            _listOfFoodWithCategories.value!!.filterNot { it is Food.FoodCategory }
+    private fun setCountedList() {
+        countedFoodList.let { list ->
+            list.value = _listOfFoodWithCategories.value!!.filterNot { food ->
+                food is Food.FoodCategory }
                 .map { it as Food.FoodItem }
                 .filter { it.foodAmount > 0 }
+        }
     }
 
-    fun amountIncrease(currentPosition: Int) {
+
+    fun amountIncreaseInPlace(currentPosition: Int) {
         _listOfFoodWithCategories.value!![currentPosition].apply {
             if (this is Food.FoodItem) {
                 this.foodAmount += 1
                 setCountedList()
+                setAmountnSum()
             }
         }
     }
 
-    fun amountIncreaseInb(currentPosition: Int) {
+    fun amountIncreaseInBasket(currentPosition: Int) {
         countedFoodList.value!![currentPosition].apply {
             this.foodAmount += 1
             setCountedList()
+            setAmountnSum()
         }
     }
 
-    fun amountDecrease(currentPosition: Int) {
+    fun amountDecreaseInPlace(currentPosition: Int) {
         _listOfFoodWithCategories.value!![currentPosition].apply {
             if (this is Food.FoodItem) {
                 if (this.foodAmount <= 0) {
                     this.foodAmount = 0
                     setCountedList()
+                    setAmountnSum()
                 } else {
                     this.foodAmount -= 1
                     setCountedList()
+                    setAmountnSum()
                 }
             }
         }
     }
 
-    fun amountDecreaseInb(currentPosition: Int) {
+    fun amountDecreaseInBasket(currentPosition: Int) {
         countedFoodList.value!![currentPosition].apply {
             if (this.foodAmount <= 0) {
                 this.foodAmount = 0
                 setCountedList()
+                setAmountnSum()
             } else {
                 this.foodAmount -= 1
                 setCountedList()
+                setAmountnSum()
             }
         }
     }

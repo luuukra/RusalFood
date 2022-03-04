@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/gilroy_bold"
         android:maxLength="14"
-        android:text="@string/place_name_h"
+        android:text="@string/hints_name"
         android:textColor="#C2C2C2"
         android:textSize="20sp"
         android:textStyle="bold"

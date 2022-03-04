@@ -5,14 +5,14 @@ import com.example.rusalfood.domain.irepositories.MainRepository
 import com.example.rusalfood.domain.models.Place
 import javax.inject.Inject
 
-//interface GetOrdersListUseCase {
-//    suspend fun execute(): List<MockOrder>
-//}
-//
-//class GetOrdersListUseCaseImpl @Inject constructor(private val mainRepository: MainRepository) :
-//    GetOrdersListUseCase {
-//
-//    override suspend fun execute(): List<MockOrder> {
-//        return mainRepository.getOrdersList()
-//    }
-//}
+interface GetOrdersListUseCase {
+    suspend operator fun invoke() : List<MockOrder>
+}
+
+class GetOrdersListUseCaseImpl @Inject constructor(private val mainRepository: MainRepository) :
+    GetOrdersListUseCase {
+
+    override suspend operator fun invoke() : List<MockOrder> {
+        return mainRepository.getOrdersList()
+    }
+}

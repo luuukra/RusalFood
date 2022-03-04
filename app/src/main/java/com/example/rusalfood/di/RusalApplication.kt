@@ -25,3 +25,6 @@ val Context.appComponent: AppComponent
         is RusalApplication -> appComponent
         else -> this.applicationContext.appComponent
     }
+
+
+
