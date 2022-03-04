@@ -1,4 +1,4 @@
-package com.example.rusalfood.data.models
+package com.example.rusalfood.data.models.foodList
 
 import com.example.rusalfood.domain.models.Food
 
@@ -17,5 +17,4 @@ data class Product(
         foodImage = image,
         foodAmount = 0
     )
-
 }

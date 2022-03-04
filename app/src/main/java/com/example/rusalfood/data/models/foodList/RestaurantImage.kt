@@ -1,4 +1,4 @@
-package com.example.rusalfood.data.models
+package com.example.rusalfood.data.models.foodList
 
 data class RestaurantImage(
     val image_id: Int,

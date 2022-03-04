@@ -1,8 +1,9 @@
 package com.example.rusalfood.domain.usecases
 
-import com.example.rusalfood.data.models.ProductCategory
+import com.example.rusalfood.data.models.foodList.ApiFoodListModel
 import com.example.rusalfood.domain.irepositories.MainRepository
 import com.example.rusalfood.domain.models.Food
+import retrofit2.Response
 import javax.inject.Inject
 
 interface GetFoodListUseCase {
@@ -15,12 +16,12 @@ class GetFoodListUseCaseImpl @Inject constructor(private val mainRepository: Mai
         return responseListToFoodAndFoodCatList(mainRepository.getPlaceFoodList(placeId))
     }
 
-    private fun responseListToFoodAndFoodCatList(responseList: List<ProductCategory>): Pair<List<Food>, List<Food.FoodCategory>> {
+    private fun responseListToFoodAndFoodCatList(responseList: Response<ApiFoodListModel>): Pair<List<Food>, List<Food.FoodCategory>> {
         return Pair(toFoodItemsAndCategoriesList(responseList), toCategoriesList(responseList))
     }
 
-    private fun toFoodItemsAndCategoriesList(responseList: List<ProductCategory>): List<Food> {
-        return responseList.map {
+    private fun toFoodItemsAndCategoriesList(responseList: Response<ApiFoodListModel>): List<Food> {
+        return responseList.body()!!.data.product_categories.map {
             val tempFoodItemList = mutableListOf<Food.FoodItem>()
             it.products.forEach { product ->
                 tempFoodItemList.add(
@@ -29,10 +30,11 @@ class GetFoodListUseCaseImpl @Inject constructor(private val mainRepository: Mai
             }
             listOf(it.mapToFoodCategory()) + tempFoodItemList
         }.flatten()
+
     }
 
-    private fun toCategoriesList(responseList: List<ProductCategory>): List<Food.FoodCategory> {
-        return responseList.map {
+    private fun toCategoriesList(responseList: Response<ApiFoodListModel>): List<Food.FoodCategory> {
+        return responseList.body()!!.data.product_categories.map {
             it.mapToFoodCategory()
         }
     }

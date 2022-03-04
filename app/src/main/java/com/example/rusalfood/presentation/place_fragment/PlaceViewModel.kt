@@ -8,12 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.rusalfood.domain.models.Food
 import com.example.rusalfood.domain.models.Place
 import com.example.rusalfood.domain.usecases.GetFoodListUseCase
-import com.example.rusalfood.domain.usecases.GetIntoPlaceUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PlaceViewModel(
-    private val getIntoPlaceUseCase: GetIntoPlaceUseCase,
     private val getFoodListUseCase: GetFoodListUseCase
 ) : ViewModel() {
 
@@ -28,8 +26,7 @@ class PlaceViewModel(
     private val _listOfCategories = MutableLiveData<List<Food.FoodCategory>>()
     val listOfCategories: LiveData<List<Food.FoodCategory>> = _listOfCategories
 
-    fun getIntoPlace(placeId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        val place = getIntoPlaceUseCase.execute(placeId)
+    fun getIntoPlace(place: Place) = viewModelScope.launch(Dispatchers.IO) {
         currentPlace.postValue(place)
     }
 
@@ -58,7 +55,6 @@ class PlaceViewModel(
     }
 
 
-
     fun setCountedList() {
         countedFoodList.value =
             _listOfFoodWithCategories.value!!.filterNot { it is Food.FoodCategory }
@@ -77,8 +73,8 @@ class PlaceViewModel(
 
     fun amountIncreaseInb(currentPosition: Int) {
         countedFoodList.value!![currentPosition].apply {
-                this.foodAmount += 1
-                setCountedList()
+            this.foodAmount += 1
+            setCountedList()
         }
     }
 
@@ -98,13 +94,13 @@ class PlaceViewModel(
 
     fun amountDecreaseInb(currentPosition: Int) {
         countedFoodList.value!![currentPosition].apply {
-                if (this.foodAmount <= 0) {
-                    this.foodAmount = 0
-                    setCountedList()
-                } else {
-                    this.foodAmount -= 1
-                    setCountedList()
-                }
+            if (this.foodAmount <= 0) {
+                this.foodAmount = 0
+                setCountedList()
+            } else {
+                this.foodAmount -= 1
+                setCountedList()
+            }
         }
     }
 
