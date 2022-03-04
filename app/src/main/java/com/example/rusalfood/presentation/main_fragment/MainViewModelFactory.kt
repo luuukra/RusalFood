@@ -2,16 +2,14 @@ package com.example.rusalfood.presentation.main_fragment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.rusalfood.data.network.MockData
-import com.example.rusalfood.data.repositories.MainRepositoryImpl
-import com.example.rusalfood.domain.usecases.DisplayAllPlacesUseCase
+import com.example.rusalfood.domain.usecases.GetAllPlacesUseCase
 import javax.inject.Inject
 
 class MainViewModelFactory @Inject constructor(
-    val displayAllPlacesUseCase: DisplayAllPlacesUseCase
+    val getAllPlacesUseCase: GetAllPlacesUseCase
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MainViewModel(displayAllPlacesUseCase) as T
+        return MainViewModel(getAllPlacesUseCase) as T
     }
 }

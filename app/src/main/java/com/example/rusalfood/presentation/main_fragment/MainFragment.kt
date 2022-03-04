@@ -13,7 +13,7 @@ import com.example.rusalfood.databinding.FragmentMainBinding
 import com.example.rusalfood.di.appComponent
 import com.example.rusalfood.domain.models.Resource
 
-class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
+class MainFragment : Fragment(), MainAdapter.OnItemClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -21,7 +21,11 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
 
     private val mainViewModel: MainViewModel by viewModels { requireContext().appComponent.mainViewModelFactory() }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -45,13 +49,18 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
 
     private fun setupObserving() {
         mainViewModel.apply {
-            listPlaces.observe(viewLifecycleOwner) { status ->
+            placesList.observe(viewLifecycleOwner) { status ->
                 when (status) {
                     //is Resource.Loading -> { binding.shimmerLayout.startShimmer() }  //fixme FLOW
-                    is Resource.Success -> { status.data?.let {
-                        mainAdapter.diffUtilPlaces.submitList(it)
-                        showRecyclerView()
-                    }}
+                    is Resource.Success -> {
+                        status.data?.let {
+                            mainAdapter.diffUtilPlaces.submitList(it)
+                            showRecyclerView()
+                        }
+                    }
+                    /*is Resource.Error -> {
+                        Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
+                    }*/
                 }
             }
         }
@@ -72,9 +81,12 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
         binding.mainRecyclerView.adapter = mainAdapter
     }
 
-    override fun onItemClick(position: Int, placeName: String, placeId: Int) {
+    override fun onItemClick(placeName: String, placeId: Int) {
         findNavController().navigate(
-            MainFragmentDirections.actionMainFragmentToPlaceFragment(placeName, placeId)
+            MainFragmentDirections.actionMainFragmentToPlaceFragment(
+                placeName,
+                mainViewModel.placesList.value!!.data!![placeId]
+            )
         )
     }
 }

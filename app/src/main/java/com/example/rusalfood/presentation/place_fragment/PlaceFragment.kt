@@ -1,8 +1,10 @@
 package com.example.rusalfood.presentation.place_fragment
 
 import android.annotation.SuppressLint
-import android.opengl.Visibility
 import android.os.Bundle
+import android.transition.Fade
+import android.transition.Transition
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,12 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ahmadhamwi.tabsync.TabbedListMediator
 import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
-
-import android.R
-import android.transition.Fade
-import android.transition.Transition
-import android.transition.TransitionManager
-import kotlinx.coroutines.NonDisposableHandle.parent
 
 
 class PlaceFragment : Fragment() {
@@ -50,10 +46,6 @@ class PlaceFragment : Fragment() {
         setupViewPager()
         setupFoodListRecyclerView()
         setupBasketButton()
-
-
-
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -71,10 +63,10 @@ class PlaceFragment : Fragment() {
     }
 
     private fun setupCurrentPlace() {
-        val placeId = args.placeId
-        placeViewModel.getIntoPlace(placeId)
+        val place = args.place
+        placeViewModel.getIntoPlace(place)
         if (placeViewModel.listOfFoodWithCategories.value.isNullOrEmpty()) {
-            placeViewModel.getFoodListById(placeId)
+            placeViewModel.getFoodListById(place.id)
         }
     }
 

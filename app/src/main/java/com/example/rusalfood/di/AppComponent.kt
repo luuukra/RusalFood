@@ -1,5 +1,6 @@
 package com.example.rusalfood.di
 
+import com.example.rusalfood.data.network.RetrofitService
 import com.example.rusalfood.presentation.main_fragment.MainViewModelFactory
 import com.example.rusalfood.presentation.place_fragment.PlaceViewModelFactory
 import com.example.rusalfood.presentation.sign_in_fragment.SignInViewModelFactory
@@ -8,7 +9,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ViewModelFactoriesModule::class, UseCasesModule::class])
+@Component(modules = [VMModule::class, UseCasesModule::class, RetrofitModule::class])
 interface AppComponent {
 
     fun signInViewModelFactory(): SignInViewModelFactory
@@ -19,4 +20,5 @@ interface AppComponent {
 
     fun placeViewModelFactory(): PlaceViewModelFactory
 
+    fun retrofitService(): RetrofitService
 }
