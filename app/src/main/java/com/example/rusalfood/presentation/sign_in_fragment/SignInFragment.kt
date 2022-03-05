@@ -32,7 +32,6 @@ class SignInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = SignInFragmentBinding.inflate(inflater, container, false)
-        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
         return binding.root
     }
 

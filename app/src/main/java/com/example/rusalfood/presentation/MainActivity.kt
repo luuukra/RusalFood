@@ -2,7 +2,6 @@ package com.example.rusalfood.presentation
 
 import android.os.Bundle
 import android.view.View
-import android.view.animation.Animation
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -37,8 +36,10 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.signInFragment || destination.id == R.id.signUpLoginFragment || destination.id == R.id.signUpPasswordFragment) {
                 binding.bottomNav.visibility = View.GONE
+                supportActionBar?.hide()
             } else {
                 binding.bottomNav.visibility = View.VISIBLE
+                supportActionBar?.show()
             }
         }
     }

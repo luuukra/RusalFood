@@ -29,7 +29,6 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as AppCompatActivity).supportActionBar?.show()
         setupRecyclerView()
         setAuthorizationFlag()
         setupObserving()
