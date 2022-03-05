@@ -3,12 +3,13 @@ package com.example.rusalfood.presentation.sign_in_fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -37,16 +38,26 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupTextChangedListeners()
-        setupClickListeners()
-        setupObserving()
+        initTextChangedListeners()
+        initClickListeners()
+        initObserving()
     }
 
-    private fun setupTextChangedListeners() {
-        binding.signInLoginField.addTextChangedListener(signInViewModel.loginAfterTextChangedListener)
+    private fun initTextChangedListeners() {
+        binding.signInLoginField.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                signInViewModel.checkEmailInput(s)
+            }
+        })
     }
 
-    private fun setupClickListeners() {
+    private fun initClickListeners() {
         binding.signInButton.setOnClickListener {
             binding.loginProgressBar.visibility = ProgressBar.VISIBLE
             signInViewModel.signIn(
@@ -65,7 +76,7 @@ class SignInFragment : Fragment() {
     }
 
     @SuppressLint("NewApi")
-    private fun setupObserving() {
+    private fun initObserving() {
         signInViewModel.isLoginInputCorrect.observe(viewLifecycleOwner) {
             binding.signInButton.isEnabled = it
         }
