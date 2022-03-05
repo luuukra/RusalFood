@@ -3,9 +3,12 @@ package com.example.rusalfood.di
 import com.example.rusalfood.data.network.RetrofitService
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.SSLSession
 
 @Module
 class RetrofitModule {
@@ -21,12 +24,23 @@ class RetrofitModule {
     @Singleton
     @Provides
     fun getRetrofitInstance(): Retrofit {
+        //verifier всегда возвращает true
+        //чтобы приложение не падало из-за ошибки
+        //"javax.net.ssl.SSLPeerUnverifiedException: Hostname 142.93.107.238 not verified:"
+        val builder = OkHttpClient.Builder()
+            .hostnameVerifier(object : HostnameVerifier {
+                override fun verify(p0: String?, p1: SSLSession?): Boolean {
+                    return true
+                }
+            })
+        val client: OkHttpClient = builder.build()
+
         return Retrofit.Builder()
             .baseUrl(baseURL)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
             .build()
     }
-
 
 
 }
