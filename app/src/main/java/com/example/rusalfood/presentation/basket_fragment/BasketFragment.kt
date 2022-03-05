@@ -30,10 +30,10 @@ class BasketFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
-        setupNameAndAddress()
-        launchObserving()
-        setTotalCounter()
+        initRecyclerView()
+        initNameAndAddress()
+        initObserving()
+        initTotalCounter()
     }
 
     override fun onDestroyView() {
@@ -42,31 +42,31 @@ class BasketFragment: Fragment() {
     }
 
 
-    private fun setTotalCounter() {
+    private fun initTotalCounter() {
         placeViewModel.totalSum.observe(viewLifecycleOwner) {
             binding.textViewSum.text = it.toString()
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun launchObserving() {
+    private fun initObserving() {
         placeViewModel.countedFoodList.observe(viewLifecycleOwner) {
             basketAdapter.setData(it)
             basketAdapter.notifyDataSetChanged()
         }
     }
 
-    private fun setupRecyclerView() {
+    private fun initRecyclerView() {
         basketAdapter = BasketAdapter(placeViewModel)
         val layoutManagers = LinearLayoutManager(requireContext())
-        binding.basketRecyclerView.run {
+        binding.basketRecyclerView.apply {
             layoutManager = layoutManagers
             adapter = basketAdapter
         }
     }
 
-    private fun setupNameAndAddress() {
-        binding.run {
+    private fun initNameAndAddress() {
+        binding.apply {
             basketPlaceName.text = args.placeName
             basketPlaceAddress.text = args.placeAddress
         }

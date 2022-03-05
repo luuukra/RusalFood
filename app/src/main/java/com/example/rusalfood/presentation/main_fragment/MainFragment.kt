@@ -29,9 +29,9 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
-        setAuthorizationFlag()
-        setupObserving()
+        initRecyclerView()
+        initAuthorizationFlag()
+        initObserving()
     }
 
     override fun onDestroyView() {
@@ -39,11 +39,11 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
         _binding = null
     }
 
-    private fun setAuthorizationFlag() {
+    private fun initAuthorizationFlag() {
         mainViewModel.isAuthorized.value = requireArguments().getBoolean("isAuthorized")
     }
 
-    private fun setupObserving() {
+    private fun initObserving() {
         mainViewModel.run {
             placesList.observe(viewLifecycleOwner) { status ->
                 when (status) {
@@ -64,7 +64,7 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
         binding.mainRecyclerView.visibility = View.VISIBLE
     }
 
-    private fun setupRecyclerView() {
+    private fun initRecyclerView() {
         mainAdapter = MainAdapter(this)
         val layoutManager = LinearLayoutManager(requireContext())
         binding.mainRecyclerView.layoutManager = layoutManager
