@@ -25,7 +25,7 @@ class MainAdapter (private val listener: OnItemClickListener) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         var currPlace = diffUtilPlaces.currentList[position]
-        holder.binding.apply {
+        holder.binding.run {
             tvName.text = currPlace.name
             tvAddress.text = currPlace.address
             Glide.with(ivPhoto.context)

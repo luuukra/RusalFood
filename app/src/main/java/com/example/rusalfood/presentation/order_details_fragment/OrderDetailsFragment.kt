@@ -31,8 +31,8 @@ class OrderDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupCurrentDetails()
-        setupObserve()
+        initCurrentDetails()
+        initObserve()
     }
 
     override fun onDestroyView() {
@@ -40,9 +40,9 @@ class OrderDetailsFragment : Fragment() {
         _binding = null
     }
 
-    private fun setupObserve() {
+    private fun initObserve() {
         ordersViewModel.currentOrder.observe(viewLifecycleOwner) {
-            binding.apply {
+            binding.run {
                 detailsPlace.text = it.restaurantName
                 detailsAddress.text = args.orderAddress
                 detailsStatus.text = it.orderStatus
@@ -52,7 +52,7 @@ class OrderDetailsFragment : Fragment() {
         }
     }
 
-    private fun setupCurrentDetails() {
+    private fun initCurrentDetails() {
         val order = args.orderId
         ordersViewModel.getOrderById(order)
     }

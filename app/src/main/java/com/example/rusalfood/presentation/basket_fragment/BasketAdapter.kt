@@ -14,7 +14,7 @@ import com.example.rusalfood.presentation.place_fragment.PlaceViewModel
 class BasketAdapter(private val placeViewModel: PlaceViewModel) : RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
 
     fun setData(data: List<Food.FoodItem>) {
-        basketList.apply {
+        basketList.run {
             clear()
             addAll(data)
         }
@@ -35,10 +35,7 @@ class BasketAdapter(private val placeViewModel: PlaceViewModel) : RecyclerView.A
             basketFoodName.text = currBasketFood.foodName
             basketFoodPrice.text = currBasketFood.foodPrice.toString()
 
-
-
             basketTextViewAmount.text = placeViewModel.countedFoodList.value?.get(position)?.foodAmount.toString()
-
 
             Glide.with(basketImage.context)
                 .load(currBasketFood.foodImage)

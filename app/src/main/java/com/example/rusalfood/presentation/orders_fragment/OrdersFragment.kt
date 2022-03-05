@@ -23,8 +23,8 @@ class OrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentOrdersBinding.inflate(inflater, container, false)
-        setupRecyclerView()
-        setupObserving()
+        initRecyclerView()
+        initObserving()
         return binding.root
     }
 
@@ -33,13 +33,13 @@ class OrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener {
 
     }
 
-    private fun setupObserving() {
+    private fun initObserving() {
         ordersViewModel.listOrders.observe(viewLifecycleOwner) {
             ordersAdapter.setData(it)
         }
     }
 
-    private fun setupRecyclerView() {
+    private fun initRecyclerView() {
         ordersAdapter = OrdersAdapter(this)
         val layoutManager = LinearLayoutManager(requireContext())
         binding.ordersRecyclerView.layoutManager = layoutManager

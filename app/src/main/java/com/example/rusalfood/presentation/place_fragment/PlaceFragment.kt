@@ -8,14 +8,15 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.ahmadhamwi.tabsync.TabbedListMediator
-import com.example.rusalfood.R
 import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
 import com.example.rusalfood.domain.models.Food
@@ -37,39 +38,33 @@ class PlaceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPlaceBinding.inflate(inflater, container, false)
+
+
+
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupCurrentPlace()
-        launchObserving()
+        initCurrentPlace()
+        initObserving()
         initTabLayout()
-        setupViewPager()
-        setupFoodListRecyclerView()
-        setupBasketButton()
-        setOnDestinationChangeListener()
+        initViewPager()
+        initFoodListRecyclerView()
+        initBasketButton()
     }
 
 
 
-    private fun setOnDestinationChangeListener() {
-        findNavController().addOnDestinationChangedListener {_, destination, _->
-            if (destination.id == R.id.mainFragment) {
-                placeViewModel.listOfFoodWithCategories.value!!.filterNot { it is Food.FoodCategory }
-                    .map {
-                        it as Food.FoodItem
-                    }.forEach {
-                        it.foodAmount = 0
-                    }
-            }
-        }
-    }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun launchObserving() {
+
+    @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
+    private fun initObserving() {
         placeViewModel.currentPlace.observe(viewLifecycleOwner) {
             placeViewPagerAdapter.setData(it.gallery) // Картинки в слайдере
+            binding.viewPagerCounter.text =
+                "${(binding.placeViewPager.currentItem + 1).toString()}/${(it.gallery.size + 1).toString()}"
             binding.placeTextViewAddress.text = it.address // Адрес заведения
             placeViewPagerAdapter.notifyDataSetChanged()
         }
@@ -80,7 +75,7 @@ class PlaceFragment : Fragment() {
         }
     }
 
-    private fun setupCurrentPlace() {
+    private fun initCurrentPlace() {
         val place = args.place
         placeViewModel.getIntoPlace(place)
         if (placeViewModel.listOfFoodWithCategories.value.isNullOrEmpty()) {
@@ -88,12 +83,24 @@ class PlaceFragment : Fragment() {
         }
     }
 
-    private fun setupViewPager() {
+    private fun initViewPager() {
         placeViewPagerAdapter = PlaceSliderAdapter()
+
+
         binding.placeViewPager.adapter = placeViewPagerAdapter
+
+        binding.viewPagerCounter.text = placeViewPagerAdapter.itemCount.toString()
+        binding.placeViewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+            @SuppressLint("SetTextI18n")
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                binding.viewPagerCounter.text =
+                    "${(binding.placeViewPager.currentItem + 1).toString()}/${(placeViewPagerAdapter.itemCount + 1).toString()}"
+            }
+        })
     }
 
-    private fun setupFoodListRecyclerView() {
+    private fun initFoodListRecyclerView() {
         placeFoodListAdapter = PlaceFoodListAdapter(placeViewModel, requireContext())
         val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.foodItemsRv.layoutManager = layoutManager
@@ -123,7 +130,7 @@ class PlaceFragment : Fragment() {
         tabbedListMediator.updateMediatorWithNewIndices(newIndices)
     }
 
-    private fun setupBasketButton() {
+    private fun initBasketButton() {
         placeViewModel.countedFoodList.observe(viewLifecycleOwner) {
             val transition: Transition = Fade()
             transition.duration = 300
@@ -139,7 +146,7 @@ class PlaceFragment : Fragment() {
             }
         }
 
-        placeViewModel.apply {
+        placeViewModel.run {
             totalAmount.observe(viewLifecycleOwner) {
                 binding.basketButtonTemplate.amountInc.text = it.toString()
             }
@@ -148,7 +155,7 @@ class PlaceFragment : Fragment() {
             }
         }
 
-        binding.basketButtonTemplate.apply {
+        binding.basketButtonTemplate.run {
             basketButtonInc.setOnClickListener {
                 val placeName = placeViewModel.currentPlace.value?.name
                 val placeAddress = placeViewModel.currentPlace.value?.address
