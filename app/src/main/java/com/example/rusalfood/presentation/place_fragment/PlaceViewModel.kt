@@ -65,7 +65,7 @@ class PlaceViewModel(
 
 
     fun amountIncreaseInPlace(currentPosition: Int) {
-        _listOfFoodWithCategories.value!![currentPosition].apply {
+        _listOfFoodWithCategories.value!![currentPosition].run {
             if (this is Food.FoodItem) {
                 this.foodAmount += 1
                 setCountedList()
@@ -75,7 +75,7 @@ class PlaceViewModel(
     }
 
     fun amountIncreaseInBasket(currentPosition: Int) {
-        countedFoodList.value!![currentPosition].apply {
+        countedFoodList.value!![currentPosition].run {
             this.foodAmount += 1
             setCountedList()
             setAmountnSum()
@@ -83,7 +83,7 @@ class PlaceViewModel(
     }
 
     fun amountDecreaseInPlace(currentPosition: Int) {
-        _listOfFoodWithCategories.value!![currentPosition].apply {
+        _listOfFoodWithCategories.value!![currentPosition].run {
             if (this is Food.FoodItem) {
                 if (this.foodAmount <= 0) {
                     this.foodAmount = 0
@@ -99,7 +99,7 @@ class PlaceViewModel(
     }
 
     fun amountDecreaseInBasket(currentPosition: Int) {
-        countedFoodList.value!![currentPosition].apply {
+        countedFoodList.value!![currentPosition].run {
             if (this.foodAmount <= 0) {
                 this.foodAmount = 0
                 setCountedList()
@@ -110,6 +110,15 @@ class PlaceViewModel(
                 setAmountnSum()
             }
         }
+    }
+
+    fun resetAmounts(){
+        listOfFoodWithCategories.value!!.filterNot { it is Food.FoodCategory }
+            .map {
+                it as Food.FoodItem
+            }.forEach {
+                it.foodAmount = 0
+            }
     }
 
 }

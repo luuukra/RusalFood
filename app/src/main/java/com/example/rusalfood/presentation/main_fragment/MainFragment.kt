@@ -45,7 +45,7 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
     }
 
     private fun setupObserving() {
-        mainViewModel.apply {
+        mainViewModel.run {
             placesList.observe(viewLifecycleOwner) { status ->
                 when (status) {
                     is Resource.Success -> { status.data?.let {
@@ -58,7 +58,7 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
     }
 
     private fun showRecyclerView() {
-        binding.shimmerLayout.apply {
+        binding.shimmerLayout.run {
             stopShimmer()
             visibility = View.INVISIBLE
         }

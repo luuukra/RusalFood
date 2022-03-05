@@ -42,7 +42,7 @@ class OrderDetailsFragment : Fragment() {
 
     private fun setupObserve() {
         ordersViewModel.currentOrder.observe(viewLifecycleOwner) {
-            binding.apply {
+            binding.run {
                 detailsPlace.text = it.restaurantName
                 detailsAddress.text = args.orderAddress
                 detailsStatus.text = it.orderStatus

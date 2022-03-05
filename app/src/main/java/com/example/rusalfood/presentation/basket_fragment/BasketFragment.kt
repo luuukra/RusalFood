@@ -60,14 +60,14 @@ class BasketFragment: Fragment() {
     private fun setupRecyclerView() {
         basketAdapter = BasketAdapter(placeViewModel)
         val layoutManagers = LinearLayoutManager(requireContext())
-        binding.basketRecyclerView.apply {
+        binding.basketRecyclerView.run {
             layoutManager = layoutManagers
             adapter = basketAdapter
         }
     }
 
     private fun setupNameAndAddress() {
-        binding.apply {
+        binding.run {
             basketPlaceName.text = args.placeName
             basketPlaceAddress.text = args.placeAddress
         }

@@ -61,7 +61,7 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel, private v
     }
 
     fun setData(newFoodList: List<Food>){
-        foodList.apply {
+        foodList.run {
             clear()
             addAll(newFoodList)
         }
@@ -80,7 +80,7 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel, private v
         class PlaceFoodCategoriesHolder(private val binding: ItemRecyclerviewFoodItemCategoryBinding) :
             PlaceFoodListHolder(binding) {
             fun bind(foodCategory: Food.FoodCategory) {
-                binding.apply {
+                binding.run {
                     categoryNameTv.text = foodCategory.categoryName
                 }
             }
@@ -93,7 +93,7 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel, private v
             ) :
             PlaceFoodListHolder(binding) {
             fun bind(foodItem: Food.FoodItem) {
-                binding.apply {
+                binding.run {
                     foodName.text = foodItem.foodName
                     if (foodItem.foodDesc.isNullOrEmpty()) foodDescription.visibility = View.GONE
                     else foodDescription.text = foodItem.foodDesc
@@ -103,7 +103,7 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel, private v
                         .load(foodItem.foodImage)
                         .into(foodImage)
 
-                    placeViewModel.listOfFoodWithCategories.value!![bindingAdapterPosition].apply {
+                    placeViewModel.listOfFoodWithCategories.value!![bindingAdapterPosition].run {
                         if (this is Food.FoodItem) {
                             foodTextViewAmount.text = this.foodAmount.toString()
                         }

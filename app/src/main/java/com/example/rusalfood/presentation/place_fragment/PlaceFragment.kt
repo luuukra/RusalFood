@@ -51,21 +51,6 @@ class PlaceFragment : Fragment() {
         setOnDestinationChangeListener()
     }
 
-
-
-    private fun setOnDestinationChangeListener() {
-        findNavController().addOnDestinationChangedListener {_, destination, _->
-            if (destination.id == R.id.mainFragment) {
-                placeViewModel.listOfFoodWithCategories.value!!.filterNot { it is Food.FoodCategory }
-                    .map {
-                        it as Food.FoodItem
-                    }.forEach {
-                        it.foodAmount = 0
-                    }
-            }
-        }
-    }
-
     @SuppressLint("NotifyDataSetChanged")
     private fun launchObserving() {
         placeViewModel.currentPlace.observe(viewLifecycleOwner) {
@@ -130,7 +115,7 @@ class PlaceFragment : Fragment() {
             transition.addTarget(binding.basketButtonTemplate.basketFullButton)
             TransitionManager.beginDelayedTransition(binding.root, transition)
 
-            binding.basketButtonTemplate.basketFullButton.apply {
+            binding.basketButtonTemplate.basketFullButton.run {
                 visibility = if (it.isNullOrEmpty()) {
                     View.GONE
                 } else {
@@ -139,7 +124,7 @@ class PlaceFragment : Fragment() {
             }
         }
 
-        placeViewModel.apply {
+        placeViewModel.run {
             totalAmount.observe(viewLifecycleOwner) {
                 binding.basketButtonTemplate.amountInc.text = it.toString()
             }
@@ -148,7 +133,7 @@ class PlaceFragment : Fragment() {
             }
         }
 
-        binding.basketButtonTemplate.apply {
+        binding.basketButtonTemplate.run {
             basketButtonInc.setOnClickListener {
                 val placeName = placeViewModel.currentPlace.value?.name
                 val placeAddress = placeViewModel.currentPlace.value?.address
@@ -158,6 +143,14 @@ class PlaceFragment : Fragment() {
                         placeAddress.toString()
                     )
                 )
+            }
+        }
+    }
+
+    private fun setOnDestinationChangeListener() {
+        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.mainFragment) {
+                placeViewModel.resetAmounts()
             }
         }
     }

@@ -25,7 +25,7 @@ class OrdersAdapter (private val listener: OnItemClickListener) : RecyclerView.A
 
     override fun onBindViewHolder(holder: OrdersViewHolder, position: Int) {
         var currOrder = diffUtilOrders.currentList[position]
-        holder.binding.apply {
+        holder.binding.run {
             ordersPlaceName.text = currOrder.restaurantName
             ordersPrice.text = currOrder.totalPrice.toString()
             ordersStatus.text = currOrder.orderStatus
