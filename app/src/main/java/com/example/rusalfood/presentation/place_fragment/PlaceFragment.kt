@@ -8,7 +8,6 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -17,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.ahmadhamwi.tabsync.TabbedListMediator
+import com.example.rusalfood.R
 import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
 import com.example.rusalfood.domain.models.Food
@@ -38,10 +38,6 @@ class PlaceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPlaceBinding.inflate(inflater, container, false)
-
-
-
-
         return binding.root
     }
 
@@ -52,12 +48,14 @@ class PlaceFragment : Fragment() {
         initTabLayout()
         initViewPager()
         initFoodListRecyclerView()
+        initOnDestinationChangeListener()
         initBasketButton()
     }
 
-
-
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     private fun initObserving() {
@@ -86,11 +84,11 @@ class PlaceFragment : Fragment() {
     private fun initViewPager() {
         placeViewPagerAdapter = PlaceSliderAdapter()
 
-
         binding.placeViewPager.adapter = placeViewPagerAdapter
 
         binding.viewPagerCounter.text = placeViewPagerAdapter.itemCount.toString()
-        binding.placeViewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+        binding.placeViewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             @SuppressLint("SetTextI18n")
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
@@ -169,9 +167,12 @@ class PlaceFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun initOnDestinationChangeListener() {
+        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.mainFragment) {
+                placeViewModel.resetAmounts()
+            }
+        }
     }
 }
 

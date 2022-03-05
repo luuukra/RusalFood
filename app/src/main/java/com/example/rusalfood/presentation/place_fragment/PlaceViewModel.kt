@@ -32,7 +32,7 @@ class PlaceViewModel(
 
     @SuppressLint("NullSafeMutableLiveData")
     fun getFoodListById(placeId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        var foodAndFoodCatList = getFoodListUseCase.getFoodAndCategoriesList(placeId)
+        var foodAndFoodCatList = getFoodListUseCase(placeId)
         _listOfFoodWithCategories.postValue(foodAndFoodCatList.first)
         _listOfCategories.postValue(foodAndFoodCatList.second)
     }
@@ -62,7 +62,6 @@ class PlaceViewModel(
                 .filter { it.foodAmount > 0 }
         }
     }
-
 
     fun amountIncreaseInPlace(currentPosition: Int) {
         _listOfFoodWithCategories.value!![currentPosition].run {

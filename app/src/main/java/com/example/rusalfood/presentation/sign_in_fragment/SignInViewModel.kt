@@ -14,7 +14,7 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 class SignInViewModel(private val signInUseCase: SignInUseCase) : ViewModel() {
-    private val _response = MutableLiveData<String>()//data is request status response: ok, or error
+    private val _response: MutableLiveData<String> = MutableLiveData()//data is request status response: ok, or error
     val response: LiveData<String> = _response
     private val _isLoginInputCorrect = MutableLiveData<Boolean>()
     val isLoginInputCorrect: LiveData<Boolean> = _isLoginInputCorrect
@@ -42,7 +42,6 @@ class SignInViewModel(private val signInUseCase: SignInUseCase) : ViewModel() {
 
     fun signIn(login: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
         delay(2000)//todo delete after api implementation
-        _response.postValue(signInUseCase.signIn(login, password))
+        _response.postValue(signInUseCase(login, password))
     }
-
 }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,7 +12,7 @@ import com.example.rusalfood.databinding.FragmentMainBinding
 import com.example.rusalfood.di.appComponent
 import com.example.rusalfood.domain.models.Resource
 
-class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
+class MainFragment : Fragment(), MainAdapter.OnItemClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -21,7 +20,11 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
 
     private val mainViewModel: MainViewModel by viewModels { requireContext().appComponent.mainViewModelFactory() }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -47,10 +50,12 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
         mainViewModel.run {
             placesList.observe(viewLifecycleOwner) { status ->
                 when (status) {
-                    is Resource.Success -> { status.data?.let {
-                        mainAdapter.setData(it)
-                        showRecyclerView()
-                    }}
+                    is Resource.Success -> {
+                        status.data?.let {
+                            mainAdapter.setData(it)
+                            showRecyclerView()
+                        }
+                    }
                 }
             }
         }
@@ -79,4 +84,5 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
             )
         )
     }
+
 }

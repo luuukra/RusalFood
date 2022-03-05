@@ -4,7 +4,7 @@ import com.example.rusalfood.domain.irepositories.LoginRepository
 import javax.inject.Inject
 
 interface SignInUseCase {
-    suspend fun signIn(login: String, password: String): String
+    suspend operator fun invoke(login: String, password: String): String
 }
 
 class SignInUseCaseImpl @Inject constructor(private val loginRepository: LoginRepository) :
@@ -13,11 +13,12 @@ class SignInUseCaseImpl @Inject constructor(private val loginRepository: LoginRe
     companion object {
         const val AUTH_OK = "Authentication successful"
         const val AUTH_ERROR = "Authentication error: incorrect email or login"
+        const val ERROR_CODE = "0"
     }
 
-    override suspend fun signIn(login: String, password: String): String {
-        val token: String? = loginRepository.getAuthToken(login, password)
-        return if (!token.isNullOrEmpty()) {
+    override suspend operator fun invoke(login: String, password: String): String {
+        val token = loginRepository.getAuthToken(login, password)
+        return if (token != ERROR_CODE) {
             //token to encryptedSharedPref
             AUTH_OK
         } else {

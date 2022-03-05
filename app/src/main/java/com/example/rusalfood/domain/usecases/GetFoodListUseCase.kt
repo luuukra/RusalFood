@@ -7,12 +7,12 @@ import retrofit2.Response
 import javax.inject.Inject
 
 interface GetFoodListUseCase {
-    suspend fun getFoodAndCategoriesList(placeId: Int): Pair<List<Food>, List<Food.FoodCategory>>
+    suspend operator fun invoke(placeId: Int): Pair<List<Food>, List<Food.FoodCategory>>
 }
 
 class GetFoodListUseCaseImpl @Inject constructor(private val mainRepository: MainRepository) :
     GetFoodListUseCase {
-    override suspend fun getFoodAndCategoriesList(placeId: Int): Pair<List<Food>, List<Food.FoodCategory>> {
+    override suspend operator fun invoke(placeId: Int): Pair<List<Food>, List<Food.FoodCategory>> {
         return responseListToFoodAndFoodCatList(mainRepository.getPlaceFoodList(placeId))
     }
 

@@ -6,13 +6,13 @@ import retrofit2.Response
 import javax.inject.Inject
 
 interface GetAllPlacesUseCase {
-    suspend fun getAllPlaces(): Response<List<ApiRestaurantModel>>
+    suspend operator fun invoke(): Response<List<ApiRestaurantModel>>
 }
 
 class GetAllPlacesUseCaseImpl @Inject constructor(private val mainRepository: MainRepository) :
     GetAllPlacesUseCase {
 
-    override suspend fun getAllPlaces(): Response<List<ApiRestaurantModel>> {
+    override suspend operator fun invoke(): Response<List<ApiRestaurantModel>> {
         return mainRepository.getAllPlaces()
     }
 }
