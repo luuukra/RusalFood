@@ -21,7 +21,7 @@ class GetFoodListUseCaseImpl @Inject constructor(private val mainRepository: Mai
     }
 
     private fun toFoodItemsAndCategoriesList(responseList: Response<ApiFoodListModel>): List<Food> {
-        return responseList.body()!!.data.product_categories.map {
+        return responseList.body()!!.data.productCategories.map {
             val tempFoodItemList = mutableListOf<Food.FoodItem>()
             it.products.forEach { product ->
                 tempFoodItemList.add(
@@ -34,7 +34,7 @@ class GetFoodListUseCaseImpl @Inject constructor(private val mainRepository: Mai
     }
 
     private fun toCategoriesList(responseList: Response<ApiFoodListModel>): List<Food.FoodCategory> {
-        return responseList.body()!!.data.product_categories.map {
+        return responseList.body()!!.data.productCategories.map {
             it.mapToFoodCategory()
         }
     }

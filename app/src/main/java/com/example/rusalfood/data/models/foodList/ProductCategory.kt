@@ -1,14 +1,18 @@
 package com.example.rusalfood.data.models.foodList
 
 import com.example.rusalfood.domain.models.Food
+import com.google.gson.annotations.SerializedName
 
 data class ProductCategory(
-    val product_category_id: Int,
-    val product_category_name: String,
+    @SerializedName("product_category_id")
+    val productCategoryId: Int,
+    @SerializedName("product_category_name")
+    val productCategoryName: String,
+    @SerializedName("products")
     val products: List<Product>
 ) {
     fun mapToFoodCategory() = Food.FoodCategory(
-        categoryName = product_category_name,
+        categoryName = productCategoryName,
         catFoodAmount = products.size
     )
 }

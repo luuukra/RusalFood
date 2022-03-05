@@ -100,24 +100,24 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sign_in_button"
-        style="@style/basic_mtrl_btn_style"
+        style="@style/basic_btn_style"
         android:layout_width="0dp"
         android:enabled="false"
         android:text="@string/sign_in_btn_txt" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sign_up_button"
-        style="@style/basic_mtrl_btn_style"
+        style="@style/basic_btn_style"
         android:layout_width="0dp"
         android:text="@string/sign_up_btn_txt"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/continue_guest_button"
-        style="@style/basic_mtrl_btn_style"
+        style="@style/basic_btn_style"
         android:layout_width="0dp"
         android:text="@string/continue_as_a_guest_btn_txt"
-        app:backgroundTint="@color/mtrl_btn_blue_bg_color_selector"
+        app:backgroundTint="@color/btn_blue_bg_color_selector"
         tools:ignore="MissingConstraints" />
 
 
