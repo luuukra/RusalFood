@@ -32,7 +32,7 @@ class PlaceViewModel(
 
     @SuppressLint("NullSafeMutableLiveData")
     fun getFoodListById(placeId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        var foodAndFoodCatList = getFoodListUseCase(placeId)
+        val foodAndFoodCatList = getFoodListUseCase(placeId)
         _listOfFoodWithCategories.postValue(foodAndFoodCatList.first)
         _listOfCategories.postValue(foodAndFoodCatList.second)
     }
@@ -62,7 +62,8 @@ class PlaceViewModel(
     private fun setCountedList() {
         _countedFoodList.let { list ->
             list.value = _listOfFoodWithCategories.value!!.filterNot { food ->
-                food is Food.FoodCategory }
+                food is Food.FoodCategory
+            }
                 .map { it as Food.FoodItem }
                 .filter { it.foodAmount > 0 }
         }
@@ -116,13 +117,17 @@ class PlaceViewModel(
         }
     }
 
-    fun resetAmounts(){
+    fun resetAmounts() {
         _listOfFoodWithCategories.value!!.filterNot { it is Food.FoodCategory }
             .map {
                 it as Food.FoodItem
             }.forEach {
                 it.foodAmount = 0
             }
+    }
+
+    fun resetListOfFoodWithCategories() {
+        _listOfFoodWithCategories.value = emptyList()
     }
 
 }

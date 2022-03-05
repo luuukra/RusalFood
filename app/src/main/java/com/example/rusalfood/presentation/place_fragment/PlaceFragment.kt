@@ -1,6 +1,5 @@
 package com.example.rusalfood.presentation.place_fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.transition.Fade
 import android.transition.Transition
@@ -19,7 +18,6 @@ import com.ahmadhamwi.tabsync.TabbedListMediator
 import com.example.rusalfood.R
 import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
-import com.example.rusalfood.domain.models.Food
 
 
 class PlaceFragment : Fragment() {
@@ -89,12 +87,15 @@ class PlaceFragment : Fragment() {
             ViewPager2.OnPageChangeCallback() {
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
-                setImageCounterText(binding.placeViewPager.currentItem + 1, placeViewPagerAdapter.itemCount)
+                setImageCounterText(
+                    binding.placeViewPager.currentItem + 1,
+                    placeViewPagerAdapter.itemCount
+                )
             }
         })
     }
 
-    private fun setImageCounterText(currentItem: Int, itemCount: Int ) {
+    private fun setImageCounterText(currentItem: Int, itemCount: Int) {
         binding.viewPagerCounter.text =
             resources.getString(
                 R.string.images_counter,
@@ -176,6 +177,7 @@ class PlaceFragment : Fragment() {
         findNavController().addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.mainFragment) {
                 placeViewModel.resetAmounts()
+                placeViewModel.resetListOfFoodWithCategories()
             }
         }
     }
