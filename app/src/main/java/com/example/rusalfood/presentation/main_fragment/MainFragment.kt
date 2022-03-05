@@ -24,7 +24,7 @@ class MainFragment : Fragment(), MainAdapter.OnItemClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
 
         return binding.root

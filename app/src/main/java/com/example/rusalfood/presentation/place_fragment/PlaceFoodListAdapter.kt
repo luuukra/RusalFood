@@ -35,8 +35,7 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel, private v
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                ), placeViewModel = placeViewModel,
-                context = context
+                ), placeViewModel = placeViewModel
             )
             else -> throw IllegalArgumentException("Invalid type")
         }
@@ -88,8 +87,7 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel, private v
 
         class PlaceFoodItemsHolder(
             private val binding: ItemRecyclerviewFoodItemBinding,
-            private val placeViewModel: PlaceViewModel,
-            private val context: Context
+            private val placeViewModel: PlaceViewModel
             ) :
             PlaceFoodListHolder(binding) {
             fun bind(foodItem: Food.FoodItem) {
@@ -123,7 +121,6 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel, private v
         }
 
     }
-
 
     interface OnItemClickListener {
         fun onItemClick(textView: TextView)
