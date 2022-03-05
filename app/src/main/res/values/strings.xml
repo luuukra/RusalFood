@@ -17,6 +17,9 @@
     // Main
     <string name="main_header">Заказ с собой</string>
 
+    //Place Fragment
+    <string name="images_counter" translatable="false">%1$d/%2$d</string>
+
     // Basket
     <string name="basket_basket">Корзина</string>
     <string name="basket_header">Мой заказ</string>

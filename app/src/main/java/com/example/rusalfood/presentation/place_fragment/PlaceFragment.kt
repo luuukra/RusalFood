@@ -57,12 +57,18 @@ class PlaceFragment : Fragment() {
         _binding = null
     }
 
-    @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
+    private fun initCurrentPlace() {
+        val place = args.place
+        placeViewModel.getIntoPlace(place)
+        if (placeViewModel.listOfFoodWithCategories.value.isNullOrEmpty()) {
+            placeViewModel.getFoodListById(place.id)
+        }
+    }
+
     private fun initObserving() {
         placeViewModel.currentPlace.observe(viewLifecycleOwner) {
             placeViewPagerAdapter.setData(it.gallery) // Картинки в слайдере
-            binding.viewPagerCounter.text =
-                "${(binding.placeViewPager.currentItem + 1).toString()}/${(it.gallery.size + 1).toString()}"
+            setImageCounterText(binding.placeViewPager.currentItem + 1, it.gallery.size)
             binding.placeTextViewAddress.text = it.address // Адрес заведения
             placeViewPagerAdapter.notifyDataSetChanged()
         }
@@ -70,14 +76,6 @@ class PlaceFragment : Fragment() {
         placeViewModel.listOfFoodWithCategories.observe(viewLifecycleOwner) {
             placeFoodListAdapter.setData(it)// Меню ресторана с категориями
             placeFoodListAdapter.notifyDataSetChanged()
-        }
-    }
-
-    private fun initCurrentPlace() {
-        val place = args.place
-        placeViewModel.getIntoPlace(place)
-        if (placeViewModel.listOfFoodWithCategories.value.isNullOrEmpty()) {
-            placeViewModel.getFoodListById(place.id)
         }
     }
 
@@ -89,13 +87,20 @@ class PlaceFragment : Fragment() {
         binding.viewPagerCounter.text = placeViewPagerAdapter.itemCount.toString()
         binding.placeViewPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
-            @SuppressLint("SetTextI18n")
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
-                binding.viewPagerCounter.text =
-                    "${(binding.placeViewPager.currentItem + 1).toString()}/${(placeViewPagerAdapter.itemCount + 1).toString()}"
+                setImageCounterText(binding.placeViewPager.currentItem + 1, placeViewPagerAdapter.itemCount)
             }
         })
+    }
+
+    private fun setImageCounterText(currentItem: Int, itemCount: Int ) {
+        binding.viewPagerCounter.text =
+            resources.getString(
+                R.string.images_counter,
+                currentItem,
+                itemCount
+            )
     }
 
     private fun initFoodListRecyclerView() {
