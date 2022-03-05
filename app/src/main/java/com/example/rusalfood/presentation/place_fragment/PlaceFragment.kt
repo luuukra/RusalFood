@@ -1,6 +1,5 @@
 package com.example.rusalfood.presentation.place_fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.transition.Fade
 import android.transition.Transition
@@ -8,7 +7,6 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -17,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.ahmadhamwi.tabsync.TabbedListMediator
+import com.example.rusalfood.R
 import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
-import com.example.rusalfood.domain.models.Food
 
 
 class PlaceFragment : Fragment() {
@@ -38,10 +36,6 @@ class PlaceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPlaceBinding.inflate(inflater, container, false)
-
-
-
-
         return binding.root
     }
 
@@ -52,27 +46,13 @@ class PlaceFragment : Fragment() {
         initTabLayout()
         initViewPager()
         initFoodListRecyclerView()
+        initOnDestinationChangeListener()
         initBasketButton()
     }
 
-
-
-
-
-    @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
-    private fun initObserving() {
-        placeViewModel.currentPlace.observe(viewLifecycleOwner) {
-            placeViewPagerAdapter.setData(it.gallery) // Картинки в слайдере
-            binding.viewPagerCounter.text =
-                "${(binding.placeViewPager.currentItem + 1).toString()}/${(it.gallery.size + 1).toString()}"
-            binding.placeTextViewAddress.text = it.address // Адрес заведения
-            placeViewPagerAdapter.notifyDataSetChanged()
-        }
-
-        placeViewModel.listOfFoodWithCategories.observe(viewLifecycleOwner) {
-            placeFoodListAdapter.setData(it)// Меню ресторана с категориями
-            placeFoodListAdapter.notifyDataSetChanged()
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun initCurrentPlace() {
@@ -83,21 +63,45 @@ class PlaceFragment : Fragment() {
         }
     }
 
+    private fun initObserving() {
+        placeViewModel.currentPlace.observe(viewLifecycleOwner) {
+            placeViewPagerAdapter.setData(it.gallery) // Картинки в слайдере
+            setImageCounterText(binding.placeViewPager.currentItem + 1, it.gallery.size)
+            binding.placeTextViewAddress.text = it.address // Адрес заведения
+            placeViewPagerAdapter.notifyDataSetChanged()
+        }
+
+        placeViewModel.listOfFoodWithCategories.observe(viewLifecycleOwner) {
+            placeFoodListAdapter.setData(it)// Меню ресторана с категориями
+            placeFoodListAdapter.notifyDataSetChanged()
+        }
+    }
+
     private fun initViewPager() {
         placeViewPagerAdapter = PlaceSliderAdapter()
-
 
         binding.placeViewPager.adapter = placeViewPagerAdapter
 
         binding.viewPagerCounter.text = placeViewPagerAdapter.itemCount.toString()
-        binding.placeViewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
-            @SuppressLint("SetTextI18n")
+        binding.placeViewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
-                binding.viewPagerCounter.text =
-                    "${(binding.placeViewPager.currentItem + 1).toString()}/${(placeViewPagerAdapter.itemCount + 1).toString()}"
+                setImageCounterText(
+                    binding.placeViewPager.currentItem + 1,
+                    placeViewPagerAdapter.itemCount
+                )
             }
         })
+    }
+
+    private fun setImageCounterText(currentItem: Int, itemCount: Int) {
+        binding.viewPagerCounter.text =
+            resources.getString(
+                R.string.images_counter,
+                currentItem,
+                itemCount
+            )
     }
 
     private fun initFoodListRecyclerView() {
@@ -169,9 +173,13 @@ class PlaceFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun initOnDestinationChangeListener() {
+        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.mainFragment) {
+                placeViewModel.resetAmounts()
+                placeViewModel.resetListOfFoodWithCategories()
+            }
+        }
     }
 }
 

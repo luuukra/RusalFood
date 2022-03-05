@@ -25,7 +25,7 @@ class MainViewModel(
     val isAuthorized = _isAuthorized
 
     private fun displayAllPlaces() = viewModelScope.launch(Dispatchers.IO) {
-        val response = getAllPlacesUseCase.getAllPlaces()
+        val response = getAllPlacesUseCase()
         if (response.isSuccessful) {
             _placesList.postValue(Resource.Success(response.body()!!.map { it.mapToPlace() }))
         } else {

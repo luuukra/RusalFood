@@ -2,6 +2,8 @@ package com.example.rusalfood.presentation.sign_up_fragment
 
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,23 +36,33 @@ class SignUpLoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupTextChangedListeners()
-        setupClickListeners()
-        setupObserving()
+        initTextChangedListeners()
+        initClickListeners()
+        initObserving()
     }
 
-    private fun setupTextChangedListeners() {
-        binding.signUpLoginField.addTextChangedListener(signUpViewModel.loginAfterTextChangedListener)
+    private fun initTextChangedListeners() {
+        binding.signUpLoginField.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                signUpViewModel.checkEmailInput(s)
+            }
+        })
     }
 
-    private fun setupClickListeners() {
+    private fun initClickListeners() {
         binding.nextButton.setOnClickListener {
             binding.loginProgressBar.visibility = ProgressBar.VISIBLE
             signUpViewModel.checkIfEmailAvailable(binding.signUpLoginField.text.toString())
         }
     }
 
-    private fun setupObserving() {
+    private fun initObserving() {
         signUpViewModel.isEmailInputCorrect.observe(viewLifecycleOwner) {
             binding.nextButton.isEnabled = it
         }

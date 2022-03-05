@@ -28,7 +28,7 @@ class PlaceSliderAdapter(
 
     override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int) {
         val currentImage = gallery[position]
-        holder.binding.apply {
+        holder.binding.run {
             Glide.with(ivImage.context)
                 .load(currentImage)
                 .centerCrop()

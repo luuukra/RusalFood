@@ -9,14 +9,14 @@
         <item name="android:fontFamily">@font/gilroy_bold</item>
     </style>
 
-    <style name="basic_mtrl_btn_style">
+    <style name="basic_btn_style">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/mtrl_btn_height</item>
+        <item name="android:layout_height">@dimen/btn_height</item>
         <item name="android:fontFamily">@font/gilroy_bold</item>
-        <item name="android:textSize">@dimen/btns_text_size</item>
+        <item name="android:textSize">@dimen/text_size</item>
         <item name="cornerRadius">@dimen/basic_btn_radius</item>
         <item name="android:textAllCaps">false</item>
-        <item name="backgroundTint">@color/mtrl_btn_blue_bg_color_selector</item>
+        <item name="backgroundTint">@color/btn_blue_bg_color_selector</item>
 
     </style>
 

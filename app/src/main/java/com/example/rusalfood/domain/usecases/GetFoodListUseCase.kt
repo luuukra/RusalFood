@@ -7,12 +7,12 @@ import retrofit2.Response
 import javax.inject.Inject
 
 interface GetFoodListUseCase {
-    suspend fun getFoodAndCategoriesList(placeId: Int): Pair<List<Food>, List<Food.FoodCategory>>
+    suspend operator fun invoke(placeId: Int): Pair<List<Food>, List<Food.FoodCategory>>
 }
 
 class GetFoodListUseCaseImpl @Inject constructor(private val mainRepository: MainRepository) :
     GetFoodListUseCase {
-    override suspend fun getFoodAndCategoriesList(placeId: Int): Pair<List<Food>, List<Food.FoodCategory>> {
+    override suspend operator fun invoke(placeId: Int): Pair<List<Food>, List<Food.FoodCategory>> {
         return responseListToFoodAndFoodCatList(mainRepository.getPlaceFoodList(placeId))
     }
 
@@ -21,7 +21,7 @@ class GetFoodListUseCaseImpl @Inject constructor(private val mainRepository: Mai
     }
 
     private fun toFoodItemsAndCategoriesList(responseList: Response<ApiFoodListModel>): List<Food> {
-        return responseList.body()!!.data.product_categories.map {
+        return responseList.body()!!.data.productCategories.map {
             val tempFoodItemList = mutableListOf<Food.FoodItem>()
             it.products.forEach { product ->
                 tempFoodItemList.add(
@@ -34,7 +34,7 @@ class GetFoodListUseCaseImpl @Inject constructor(private val mainRepository: Mai
     }
 
     private fun toCategoriesList(responseList: Response<ApiFoodListModel>): List<Food.FoodCategory> {
-        return responseList.body()!!.data.product_categories.map {
+        return responseList.body()!!.data.productCategories.map {
             it.mapToFoodCategory()
         }
     }

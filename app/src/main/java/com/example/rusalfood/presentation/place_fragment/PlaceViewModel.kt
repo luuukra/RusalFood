@@ -32,7 +32,7 @@ class PlaceViewModel(
 
     @SuppressLint("NullSafeMutableLiveData")
     fun getFoodListById(placeId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        var foodAndFoodCatList = getFoodListUseCase.getFoodAndCategoriesList(placeId)
+        val foodAndFoodCatList = getFoodListUseCase(placeId)
         _listOfFoodWithCategories.postValue(foodAndFoodCatList.first)
         _listOfCategories.postValue(foodAndFoodCatList.second)
     }
@@ -45,71 +45,89 @@ class PlaceViewModel(
     }
 
     // Basket Clicks & Food Amounts
-    val countedFoodList = MutableLiveData<List<Food.FoodItem>>()
-    val totalAmount = MutableLiveData<Int>()
-    val totalSum = MutableLiveData<Int>()
+    private val _countedFoodList = MutableLiveData<List<Food.FoodItem>>()
+    val countedFoodList: LiveData<List<Food.FoodItem>> = _countedFoodList
 
-    private fun setAmountnSum() {
-        totalAmount.value = countedFoodList.value?.sumOf { it.foodAmount }
-        totalSum.value = countedFoodList.value?.sumOf { it.foodAmount * it.foodPrice }
+    private val _totalAmount = MutableLiveData<Int>()
+    val totalAmount: LiveData<Int> = _totalAmount
+
+    private val _totalSum = MutableLiveData<Int>()
+    val totalSum: LiveData<Int> = _totalSum
+
+    private fun setAmountSum() {
+        _totalAmount.value = _countedFoodList.value?.sumOf { it.foodAmount }
+        _totalSum.value = _countedFoodList.value?.sumOf { it.foodAmount * it.foodPrice }
     }
 
     private fun setCountedList() {
-        countedFoodList.let { list ->
+        _countedFoodList.let { list ->
             list.value = _listOfFoodWithCategories.value!!.filterNot { food ->
-                food is Food.FoodCategory }
+                food is Food.FoodCategory
+            }
                 .map { it as Food.FoodItem }
                 .filter { it.foodAmount > 0 }
         }
     }
 
-
     fun amountIncreaseInPlace(currentPosition: Int) {
-        _listOfFoodWithCategories.value!![currentPosition].apply {
+        _listOfFoodWithCategories.value!![currentPosition].run {
             if (this is Food.FoodItem) {
                 this.foodAmount += 1
                 setCountedList()
-                setAmountnSum()
+                setAmountSum()
             }
         }
     }
 
     fun amountIncreaseInBasket(currentPosition: Int) {
-        countedFoodList.value!![currentPosition].apply {
+        _countedFoodList.value!![currentPosition].run {
             this.foodAmount += 1
             setCountedList()
-            setAmountnSum()
+            setAmountSum()
         }
     }
 
     fun amountDecreaseInPlace(currentPosition: Int) {
-        _listOfFoodWithCategories.value!![currentPosition].apply {
+        _listOfFoodWithCategories.value!![currentPosition].run {
             if (this is Food.FoodItem) {
                 if (this.foodAmount <= 0) {
                     this.foodAmount = 0
                     setCountedList()
-                    setAmountnSum()
+                    setAmountSum()
                 } else {
                     this.foodAmount -= 1
                     setCountedList()
-                    setAmountnSum()
+                    setAmountSum()
                 }
             }
         }
     }
 
     fun amountDecreaseInBasket(currentPosition: Int) {
-        countedFoodList.value!![currentPosition].apply {
+        _countedFoodList.value!![currentPosition].run {
             if (this.foodAmount <= 0) {
                 this.foodAmount = 0
                 setCountedList()
-                setAmountnSum()
+                setAmountSum()
             } else {
                 this.foodAmount -= 1
                 setCountedList()
-                setAmountnSum()
+                setAmountSum()
             }
         }
+    }
+
+    fun resetAmounts() {
+        _listOfFoodWithCategories.value!!.filterNot { it is Food.FoodCategory }
+            .map {
+                it as Food.FoodItem
+            }.forEach {
+                it.foodAmount = 0
+            }
+    }
+
+    fun resetListOfFoodWithCategories() {
+        _listOfFoodWithCategories.value = emptyList()
     }
 
 }

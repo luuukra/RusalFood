@@ -1,9 +1,16 @@
 package com.example.rusalfood.data.models.foodList
 
+import com.google.gson.annotations.SerializedName
+
 data class Data(
-    val restaurant_id: Int,
-    val restaurant_name: String,
+    @SerializedName("restaurant_id")
+    val restaurantId: Int,
+    @SerializedName("restaurant_name")
+    val restaurantName: String,
+    @SerializedName("location")
     val location: String,
-    val product_categories: List<ProductCategory>,
-    val restaurant_images: List<RestaurantImage>
+    @SerializedName("product_categories")
+    val productCategories: List<ProductCategory>,
+    @SerializedName("restaurant_images")
+    val restaurantImages: List<RestaurantImage>
 )

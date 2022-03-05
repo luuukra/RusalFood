@@ -14,35 +14,22 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 class SignInViewModel(private val signInUseCase: SignInUseCase) : ViewModel() {
-    private val _response = MutableLiveData<String>()//data is request status response: ok, or error
+    private val _response: MutableLiveData<String> = MutableLiveData()//data is request status response: ok, or error
     val response: LiveData<String> = _response
     private val _isLoginInputCorrect = MutableLiveData<Boolean>()
     val isLoginInputCorrect: LiveData<Boolean> = _isLoginInputCorrect
 
-    val loginAfterTextChangedListener = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        }
-
-        override fun afterTextChanged(s: Editable) {
-            _isLoginInputCorrect.value = checkEmailInput(s)
-        }
-    }
-
-    private fun checkEmailInput(email: Editable): Boolean {
+    fun checkEmailInput(email: Editable) {
         val pattern: Pattern = Pattern.compile(
             "^([a-z0-9_.-]+)@([a-z0-9_.-]+)\\.([a-z]{2,10})$",
             Pattern.CASE_INSENSITIVE
         )
         val matcher: Matcher = pattern.matcher(email)
-        return matcher.matches()
+        _isLoginInputCorrect.value = matcher.matches()
     }
 
     fun signIn(login: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
         delay(2000)//todo delete after api implementation
-        _response.postValue(signInUseCase.signIn(login, password))
+        _response.postValue(signInUseCase(login, password))
     }
-
 }

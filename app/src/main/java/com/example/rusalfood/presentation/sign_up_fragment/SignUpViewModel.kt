@@ -1,7 +1,6 @@
 package com.example.rusalfood.presentation.sign_up_fragment
 
 import android.text.Editable
-import android.text.TextWatcher
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,7 +14,8 @@ import java.util.regex.Pattern
 
 class SignUpViewModel(private val signUpUseCase: SignUpUseCase) : ViewModel() {
 
-    private val _emailCheckResponse = MutableLiveData<Boolean>()//data is request status response: ok, or error
+    private val _emailCheckResponse =
+        MutableLiveData<Boolean>()//data is request status response: ok, or error
     val emailCheckResponse: LiveData<Boolean> = _emailCheckResponse
     private val _signUpResponse = MutableLiveData<String>()
     val signUpResponse: LiveData<String> = _signUpResponse
@@ -24,31 +24,7 @@ class SignUpViewModel(private val signUpUseCase: SignUpUseCase) : ViewModel() {
     private val _isPasswordInputCorrect = MutableLiveData<Boolean>()
     val isPasswordInputCorrect: LiveData<Boolean> = _isPasswordInputCorrect
 
-    val loginAfterTextChangedListener = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        }
-
-        override fun afterTextChanged(s: Editable) {
-            checkEmailInput(s)
-        }
-    }
-
-    val passwordAfterTextChangedListener = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        }
-
-        override fun afterTextChanged(s: Editable) {
-            checkPasswordInput(s)
-        }
-    }
-
-    private fun checkEmailInput(email: Editable) {
+    fun checkEmailInput(email: Editable) {
         val pattern: Pattern = Pattern.compile(
             "^([a-z0-9_.-]+)@([a-z0-9_.-]+)\\.([a-z]{2,10})$",
             Pattern.CASE_INSENSITIVE
@@ -57,7 +33,7 @@ class SignUpViewModel(private val signUpUseCase: SignUpUseCase) : ViewModel() {
         _isEmailInputCorrect.value = matcher.matches()
     }
 
-    private fun checkPasswordInput(password: Editable) {
+    fun checkPasswordInput(password: Editable) {
         val pattern: Pattern = Pattern.compile(
             "^.{9,}$",
             Pattern.CASE_INSENSITIVE
