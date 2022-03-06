@@ -27,4 +27,12 @@ class MainViewModel(
     private fun displayAllPlaces() = viewModelScope.launch(Dispatchers.IO) {
             _placesList.postValue(getAllPlacesUseCase())
     }
+
+    fun getClickedPlace(placeId: Int): Place {
+        var place =
+        placesList.value?.data?.single() {
+            it.id == placeId
+        } as Place
+        return place
+    }
 }

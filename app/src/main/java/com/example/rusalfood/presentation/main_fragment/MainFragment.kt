@@ -80,7 +80,7 @@ class MainFragment : Fragment(), MainAdapter.OnItemClickListener {
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToPlaceFragment(
                 placeName,
-                mainViewModel.placesList.value!!.data!![placeId]
+                mainViewModel.getClickedPlace(placeId)
             )
         )
     }
