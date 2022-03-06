@@ -35,19 +35,19 @@ class BasketAdapter(private val placeViewModel: PlaceViewModel) : RecyclerView.A
             basketFoodName.text = currBasketFood.foodName
             basketFoodPrice.text = currBasketFood.foodPrice.toString()
 
-            basketTextViewAmount.text = placeViewModel.countedFoodList.value?.get(position)?.foodAmount.toString()
+            basketFoodTextViewAmount.text = placeViewModel.countedFoodList.value?.get(position)?.foodAmount.toString()
 
-            Glide.with(basketImage.context)
+            Glide.with(basketFoodImage.context)
                 .load(currBasketFood.foodImage)
-                .into(basketImage)
+                .into(basketFoodImage)
 
 
-            basketButtonPlus.setOnClickListener {
+            basketFoodButtonPlus.setOnClickListener {
                 placeViewModel.amountIncreaseInBasket(position)
                 notifyItemChanged(position)
             }
 
-            basketButtonMinus.setOnClickListener {
+            basketFoodButtonMinus.setOnClickListener {
                 placeViewModel.amountDecreaseInBasket(position)
                 notifyItemChanged(position)
             }

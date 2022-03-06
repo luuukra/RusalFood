@@ -42,15 +42,4 @@
     <string name="bottom_nav_orders_history">My orders</string>
     <string name="bottom_nav_rakhmet">Rakhmet</string>
 
-    // Hints
-    <string name="hints_name">Name</string>
-    <string name="hints_address">Address</string>
-    <string name="hints_category">Category</string>
-    <string name="hints_product">Product</string>
-    <string name="hints_description">Description</string>
-    <string name="hints_price">Price</string>
-    <string name="hints_price_count">2 pc.</string>
-    <string name="hints_status_done">Done</string>
-    <string name="hints_status_pending">Pending</string>
-    <string name="hints_range">1.8 km.</string>
 </resources>

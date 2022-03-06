@@ -46,21 +46,4 @@
     <string name="bottom_nav_orders_history">Мои заказы</string>
     <string name="bottom_nav_rakhmet">Рахмет</string>
 
-    // Hints
-    <string name="hints_name">Название</string>
-    <string name="hints_address">Адрес</string>
-    <string name="hints_category">Категория</string>
-    <string name="hints_product">Продукт</string>
-    <string name="hints_description">Описание</string>
-    <string name="hints_price">Цена</string>
-    <string name="hints_price_count">2 шт.</string>
-    <string name="hints_status_done">Готов</string>
-    <string name="hints_status_pending">В обработке</string>
-
-    <string name="hints_sum_1" translatable="false">9 999</string>
-    <string name="hints_sum_2" translatable="false">0</string>
-    <string name="hints_gallery_counter" translatable="false">1/22</string>
-    <string name="hints_date" translatable="false">15.12.2021, 10:44</string>
-    <string name="hints_range">1.8 км.</string>
-
 </resources>

@@ -99,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="@string/hints_sum_2"
+                tools:text="0"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
