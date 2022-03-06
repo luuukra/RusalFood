@@ -15,5 +15,4 @@ interface MainRepository {
     suspend fun getOrdersList(): List<MockOrder>
 
     suspend fun getOrderById(orderId: Int): MockOrder
-
 }

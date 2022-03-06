@@ -16,7 +16,6 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getPlaceFoodList(placeId: Int) = retrofitService.getFoodListById(placeId)
 
-
     override suspend fun getOrdersList(): List<MockOrder> {
         return mockOrders.getOrdersList()
     }
