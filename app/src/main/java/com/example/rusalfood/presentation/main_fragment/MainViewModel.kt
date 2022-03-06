@@ -18,18 +18,21 @@ class MainViewModel(
         displayAllPlaces()
     }
 
-    private val _placesList = MutableLiveData<Resource<List<Place>>>()
+    private val _placesList: MutableLiveData<Resource<List<Place>>> = MutableLiveData()
     val placesList: LiveData<Resource<List<Place>>> = _placesList
 
     private val _isAuthorized = MutableLiveData<Boolean>()
     val isAuthorized = _isAuthorized
 
     private fun displayAllPlaces() = viewModelScope.launch(Dispatchers.IO) {
-        val response = getAllPlacesUseCase()
-        if (response.isSuccessful) {
-            _placesList.postValue(Resource.Success(response.body()!!.map { it.mapToPlace() }))
-        } else {
-            _placesList.postValue(Resource.Error(response.message()))
-        }
+            _placesList.postValue(getAllPlacesUseCase())
+    }
+
+    fun getClickedPlace(placeId: Int): Place {
+        var place =
+        placesList.value?.data?.single() {
+            it.id == placeId
+        } as Place
+        return place
     }
 }

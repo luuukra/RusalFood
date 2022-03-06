@@ -1,6 +1,5 @@
 package com.example.rusalfood.presentation.place_fragment
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,18 +18,17 @@ class PlaceViewModel(
     val currentPlace: LiveData<Place> = _currentPlace
 
     //full list of food by categories for restaurant menu
-    private val _listOfFoodWithCategories = MutableLiveData<List<Food>>()
+    private val _listOfFoodWithCategories: MutableLiveData<List<Food>> = MutableLiveData()
     val listOfFoodWithCategories: LiveData<List<Food>> = _listOfFoodWithCategories
 
     //list of categories for horizontal categories rv
-    private val _listOfCategories = MutableLiveData<List<Food.FoodCategory>>()
+    private val _listOfCategories: MutableLiveData<List<Food.FoodCategory>> = MutableLiveData()
     val listOfCategories: LiveData<List<Food.FoodCategory>> = _listOfCategories
 
     fun getIntoPlace(place: Place) = viewModelScope.launch(Dispatchers.IO) {
         _currentPlace.postValue(place)
     }
 
-    @SuppressLint("NullSafeMutableLiveData")
     fun getFoodListById(placeId: Int) = viewModelScope.launch(Dispatchers.IO) {
         val foodAndFoodCatList = getFoodListUseCase(placeId)
         _listOfFoodWithCategories.postValue(foodAndFoodCatList.first)

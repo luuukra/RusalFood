@@ -11,7 +11,7 @@ import javax.inject.Singleton
 interface UseCasesModule {
     @Singleton
     @Binds
-    fun bindDisplayAllPlacesUseCaseImplToDisplayAllPlacesUseCase(getAllPlacesUseCaseImpl: GetAllPlacesUseCaseImpl): GetAllPlacesUseCase
+    fun bindGetAllPlacesUseCaseImplToGetAllPlacesUseCase(getAllPlacesUseCaseImpl: GetAllPlacesUseCaseImpl): GetAllPlacesUseCase
 
     @Singleton
     @Binds

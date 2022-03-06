@@ -10,7 +10,7 @@ class PlaceSliderAdapter(
 ) : RecyclerView.Adapter<PlaceSliderAdapter.ViewPagerViewHolder>() {
 
     fun setData(data: List<String>){
-        gallery.apply {
+        gallery.run {
             clear()
             addAll(data)
         }
