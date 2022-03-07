@@ -57,24 +57,14 @@ class SignUpLoginFragment : Fragment() {
 
     private fun initClickListeners() {
         binding.nextButton.setOnClickListener {
-            binding.loginProgressBar.visibility = ProgressBar.VISIBLE
-            signUpViewModel.checkIfEmailAvailable(binding.signUpLoginField.text.toString())
+            findNavController()
+                .navigate(SignUpLoginFragmentDirections.toSignUpPasswordScreen(binding.signUpLoginField.text.toString()))
         }
     }
 
     private fun initObserving() {
         signUpViewModel.isEmailInputCorrect.observe(viewLifecycleOwner) {
             binding.nextButton.isEnabled = it
-        }
-
-        signUpViewModel.emailCheckResponse.observe(viewLifecycleOwner) {
-            if (it)
-                findNavController()
-                    .navigate(SignUpLoginFragmentDirections.toSignUpPasswordScreen(binding.signUpLoginField.text.toString()))
-            else {
-                Toast.makeText(context, EMAIL_CHECK_ERROR, Toast.LENGTH_SHORT).show()
-                binding.loginProgressBar.visibility = ProgressBar.GONE
-            }
         }
     }
 
