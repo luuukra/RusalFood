@@ -1,24 +1,24 @@
 package com.example.rusalfood.data.network
 
-import com.example.rusalfood.data.models.MockOrder
+import com.example.rusalfood.data.models.orders.mock.MockOrder
 import javax.inject.Inject
 
 interface IMockOrders {
 
-    fun getOrdersList() : List<MockOrder>
+    fun getOrdersByUserId(userId: Int) : List<MockOrder>
 
-    fun getOrderById(orderId: Int) : MockOrder
+    fun getOrderDetails(orderId: Int) : MockOrder
 
 }
 
 class MockOrders @Inject constructor() : IMockOrders {
 
-    override fun getOrderById(orderId: Int): MockOrder {
-        return mockOrders[orderId]
+    override fun getOrdersByUserId(userId: Int): List<MockOrder> {
+        return mockOrders
     }
 
-    override fun getOrdersList(): List<MockOrder> {
-        return mockOrders
+    override fun getOrderDetails(orderId: Int): MockOrder {
+        return mockOrders[orderId]
     }
 
     var order1 = MockOrder(0, "Wall Street 1","Wallmart", 12000, "Done", "22.22.2022, 15:23")

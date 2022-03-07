@@ -42,6 +42,7 @@ class PlaceViewModel(
         }.map { it.index }
     }
 
+
     // Basket Clicks & Food Amounts
     private val _countedFoodList = MutableLiveData<List<Food.FoodItem>>()
     val countedFoodList: LiveData<List<Food.FoodItem>> = _countedFoodList
@@ -66,6 +67,7 @@ class PlaceViewModel(
                 .filter { it.foodAmount > 0 }
         }
     }
+
 
     fun amountIncreaseInPlace(currentPosition: Int) {
         _listOfFoodWithCategories.value!![currentPosition].run {

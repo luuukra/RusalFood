@@ -27,14 +27,12 @@ interface UseCasesModule {
 
     @Singleton
     @Binds
-    fun bindGetOrdersListUseCaseImplToGetOrdersListUseCase(getOrdersListUseCaseImpl: GetOrdersListUseCaseImpl) : GetOrdersListUseCase
+    fun bindGetOrdersByUserIdUseCaseImplToGetOrdersByUserIdUseCase(getOrdersByUserIdUseCaseImpl: GetOrdersByUserIdUseCaseImpl) : GetOrdersByUserIdUseCase
 
-    @Singleton
-    @Binds
-    fun bindGetOrderByIdUseCaseImplToGetOrderByIdUseCase(getOrderByIdUseCaseImpl: GetOrderByIdUseCaseImpl) : GetOrderByIdUseCase
 
-    @Singleton
-    @Binds
-    fun bindMockOrdersToIMockOrders(mockOrders: MockOrders) : IMockOrders
+
+//    @Singleton
+//    @Binds
+//    fun bindMockOrdersToIMockOrders(mockOrders: MockOrders) : IMockOrders
 
 }

@@ -4,37 +4,28 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rusalfood.data.models.MockOrder
-import com.example.rusalfood.domain.usecases.GetOrderByIdUseCase
-import com.example.rusalfood.domain.usecases.GetOrdersListUseCase
+import com.example.rusalfood.data.models.orders.mock.MockOrder
+import com.example.rusalfood.domain.models.OrderMine
+import com.example.rusalfood.domain.usecases.GetOrdersByUserIdUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class OrdersViewModel(
-    private val getOrdersListUseCase: GetOrdersListUseCase,
-    private val getOrderByIdUseCase: GetOrderByIdUseCase,
-
+    private val getOrdersByUserIdUseCase: GetOrdersByUserIdUseCase,
     ) : ViewModel() {
 
     init {
-        displayAllOrders()
+        displayAllOrders(1)
     }
 
-    private val _listOrders = MutableLiveData<List<MockOrder>>()
-    val listOrders: LiveData<List<MockOrder>> = _listOrders
+    private val _listOrders = MutableLiveData<List<OrderMine>>()
+    val listOrders: LiveData<List<OrderMine>> = _listOrders
 
-    private fun displayAllOrders() = viewModelScope.launch(Dispatchers.IO) {
-        val orders = getOrdersListUseCase()
-        _listOrders.postValue(orders)
+    private fun displayAllOrders(userId: Int) = viewModelScope.launch(Dispatchers.IO) {
+        val orders = getOrdersByUserIdUseCase(userId)
+        if (orders.isSuccessful) {
+            _listOrders.postValue(orders.body()!!.map { it.data.mapToOrderMine() })
+            }
+        }
     }
 
-    private val _currentOrder = MutableLiveData<MockOrder>()
-    val currentOrder: LiveData<MockOrder> = _currentOrder
-
-    fun getOrderById(orderId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        val order = getOrderByIdUseCase(orderId)
-        _currentOrder.postValue(order)
-    }
-
-
-}

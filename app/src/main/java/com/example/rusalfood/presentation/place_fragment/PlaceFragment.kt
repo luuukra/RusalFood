@@ -1,5 +1,7 @@
 package com.example.rusalfood.presentation.place_fragment
 
+import android.R.attr
+import android.graphics.Color
 import android.os.Bundle
 import android.transition.Fade
 import android.transition.Transition
@@ -19,6 +21,16 @@ import com.ahmadhamwi.tabsync.TabbedListMediator
 import com.example.rusalfood.R
 import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
+import android.graphics.PorterDuff
+
+import android.R.color
+
+import android.graphics.PorterDuffColorFilter
+
+import android.R.attr.button
+
+
+
 
 
 class PlaceFragment : Fragment() {
@@ -49,6 +61,7 @@ class PlaceFragment : Fragment() {
         initFoodListRecyclerView()
         initOnDestinationChangeListener()
         initBasketButton()
+        initBasketAvailability()
     }
 
     override fun onDestroyView() {
@@ -63,6 +76,8 @@ class PlaceFragment : Fragment() {
             placeViewModel.getFoodListById(place.id)
         }
     }
+
+
 
     private fun initObserving() {
         placeViewModel.currentPlace.observe(viewLifecycleOwner) {
@@ -84,6 +99,9 @@ class PlaceFragment : Fragment() {
         binding.placeViewPager.adapter = placeViewPagerAdapter
 
         binding.viewPagerCounter.text = placeViewPagerAdapter.itemCount.toString()
+
+
+
         binding.placeViewPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageScrollStateChanged(state: Int) {
@@ -95,6 +113,8 @@ class PlaceFragment : Fragment() {
             }
         })
     }
+
+
 
     private fun setImageCounterText(currentItem: Int, itemCount: Int) {
         binding.viewPagerCounter.text =
@@ -135,6 +155,20 @@ class PlaceFragment : Fragment() {
         tabbedListMediator.updateMediatorWithNewIndices(newIndices)
     }
 
+
+    private fun initBasketAvailability() {
+        if (!args.authStatus) {
+            binding.basketButtonTemplate.basketButtonInc.run {
+                isEnabled = false
+                isClickable = false
+                setBackgroundColor(Color.parseColor("#BBDEFF"))
+                setOnClickListener {
+                    Toast.makeText(requireContext(), "Please, sign in", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     private fun initBasketButton() {
         placeViewModel.countedFoodList.observe(viewLifecycleOwner) {
             val transition: Transition = Fade()
@@ -162,6 +196,7 @@ class PlaceFragment : Fragment() {
 
         binding.basketButtonTemplate.run {
             basketButtonInc.setOnClickListener {
+
                 val placeName = placeViewModel.currentPlace.value?.name
                 val placeAddress = placeViewModel.currentPlace.value?.address
                 findNavController().navigate(

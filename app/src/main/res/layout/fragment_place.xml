@@ -96,6 +96,9 @@
 
             <include layout="@layout/basket_button_template"
                 android:id="@+id/basket_button_template"
+
+
+
                 />
         </LinearLayout>
 

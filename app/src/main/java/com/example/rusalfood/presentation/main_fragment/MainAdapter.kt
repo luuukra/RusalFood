@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.example.rusalfood.databinding.ItemRecyclerviewPlaceBinding
+import com.example.rusalfood.di.RetrofitModule
 import com.example.rusalfood.domain.models.Place
 
 class MainAdapter (private val listener: OnItemClickListener) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {

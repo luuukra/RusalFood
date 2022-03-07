@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:id="@+id/basket_full_button"
-    android:visibility="gone">
+    android:visibility="gone"
+
+    >
 
     <TextView
         android:id="@+id/amount_inc"
@@ -43,6 +45,7 @@
         android:layout_marginHorizontal="12dp"
         android:backgroundTint="#2997FF"
         android:text="@string/basket_basket"
+        android:textColor="@color/white"
         android:textAllCaps="false"
         android:textSize="20sp"
         app:cornerRadius="18dp"

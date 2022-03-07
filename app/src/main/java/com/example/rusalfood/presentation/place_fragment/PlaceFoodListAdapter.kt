@@ -7,9 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.rusalfood.R
 import com.example.rusalfood.databinding.ItemRecyclerviewFoodItemBinding
 import com.example.rusalfood.databinding.ItemRecyclerviewFoodItemCategoryBinding
+import com.example.rusalfood.di.RetrofitModule
 import com.example.rusalfood.domain.models.Food
 
 
@@ -99,6 +101,9 @@ class PlaceFoodListAdapter(
                     else Glide.with(foodImage.context)
                         .load(foodItem.foodImage)
                         .into(foodImage)
+
+
+
 
                     placeViewModel.listOfFoodWithCategories.value!![bindingAdapterPosition].run {
                         if (this is Food.FoodItem) {

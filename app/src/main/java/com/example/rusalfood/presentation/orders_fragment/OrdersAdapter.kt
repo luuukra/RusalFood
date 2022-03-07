@@ -7,14 +7,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rusalfood.data.models.MockOrder
+import com.example.rusalfood.data.models.orders.mock.MockOrder
 import com.example.rusalfood.databinding.ItemRecyclerviewOrderBinding
+import com.example.rusalfood.domain.models.OrderMine
 
 class OrdersAdapter (private val listener: OnItemClickListener) : RecyclerView.Adapter<OrdersAdapter.OrdersViewHolder>() {
 
-    fun setData(data: List<MockOrder>) {
-        diffUtilOrders.submitList(data)
-    }
+    var orders: List<OrderMine> = emptyList()
+
+//
+//    fun setData(data: List<OrderMine>) {
+//        diffUtilOrders.submitList(data)
+//    }
 
     //Adapter
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrdersViewHolder {
@@ -24,34 +28,39 @@ class OrdersAdapter (private val listener: OnItemClickListener) : RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: OrdersViewHolder, position: Int) {
-        var currOrder = diffUtilOrders.currentList[position]
-        holder.binding.run {
-            ordersPlaceName.text = currOrder.restaurantName
-            ordersPrice.text = currOrder.totalPrice.toString()
-            ordersStatus.text = currOrder.orderStatus
-            ordersDate.text = currOrder.orderDate
-
-            when (ordersStatus.text) {
-                "Done" -> {
-                    ordersStatus.setTextColor(Color.parseColor("#008000"))
-                }
-                "Pending" -> {
-                    ordersStatus.setTextColor(Color.parseColor("#088F8F"))
-                }
-                "In kitchen" -> {
-                    ordersStatus.setTextColor(Color.parseColor("#FFC300"))
-                }
-            }
-        }
+        var currOrder = orders[position]
+        holder.bind(currOrder)
     }
 
     override fun getItemCount(): Int {
-        return diffUtilOrders.currentList.size
+        return orders.size
     }
 
 
     // View Holder + On Item Clicker
     inner class OrdersViewHolder(val binding : ItemRecyclerviewOrderBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+        fun bind(currOrder: OrderMine) {
+            binding.run {
+                ordersPlaceName.text = currOrder.restaurantName
+                ordersPrice.text = currOrder.totalPrice.toString()
+                ordersStatus.text = currOrder.orderStatus
+                ordersDate.text = currOrder.orderDate
+
+//                when (ordersStatus.text) {
+//                    "Done" -> {
+//                        ordersStatus.setTextColor(Color.parseColor("#008000"))
+//                    }
+//                    "Pending" -> {
+//                        ordersStatus.setTextColor(Color.parseColor("#088F8F"))
+//                    }
+//                    "In kitchen" -> {
+//                        ordersStatus.setTextColor(Color.parseColor("#FFC300"))
+//                    }
+//                }
+            }
+        }
+
         init {
             itemView.setOnClickListener(this)
         }
@@ -60,8 +69,8 @@ class OrdersAdapter (private val listener: OnItemClickListener) : RecyclerView.A
             if (position != RecyclerView.NO_POSITION) {
                 listener.onItemClick(
                     position,
-                    diffUtilOrders.currentList[position].orderId,
-                    diffUtilOrders.currentList[position].orderAddress,
+                    orders[position].orderId,
+                    orders[position].orderAddress,
                 )
             }
         }
@@ -72,17 +81,17 @@ class OrdersAdapter (private val listener: OnItemClickListener) : RecyclerView.A
     }
 
 
-    // Diff Utils
-    private val differCallback = object : DiffUtil.ItemCallback<MockOrder>() {
-
-        override fun areItemsTheSame(oldItem: MockOrder, newItem: MockOrder): Boolean {
-            return oldItem.orderId == newItem.orderId
-        }
-
-        override fun areContentsTheSame(oldItem: MockOrder, newItem: MockOrder): Boolean {
-            return oldItem == newItem
-        }
-    }
-
-    private val diffUtilOrders = AsyncListDiffer(this, differCallback)
+//    // Diff Utils
+//    private val differCallback = object : DiffUtil.ItemCallback<OrderMine>() {
+//
+//        override fun areItemsTheSame(oldItem: OrderMine, newItem: OrderMine): Boolean {
+//            return oldItem.orderId == newItem.orderId
+//        }
+//
+//        override fun areContentsTheSame(oldItem: OrderMine, newItem: OrderMine): Boolean {
+//            return oldItem == newItem
+//        }
+//    }
+//
+//    private val diffUtilOrders = AsyncListDiffer(this, differCallback)
 }

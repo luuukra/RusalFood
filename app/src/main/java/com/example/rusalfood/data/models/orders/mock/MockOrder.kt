@@ -1,4 +1,4 @@
-package com.example.rusalfood.data.models
+package com.example.rusalfood.data.models.orders.mock
 
 data class MockOrder(
     val orderId: Int,

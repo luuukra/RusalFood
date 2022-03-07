@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rusalfood.R
 import com.example.rusalfood.databinding.FragmentMainBinding
 import com.example.rusalfood.di.appComponent
 import com.example.rusalfood.domain.models.Resource
@@ -77,12 +79,15 @@ class MainFragment : Fragment(), MainAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int, placeName: String, placeId: Int) {
+        val authStatus = mainViewModel.isAuthorized.value
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToPlaceFragment(
                 placeName,
-                mainViewModel.getClickedPlace(placeId)
+                mainViewModel.getClickedPlace(placeId),
+                authStatus!!
             )
         )
     }
+
 
 }
