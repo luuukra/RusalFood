@@ -78,6 +78,9 @@
         <argument
             android:name="place"
             app:argType="com.example.rusalfood.domain.models.Place" />
+        <argument
+            android:name="authStatus"
+            app:argType="boolean" />
         <action
             android:id="@+id/action_placeFragment_to_basketFragment"
             app:destination="@id/basketFragment" />
@@ -105,12 +108,16 @@
         android:name="com.example.rusalfood.presentation.orders_fragment.OrdersFragment"
         android:label="@string/orders_header"
         tools:layout="@layout/fragment_orders">
-        <action
-            android:id="@+id/action_ordersFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-        <action
-            android:id="@+id/action_ordersFragment_to_orderDetailsFragment"
-            app:destination="@id/orderDetailsFragment" />
+    <action
+        android:id="@+id/action_ordersFragment_to_mainFragment"
+        app:destination="@id/mainFragment" />
+    <action
+        android:id="@+id/action_ordersFragment_to_orderDetailsFragment"
+        app:destination="@id/orderDetailsFragment" />
+
+    <action
+        android:id="@+id/action_ordersFragment_to_signInFragment"
+        app:destination="@id/signInFragment" />
     </fragment>
 
     <fragment

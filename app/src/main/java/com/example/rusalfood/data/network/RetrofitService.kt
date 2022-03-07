@@ -9,7 +9,10 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface RetrofitService {
-    @Headers("Content-Type:application/json")
+    @Headers(
+        "accept: application/json",
+        "Content-Type: application/json"
+    )
     @POST("register")
     suspend fun signUp(@Body user: User): Response<APISignUpResponse>
 

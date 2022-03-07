@@ -1,5 +1,6 @@
 package com.example.rusalfood.presentation.place_fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.transition.Fade
 import android.transition.Transition
@@ -49,6 +50,7 @@ class PlaceFragment : Fragment() {
         initFoodListRecyclerView()
         initOnDestinationChangeListener()
         initBasketButton()
+        initBasketAvailability()
     }
 
     override fun onDestroyView() {
@@ -135,6 +137,19 @@ class PlaceFragment : Fragment() {
         tabbedListMediator.updateMediatorWithNewIndices(newIndices)
     }
 
+    private fun initBasketAvailability() {
+        if (!args.authStatus) {
+            binding.basketButtonTemplate.basketButtonInc.run {
+                isEnabled = false
+                isClickable = false
+                setBackgroundColor(Color.parseColor("#BBDEFF"))
+                setOnClickListener {
+                    Toast.makeText(requireContext(), "Please, sign in", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     private fun initBasketButton() {
         placeViewModel.countedFoodList.observe(viewLifecycleOwner) {
             val transition: Transition = Fade()
@@ -162,6 +177,7 @@ class PlaceFragment : Fragment() {
 
         binding.basketButtonTemplate.run {
             basketButtonInc.setOnClickListener {
+
                 val placeName = placeViewModel.currentPlace.value?.name
                 val placeAddress = placeViewModel.currentPlace.value?.address
                 findNavController().navigate(

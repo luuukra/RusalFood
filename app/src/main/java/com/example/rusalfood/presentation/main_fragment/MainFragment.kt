@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +19,7 @@ class MainFragment : Fragment(), MainAdapter.OnItemClickListener {
     private val binding get() = _binding!!
     private lateinit var mainAdapter: MainAdapter
 
-    private val mainViewModel: MainViewModel by viewModels { requireContext().appComponent.mainViewModelFactory() }
+    private val mainViewModel: MainViewModel by activityViewModels { requireContext().appComponent.mainViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,10 +78,12 @@ class MainFragment : Fragment(), MainAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int, placeName: String, placeId: Int) {
+        val authStatus = mainViewModel.isAuthorized.value
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToPlaceFragment(
                 placeName,
-                mainViewModel.getClickedPlace(placeId)
+                mainViewModel.getClickedPlace(placeId),
+                authStatus!!
             )
         )
     }
