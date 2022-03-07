@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.rusalfood.domain.models.SignUpResponse
 import com.example.rusalfood.domain.usecases.SignUpUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -14,11 +15,8 @@ import java.util.regex.Pattern
 
 class SignUpViewModel(private val signUpUseCase: SignUpUseCase) : ViewModel() {
 
-    private val _emailCheckResponse =
-        MutableLiveData<Boolean>()//data is request status response: ok, or error
-    val emailCheckResponse: LiveData<Boolean> = _emailCheckResponse
-    private val _signUpResponse = MutableLiveData<String>()
-    val signUpResponse: LiveData<String> = _signUpResponse
+    private val _signUpResponse: MutableLiveData<SignUpResponse> = MutableLiveData()
+    val signUpResponse: LiveData<SignUpResponse> = _signUpResponse
     private val _isEmailInputCorrect = MutableLiveData<Boolean>()
     val isEmailInputCorrect: LiveData<Boolean> = _isEmailInputCorrect
     private val _isPasswordInputCorrect = MutableLiveData<Boolean>()
@@ -42,13 +40,8 @@ class SignUpViewModel(private val signUpUseCase: SignUpUseCase) : ViewModel() {
         _isPasswordInputCorrect.value = matcher.matches()
     }
 
-    fun checkIfEmailAvailable(email: String) = viewModelScope.launch(Dispatchers.IO) {
-        delay(2000)//todo delete after api implementation
-        _emailCheckResponse.postValue(signUpUseCase.checkEmail(email))
-    }
-
     fun signUpAndGetToken(login: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
         delay(2000)//todo delete after api implementation
-        _signUpResponse.postValue(signUpUseCase.signUpAndGetToken(login, password))
+        _signUpResponse.postValue(signUpUseCase(login, password))
     }
 }
