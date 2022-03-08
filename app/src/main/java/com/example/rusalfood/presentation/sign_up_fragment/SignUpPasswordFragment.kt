@@ -23,8 +23,6 @@ class SignUpPasswordFragment : Fragment() {
 
     companion object {
         fun newInstance() = SignUpPasswordFragment()
-        const val SIGN_UP_OK_CODE = 200
-        const val SIGN_UP_ERROR_CODE = 422
     }
 
     override fun onCreateView(
@@ -60,7 +58,7 @@ class SignUpPasswordFragment : Fragment() {
     private fun initClickListeners() {
         binding.nextButton.setOnClickListener {
             binding.loginProgressBar.visibility = ProgressBar.VISIBLE
-            signUpViewModel.signUpAndGetToken(
+            signUpViewModel.signUp(
                 requireArguments().getString("email").toString(),
                 binding.signUpPasswordField.text.toString()
             )
@@ -77,10 +75,10 @@ class SignUpPasswordFragment : Fragment() {
                 activity, signUpViewModel.signUpResponse.value?.message, Toast.LENGTH_SHORT
             ).show()
             //binding.loginProgressBar.visibility = ProgressBar.VISIBLE todo when real reply error will be available
+        }
 
-            if (it.code == SIGN_UP_OK_CODE)
-                findNavController()
-                    .navigate(SignUpPasswordFragmentDirections.toMainFragment(true))
+        signUpViewModel.navDirection.observe(viewLifecycleOwner) {
+            findNavController().navigate(it)
         }
     }
 

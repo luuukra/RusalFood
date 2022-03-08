@@ -1,7 +1,6 @@
 package com.example.rusalfood.presentation.sign_in_fragment
 
 
-import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
@@ -28,8 +27,6 @@ class SignInFragment : Fragment() {
 
     companion object {
         fun newInstance() = SignInFragment()
-        const val SIGN_IN_OK_CODE = 200
-        const val SIGN_IN_ERROR_CODE = 401
     }
 
 
@@ -86,29 +83,30 @@ class SignInFragment : Fragment() {
         }
 
         binding.continueGuestButton.setOnClickListener {
-            findNavController().navigate(SignInFragmentDirections.toMainFragment(false))
+            signInViewModel.navToMainFragment()
         }
 
         binding.signUpButton.setOnClickListener {
-            findNavController().navigate(SignInFragmentDirections.toSignUpLoginScreen())
+            signInViewModel.navToSignUpLoginScreen()
         }
     }
 
-    @SuppressLint("NewApi")
     private fun initObserving() {
         signInViewModel.isLoginInputCorrect.observe(viewLifecycleOwner) {
             binding.signInButton.isEnabled = it
         }
 
         signInViewModel.response.observe(viewLifecycleOwner) {
-            Toast.makeText(activity, signInViewModel.response.value?.message, Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, signInViewModel.response.value?.message, Toast.LENGTH_SHORT)
+                .show()
             binding.loginProgressBar.visibility = ProgressBar.GONE
             //println(sharedPref.getString("token", null))
-            if (it.code == SIGN_IN_OK_CODE)
-                findNavController().navigate(SignInFragmentDirections.toMainFragment(true))//todo nav dest in VM
+        }
+
+        signInViewModel.navDirection.observe(viewLifecycleOwner) {
+            findNavController().navigate(it)
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

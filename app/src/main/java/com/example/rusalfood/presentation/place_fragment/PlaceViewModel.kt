@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDirections
 import com.example.rusalfood.domain.models.Food
 import com.example.rusalfood.domain.models.Place
 import com.example.rusalfood.domain.usecases.GetFoodListUseCase
@@ -25,6 +26,19 @@ class PlaceViewModel(
     private val _listOfCategories: MutableLiveData<List<Food.FoodCategory>> = MutableLiveData()
     val listOfCategories: LiveData<List<Food.FoodCategory>> = _listOfCategories
 
+    private val _navDirection: MutableLiveData<NavDirections> = MutableLiveData()
+    val navDirection: LiveData<NavDirections> = _navDirection
+
+    // Basket Clicks & Food Amounts
+    private val _countedFoodList = MutableLiveData<List<Food.FoodItem>>()
+    val countedFoodList: LiveData<List<Food.FoodItem>> = _countedFoodList
+
+    private val _totalAmount = MutableLiveData<Int>()
+    val totalAmount: LiveData<Int> = _totalAmount
+
+    private val _totalSum = MutableLiveData<Int>()
+    val totalSum: LiveData<Int> = _totalSum
+
     fun getIntoPlace(place: Place) = viewModelScope.launch(Dispatchers.IO) {
         _currentPlace.postValue(place)
     }
@@ -41,16 +55,6 @@ class PlaceViewModel(
             it.value is Food.FoodItem
         }.map { it.index }
     }
-
-    // Basket Clicks & Food Amounts
-    private val _countedFoodList = MutableLiveData<List<Food.FoodItem>>()
-    val countedFoodList: LiveData<List<Food.FoodItem>> = _countedFoodList
-
-    private val _totalAmount = MutableLiveData<Int>()
-    val totalAmount: LiveData<Int> = _totalAmount
-
-    private val _totalSum = MutableLiveData<Int>()
-    val totalSum: LiveData<Int> = _totalSum
 
     private fun setAmountSum() {
         _totalAmount.value = _countedFoodList.value?.sumOf { it.foodAmount }
@@ -126,6 +130,15 @@ class PlaceViewModel(
 
     fun resetListOfFoodWithCategories() {
         _listOfFoodWithCategories.value = emptyList()
+    }
+
+    fun navToBasketFragment(placeName: String, placeAddress: String) {
+        _navDirection.postValue(
+            PlaceFragmentDirections.actionPlaceFragmentToBasketFragment(
+                placeName,
+                placeAddress
+            )
+        )
     }
 
 }

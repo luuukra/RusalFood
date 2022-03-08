@@ -69,12 +69,16 @@ class PlaceFragment : Fragment() {
             placeViewPagerAdapter.setData(it.gallery) // Картинки в слайдере
             setImageCounterText(binding.placeViewPager.currentItem + 1, it.gallery.size)
             binding.placeTextViewAddress.text = it.address // Адрес заведения
-            placeViewPagerAdapter.notifyDataSetChanged()
+            placeViewPagerAdapter.notifyDataSetChanged()//todo diffutils
         }
 
         placeViewModel.listOfFoodWithCategories.observe(viewLifecycleOwner) {
             placeFoodListAdapter.setData(it)// Меню ресторана с категориями
             placeFoodListAdapter.notifyDataSetChanged()
+        }
+
+        placeViewModel.navDirection.observe(viewLifecycleOwner) {
+            findNavController().navigate(it)
         }
     }
 
@@ -164,12 +168,7 @@ class PlaceFragment : Fragment() {
             basketButtonInc.setOnClickListener {
                 val placeName = placeViewModel.currentPlace.value?.name
                 val placeAddress = placeViewModel.currentPlace.value?.address
-                findNavController().navigate(
-                    PlaceFragmentDirections.actionPlaceFragmentToBasketFragment(
-                        placeName.toString(),
-                        placeAddress.toString()
-                    )
-                )
+                placeViewModel.navToBasketFragment(placeName.toString(), placeAddress.toString())
             }
         }
     }
