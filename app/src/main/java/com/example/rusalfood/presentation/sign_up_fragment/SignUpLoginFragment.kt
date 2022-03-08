@@ -57,14 +57,17 @@ class SignUpLoginFragment : Fragment() {
 
     private fun initClickListeners() {
         binding.nextButton.setOnClickListener {
-            findNavController()
-                .navigate(SignUpLoginFragmentDirections.toSignUpPasswordScreen(binding.signUpLoginField.text.toString()))
+            signUpViewModel.navToLoginFragment(binding.signUpLoginField.text.toString())
         }
     }
 
     private fun initObserving() {
         signUpViewModel.isEmailInputCorrect.observe(viewLifecycleOwner) {
             binding.nextButton.isEnabled = it
+        }
+
+        signUpViewModel.navDirection.observe(viewLifecycleOwner) {
+            findNavController().navigate(it)
         }
     }
 

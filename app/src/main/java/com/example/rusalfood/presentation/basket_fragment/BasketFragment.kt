@@ -14,7 +14,7 @@ import com.example.rusalfood.databinding.FragmentBasketBinding
 import com.example.rusalfood.di.appComponent
 import com.example.rusalfood.presentation.place_fragment.PlaceViewModel
 
-class BasketFragment: Fragment() {
+class  BasketFragment: Fragment() {
 
     private var _binding: FragmentBasketBinding? = null
     private val binding get() = _binding!!
