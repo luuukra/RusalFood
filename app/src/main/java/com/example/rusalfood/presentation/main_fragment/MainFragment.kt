@@ -4,16 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import com.example.rusalfood.databinding.FragmentMainBinding
 import com.example.rusalfood.di.appComponent
 import com.example.rusalfood.domain.models.Resource
 
-class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
+class MainFragment : Fragment(), MainAdapter.OnItemClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -21,17 +22,21 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
 
     private val mainViewModel: MainViewModel by viewModels { requireContext().appComponent.mainViewModelFactory() }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as AppCompatActivity).supportActionBar?.show()
-        setupRecyclerView()
-        setAuthorizationFlag()
-        setupObserving()
+        initRecyclerView()
+        initAuthorizationFlag()
+        initObserving()
     }
 
     override fun onDestroyView() {
@@ -39,33 +44,34 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
         _binding = null
     }
 
-    private fun setAuthorizationFlag() {
+    private fun initAuthorizationFlag() {
         mainViewModel.isAuthorized.value = requireArguments().getBoolean("isAuthorized")
     }
 
-    private fun setupObserving() {
-        mainViewModel.apply {
-            listPlaces.observe(viewLifecycleOwner) { status ->
+    private fun initObserving() {
+        mainViewModel.run {
+            placesList.observe(viewLifecycleOwner) { status ->
                 when (status) {
-                    //is Resource.Loading -> { binding.shimmerLayout.startShimmer() }  //fixme FLOW
-                    is Resource.Success -> { status.data?.let {
-                        mainAdapter.diffUtilPlaces.submitList(it)
-                        showRecyclerView()
-                    }}
+                    is Resource.Success -> {
+                        status.data?.let {
+                            mainAdapter.setData(it)
+                            showRecyclerView()
+                        }
+                    }
                 }
             }
         }
     }
 
     private fun showRecyclerView() {
-        binding.shimmerLayout.apply {
+        binding.shimmerLayout.run {
             stopShimmer()
             visibility = View.INVISIBLE
         }
         binding.mainRecyclerView.visibility = View.VISIBLE
     }
 
-    private fun setupRecyclerView() {
+    private fun initRecyclerView() {
         mainAdapter = MainAdapter(this)
         val layoutManager = LinearLayoutManager(requireContext())
         binding.mainRecyclerView.layoutManager = layoutManager
@@ -74,7 +80,11 @@ class MainFragment: Fragment(), MainAdapter.OnItemClickListener {
 
     override fun onItemClick(position: Int, placeName: String, placeId: Int) {
         findNavController().navigate(
-            MainFragmentDirections.actionMainFragmentToPlaceFragment(placeName, placeId)
+            MainFragmentDirections.actionMainFragmentToPlaceFragment(
+                placeName,
+                mainViewModel.getClickedPlace(placeId)
+            )
         )
     }
+
 }

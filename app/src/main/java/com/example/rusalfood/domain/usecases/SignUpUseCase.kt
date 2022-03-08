@@ -1,36 +1,34 @@
 package com.example.rusalfood.domain.usecases
 
 import com.example.rusalfood.domain.irepositories.LoginRepository
+import com.example.rusalfood.domain.models.SignUpResponse
+import com.example.rusalfood.domain.models.User
 import javax.inject.Inject
 
 interface SignUpUseCase {
-    suspend fun checkEmail(email: String): Boolean
-
-    suspend fun signUpAndGetToken(login: String, password: String): String
+    suspend operator fun invoke(
+        login: String,
+        password: String
+    ): SignUpResponse//Response<SignUpResponse>//fixme signIn response token
 }
 
 class SignUpUseCaseImpl @Inject constructor(private val loginRepository: LoginRepository) :
     SignUpUseCase {
 
-    companion object {
-        const val AUTH_OK = "Registration and Authentication successful"
-        //const val AUTH_ERROR = "Authentication error: incorrect email or login"
-    }
+    override suspend operator fun invoke(
+        login: String,
+        password: String
+    ): SignUpResponse {//Response<SignUpResponse> {
+        /*val jsonObject = JsonObject()
+        jsonObject.addProperty("email", login)
+        jsonObject.addProperty("password", password)
+        println(jsonObject.toString())*/
+        //val userInfo = User(login, password)
 
-    override suspend fun checkEmail(email: String): Boolean {
-        return loginRepository.checkIsEmailAvailable(email)
-    }
+        val signUpResponse = loginRepository.signUp(User(login, password))
+        //println(signUpResponse.toString())
+        //if(signUpResponse.code() == SIGN_UP_OK_CODE) return signUpResponse.message()
+        return signUpResponse.body()!!.mapToDomainSignUpResponse(signUpResponse.code())
 
-    override suspend fun signUpAndGetToken(login: String, password: String): String {
-        val token = loginRepository.signUpAndGetAuthToken(login, password)
-        //todo token to encryptedSharedPref
-        return AUTH_OK
-        /*if (!token.isNullOrEmpty()) {
-            User.isAuthorized = true
-            //token to encryptedSharedPref
-            return SignInUseCase.AUTH_OK
-        } else {
-            return SignInUseCase.AUTH_ERROR
-        }*/
     }
 }

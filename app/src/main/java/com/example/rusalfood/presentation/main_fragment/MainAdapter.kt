@@ -12,6 +12,10 @@ import com.example.rusalfood.domain.models.Place
 
 class MainAdapter (private val listener: OnItemClickListener) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
+    fun setData(data: List<Place>) {
+        diffUtilPlaces.submitList(data)
+    }
+
     //Adapter
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -21,7 +25,7 @@ class MainAdapter (private val listener: OnItemClickListener) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         var currPlace = diffUtilPlaces.currentList[position]
-        holder.binding.apply {
+        holder.binding.run {
             tvName.text = currPlace.name
             tvAddress.text = currPlace.address
             Glide.with(ivPhoto.context)
@@ -40,7 +44,7 @@ class MainAdapter (private val listener: OnItemClickListener) : RecyclerView.Ada
         init {
             itemView.setOnClickListener(this)
         }
-        override fun onClick(p0: View?) {
+        override fun onClick(view: View?) {
             val position: Int = bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 listener.onItemClick(
@@ -69,5 +73,5 @@ class MainAdapter (private val listener: OnItemClickListener) : RecyclerView.Ada
         }
     }
 
-    val diffUtilPlaces = AsyncListDiffer(this, differCallback)
+    private val diffUtilPlaces = AsyncListDiffer(this, differCallback)
 }

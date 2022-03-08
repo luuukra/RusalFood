@@ -1,20 +1,25 @@
 package com.example.rusalfood.presentation.place_fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import android.transition.Fade
+import android.transition.Transition
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.ahmadhamwi.tabsync.TabbedListMediator
+import com.example.rusalfood.R
 import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
+
 
 class PlaceFragment : Fragment() {
 
@@ -37,13 +42,13 @@ class PlaceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupCurrentPlace()
+        initCurrentPlace()
+        initObserving()
         initTabLayout()
-        setupViewPager()
-        setupFoodListRecyclerView()
-        launchObserving()
-        setupBasketButton()
-
+        initViewPager()
+        initFoodListRecyclerView()
+        initOnDestinationChangeListener()
+        initBasketButton()
     }
 
     override fun onDestroyView() {
@@ -51,35 +56,56 @@ class PlaceFragment : Fragment() {
         _binding = null
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun launchObserving() {
+    private fun initCurrentPlace() {
+        val place = args.place
+        placeViewModel.getIntoPlace(place)
+        if (placeViewModel.listOfFoodWithCategories.value.isNullOrEmpty()) {
+            placeViewModel.getFoodListById(place.id)
+        }
+    }
+
+    private fun initObserving() {
         placeViewModel.currentPlace.observe(viewLifecycleOwner) {
-            placeViewPagerAdapter.vpImages = it.gallery // Картинки в слайдере
+            placeViewPagerAdapter.setData(it.gallery) // Картинки в слайдере
+            setImageCounterText(binding.placeViewPager.currentItem + 1, it.gallery.size)
             binding.placeTextViewAddress.text = it.address // Адрес заведения
             placeViewPagerAdapter.notifyDataSetChanged()
         }
 
         placeViewModel.listOfFoodWithCategories.observe(viewLifecycleOwner) {
-            placeFoodListAdapter.foodList = it// Меню ресторана с категориями
+            placeFoodListAdapter.setData(it)// Меню ресторана с категориями
             placeFoodListAdapter.notifyDataSetChanged()
         }
     }
 
-    private fun setupCurrentPlace() {
-        val placeId = args.placeId
-        placeViewModel.getIntoPlace(placeId)
-        if (placeViewModel.listOfFoodWithCategories.value.isNullOrEmpty()) {
-            placeViewModel.getFoodListById(placeId)
-        }
-    }
-
-
-    private fun setupViewPager() {
+    private fun initViewPager() {
         placeViewPagerAdapter = PlaceSliderAdapter()
+
         binding.placeViewPager.adapter = placeViewPagerAdapter
+
+        binding.viewPagerCounter.text = placeViewPagerAdapter.itemCount.toString()
+        binding.placeViewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                setImageCounterText(
+                    binding.placeViewPager.currentItem + 1,
+                    placeViewPagerAdapter.itemCount
+                )
+            }
+        })
     }
 
-    private fun setupFoodListRecyclerView() {
+    private fun setImageCounterText(currentItem: Int, itemCount: Int) {
+        binding.viewPagerCounter.text =
+            resources.getString(
+                R.string.images_counter,
+                currentItem,
+                itemCount
+            )
+    }
+
+    private fun initFoodListRecyclerView() {
         placeFoodListAdapter = PlaceFoodListAdapter(placeViewModel)
         val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.foodItemsRv.layoutManager = layoutManager
@@ -88,28 +114,53 @@ class PlaceFragment : Fragment() {
 
     private fun initTabLayout() {
         placeViewModel.listOfCategories.observe(viewLifecycleOwner) {
+            binding.tabLayout.removeAllTabs()
             it.forEach { category ->
                 binding.tabLayout.addTab(
                     binding.tabLayout.newTab().setText(category.categoryName)
                 )
             }
-            initMediator()
+            initMediator(placeViewModel.getCategoriesIndexesList())
         }
     }
 
-    private fun initMediator() {
-        placeViewModel.listOfCategoriesIndexes.observe(viewLifecycleOwner) {
-            TabbedListMediator(
-                binding.foodItemsRv,
-                binding.tabLayout,
-                it,
-                true
-            ).attach()
-        }
+    private fun initMediator(newIndices: List<Int>) {
+        val tabbedListMediator = TabbedListMediator(
+            binding.foodItemsRv,
+            binding.tabLayout,
+            newIndices,
+            true
+        )
+        tabbedListMediator.attach()
+        tabbedListMediator.updateMediatorWithNewIndices(newIndices)
     }
 
-    private fun setupBasketButton() {
-        binding.basketButtonTemplate.apply {
+    private fun initBasketButton() {
+        placeViewModel.countedFoodList.observe(viewLifecycleOwner) {
+            val transition: Transition = Fade()
+            transition.duration = 300
+            transition.addTarget(binding.basketButtonTemplate.basketFullButton)
+            TransitionManager.beginDelayedTransition(binding.root, transition)
+
+            binding.basketButtonTemplate.basketFullButton.apply {
+                visibility = if (it.isNullOrEmpty()) {
+                    View.GONE
+                } else {
+                    View.VISIBLE
+                }
+            }
+        }
+
+        placeViewModel.run {
+            totalAmount.observe(viewLifecycleOwner) {
+                binding.basketButtonTemplate.amountInc.text = it.toString()
+            }
+            totalSum.observe(viewLifecycleOwner) {
+                binding.basketButtonTemplate.sumInc.text = it.toString()
+            }
+        }
+
+        binding.basketButtonTemplate.run {
             basketButtonInc.setOnClickListener {
                 val placeName = placeViewModel.currentPlace.value?.name
                 val placeAddress = placeViewModel.currentPlace.value?.address
@@ -119,6 +170,15 @@ class PlaceFragment : Fragment() {
                         placeAddress.toString()
                     )
                 )
+            }
+        }
+    }
+
+    private fun initOnDestinationChangeListener() {
+        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.mainFragment) {
+                placeViewModel.resetAmounts()
+                placeViewModel.resetListOfFoodWithCategories()
             }
         }
     }

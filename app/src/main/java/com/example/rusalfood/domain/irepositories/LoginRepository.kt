@@ -1,7 +1,11 @@
 package com.example.rusalfood.domain.irepositories
 
+import com.example.rusalfood.data.models.signUp.ApiSignUpResponse
+import com.example.rusalfood.data.models.user.ApiUserInfo
+import com.example.rusalfood.domain.models.User
+import retrofit2.Response
+
 interface LoginRepository {
-    suspend fun getAuthToken(login: String, password: String): String?
-    suspend fun checkIsEmailAvailable(email: String): Boolean
-    suspend fun signUpAndGetAuthToken(login: String, password: String): String
+    suspend fun signUp(userInfo: User): Response<ApiSignUpResponse>
+    suspend fun getAuthToken(userInfo: User): Response<ApiUserInfo>
 }

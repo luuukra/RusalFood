@@ -59,6 +59,9 @@
             android:name="isAuthorized"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_mainFragment_to_ordersFragment"
+            app:destination="@id/ordersFragment" />
     </fragment>
 
     <fragment
@@ -73,17 +76,13 @@
             android:name="placeName"
             app:argType="string" />
         <argument
-            android:name="placeId"
-            app:argType="integer" />
+            android:name="place"
+            app:argType="com.example.rusalfood.domain.models.Place" />
         <action
             android:id="@+id/action_placeFragment_to_basketFragment"
             app:destination="@id/basketFragment" />
+
     </fragment>
-    <fragment
-        android:id="@+id/myOrdersFragment"
-        android:name="com.example.rusalfood.presentation.my_orders_fragment.MyOrdersFragment"
-        android:label="@string/bottom_nav_orders_history"
-        tools:layout="@layout/orders_history_fragment"/>
 
     <fragment
         android:id="@+id/basketFragment"
@@ -98,6 +97,34 @@
             app:argType="string" />
         <argument
             android:name="placeAddress"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="com.example.rusalfood.presentation.orders_fragment.OrdersFragment"
+        android:label="@string/orders_header"
+        tools:layout="@layout/fragment_orders">
+        <action
+            android:id="@+id/action_ordersFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_ordersFragment_to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.example.rusalfood.presentation.order_details_fragment.OrderDetailsFragment"
+        android:label="OrderDetailsFragment" >
+        <action
+            android:id="@+id/action_orderDetailsFragment_to_ordersFragment"
+            app:destination="@id/ordersFragment" />
+        <argument
+            android:name="orderId"
+            app:argType="integer" />
+        <argument
+            android:name="orderAddress"
             app:argType="string" />
     </fragment>
 

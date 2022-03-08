@@ -65,12 +65,6 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <ProgressBar
-            android:id="@+id/login_progress_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="invisible" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/next_button"
             android:layout_width="160dp"
@@ -79,8 +73,8 @@
             android:layout_marginBottom="20dp"
             android:enabled="false"
             android:text="@string/Next_button"
-            style="@style/basic_mtrl_btn_style"
-            app:backgroundTint="@color/mtrl_btn_red_bg_color_selector" />
+            style="@style/basic_btn_style"
+            app:backgroundTint="@color/btn_red_bg_color_selector" />
 
     </FrameLayout>
 

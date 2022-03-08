@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
@@ -14,12 +13,12 @@ import com.example.rusalfood.databinding.ItemRecyclerviewFoodItemCategoryBinding
 import com.example.rusalfood.domain.models.Food
 
 
-class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel) :
+class PlaceFoodListAdapter(
+    private val placeViewModel: PlaceViewModel,
+) :
     RecyclerView.Adapter<PlaceFoodListAdapter.PlaceFoodListHolder>() {
 
-    var foodList = emptyList<Food>()
-    var foodCategories = MutableLiveData<List<Food.FoodCategory>>()
-
+    private val foodList = mutableListOf<Food>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceFoodListHolder {
         return when (viewType) {
@@ -35,7 +34,7 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel) :
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                ), placeViewModel = placeViewModel,
+                ), placeViewModel = placeViewModel
             )
             else -> throw IllegalArgumentException("Invalid type")
         }
@@ -59,6 +58,12 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel) :
         }
     }
 
+    fun setData(newFoodList: List<Food>) {
+        foodList.run {
+            clear()
+            addAll(newFoodList)
+        }
+    }
 
     /*fun setData(newFoodCategoryList: List<FoodCategory>){
         val diffUtils = FoodCatDiffUtils(foodCategoryList, newFoodCategoryList)
@@ -73,7 +78,7 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel) :
         class PlaceFoodCategoriesHolder(private val binding: ItemRecyclerviewFoodItemCategoryBinding) :
             PlaceFoodListHolder(binding) {
             fun bind(foodCategory: Food.FoodCategory) {
-                binding.apply {
+                binding.run {
                     categoryNameTv.text = foodCategory.categoryName
                 }
             }
@@ -82,31 +87,32 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel) :
         class PlaceFoodItemsHolder(
             private val binding: ItemRecyclerviewFoodItemBinding,
             private val placeViewModel: PlaceViewModel
-            ) :
+        ) :
             PlaceFoodListHolder(binding) {
             fun bind(foodItem: Food.FoodItem) {
-                binding.apply {
+                binding.run {
                     foodName.text = foodItem.foodName
-                    foodDescription.text = foodItem.foodDesc
+                    if (foodItem.foodDesc.isEmpty()) foodDescription.visibility = View.GONE
+                    else foodDescription.text = foodItem.foodDesc
                     foodPrice.text = foodItem.foodPrice.toString()
-                    if(foodItem.foodImage == "") cardView.visibility = View.GONE
+                    if (foodItem.foodImage.isEmpty()) cardView.visibility = View.GONE
                     else Glide.with(foodImage.context)
                         .load(foodItem.foodImage)
                         .into(foodImage)
 
-                    placeViewModel.listOfFoodWithCategories.value!![bindingAdapterPosition].apply {
+                    placeViewModel.listOfFoodWithCategories.value!![bindingAdapterPosition].run {
                         if (this is Food.FoodItem) {
                             foodTextViewAmount.text = this.foodAmount.toString()
                         }
                     }
 
                     foodButtonPlus.setOnClickListener {
-                        placeViewModel.amountIncrease(bindingAdapterPosition)
+                        placeViewModel.amountIncreaseInPlace(bindingAdapterPosition)
                         bindingAdapter?.notifyItemChanged(bindingAdapterPosition)
                     }
 
                     foodButtonMinus.setOnClickListener {
-                        placeViewModel.amountDecrease(bindingAdapterPosition)
+                        placeViewModel.amountDecreaseInPlace(bindingAdapterPosition)
                         bindingAdapter?.notifyItemChanged(bindingAdapterPosition)
                     }
                 }
@@ -114,7 +120,6 @@ class PlaceFoodListAdapter(private val placeViewModel: PlaceViewModel) :
         }
 
     }
-
 
     interface OnItemClickListener {
         fun onItemClick(textView: TextView)

@@ -17,29 +17,50 @@
     // Main
     <string name="main_header">Заказ с собой</string>
 
-    // Place
-    <string name="place_counter_m" translatable="false">1/22</string>
-    <string name="place_name_h">Название</string>
-    <string name="place_address_h">Адрес</string>
-    <string name="place_category_h">Категория</string>
+    //Place Fragment
+    <string name="images_counter" translatable="false">%1$d/%2$d</string>
 
     // Basket
     <string name="basket_basket">Корзина</string>
     <string name="basket_header">Мой заказ</string>
-    <string name="basket_total_h">Итого</string>
-    <string name="basket_sum_h" translatable="false">9 999</string>
-    <string name="basket_sum_h_2" translatable="false">0</string>
+    <string name="basket_total">Итого</string>
     <string name="basket_pay_button">Оплатить</string>
 
-    <string name="basket_food_name_h">Продукт</string>
-    <string name="basket_food_desc_h">Описание продукта</string>
-    <string name="basket_food_price_h">Цена</string>
+    // Orders
+    <string name="orders_header">Мои заказы</string>
+    <string name="orders_status">Статус - </string>
+    <string name="orders_date">Дата</string>
+    <string name="orders_number">Номер заказа</string>
 
-    <string name="basket_button_template_amount">2 шт.</string>
-    <string name="basket_button_template_sum" translatable="false">1 600 ₸</string>
+    <string name="orders_sign_in">Войдите в свой аккаунт</string>
+    <string name="orders_sign_in_req">Необходимо войти в свой аккаунт, чтобы увидеть историю заказов</string>
+    <string name="orders_sign_in_btn">Войти</string>
+
+    // Order Details
+    <string name="order_details_header">Детали заказа</string>
+    <string name="order_details_positions">Позиции в заказе</string>
+    <string name="order_details_status">Статус заказа</string>
 
     //Bottom Nav Bar
     <string name="bottom_nav_main">Главная</string>
     <string name="bottom_nav_orders_history">Мои заказы</string>
     <string name="bottom_nav_rakhmet">Рахмет</string>
+
+    // Hints
+    <string name="hints_name">Название</string>
+    <string name="hints_address">Адрес</string>
+    <string name="hints_category">Категория</string>
+    <string name="hints_product">Продукт</string>
+    <string name="hints_description">Описание</string>
+    <string name="hints_price">Цена</string>
+    <string name="hints_price_count">2 шт.</string>
+    <string name="hints_status_done">Готов</string>
+    <string name="hints_status_pending">В обработке</string>
+
+    <string name="hints_sum_1" translatable="false">9 999</string>
+    <string name="hints_sum_2" translatable="false">0</string>
+    <string name="hints_gallery_counter" translatable="false">1/22</string>
+    <string name="hints_date" translatable="false">15.12.2021, 10:44</string>
+    <string name="hints_range">1.8 км.</string>
+
 </resources>

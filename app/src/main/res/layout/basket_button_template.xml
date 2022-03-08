@@ -3,14 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="72dp">
+    android:layout_height="72dp"
+    android:id="@+id/basket_full_button"
+    android:visibility="gone">
 
     <TextView
         android:id="@+id/amount_inc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="100dp"
-        android:text="@string/basket_button_template_amount"
+        android:text="@string/hints_sum_1"
         android:textColor="#80FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -26,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="100dp"
-        android:text="@string/basket_button_template_sum"
+        android:text="@string/hints_sum_1"
         android:textColor="#80FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"

@@ -1,27 +1,28 @@
 package com.example.rusalfood.data.repositories
 
-import com.example.rusalfood.data.models.ProductCategory
-import com.example.rusalfood.data.network.MockData
+import com.example.rusalfood.data.models.MockOrder
+import com.example.rusalfood.data.network.IMockOrders
 import com.example.rusalfood.data.network.MockFoodListData
+import com.example.rusalfood.data.network.RetrofitService
 import com.example.rusalfood.domain.irepositories.MainRepository
-import com.example.rusalfood.domain.models.Place
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(
-    private val mockData: MockData,
-    private val mockFoodListData: MockFoodListData
+    private val retrofitService: RetrofitService,
+    private val mockOrders: IMockOrders,
 ) : MainRepository {
 
-    override suspend fun displayAllPlaces(): List<Place> {
-        return mockData.placesList
+    override suspend fun getAllPlaces() = retrofitService.getAllPlaces()
+
+    override suspend fun getPlaceFoodList(placeId: Int) = retrofitService.getFoodListById(placeId)
+
+    override suspend fun getOrdersList(): List<MockOrder> {
+        return mockOrders.getOrdersList()
     }
 
-    override suspend fun getIntoPlace(placeId: Int): Place {
-        return mockData.placesList[placeId]
+    override suspend fun getOrderById(orderId: Int): MockOrder {
+        return mockOrders.getOrderById(orderId)
     }
 
-    override suspend fun getPlaceFoodList(placeId: Int): List<ProductCategory> {
-        return mockFoodListData.foodListByPlaceId[placeId]!!
-    }
 
 }

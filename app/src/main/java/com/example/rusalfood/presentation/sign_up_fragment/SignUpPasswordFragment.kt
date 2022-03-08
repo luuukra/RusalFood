@@ -2,6 +2,8 @@ package com.example.rusalfood.presentation.sign_up_fragment
 
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +23,8 @@ class SignUpPasswordFragment : Fragment() {
 
     companion object {
         fun newInstance() = SignUpPasswordFragment()
-        const val AUTH_OK = "Registration and Authentication successful"
+        const val SIGN_UP_OK_CODE = 200
+        const val SIGN_UP_ERROR_CODE = 422
     }
 
     override fun onCreateView(
@@ -34,17 +37,27 @@ class SignUpPasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupTextChangedListeners()
-        setupClickListeners()
-        setupObserving()
+        initTextChangedListeners()
+        initClickListeners()
+        initObserving()
     }
 
-    private fun setupTextChangedListeners() {
-        binding.signUpPasswordField.addTextChangedListener(signUpViewModel.passwordAfterTextChangedListener)
+    private fun initTextChangedListeners() {
+        binding.signUpPasswordField.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                signUpViewModel.checkPasswordInput(s)
+            }
+        })
     }
 
 
-    private fun setupClickListeners() {
+    private fun initClickListeners() {
         binding.nextButton.setOnClickListener {
             binding.loginProgressBar.visibility = ProgressBar.VISIBLE
             signUpViewModel.signUpAndGetToken(
@@ -54,18 +67,18 @@ class SignUpPasswordFragment : Fragment() {
         }
     }
 
-    private fun setupObserving() {
+    private fun initObserving() {
         signUpViewModel.isPasswordInputCorrect.observe(viewLifecycleOwner) {
             binding.nextButton.isEnabled = it
         }
 
         signUpViewModel.signUpResponse.observe(viewLifecycleOwner) {
             Toast.makeText(
-                activity, signUpViewModel.signUpResponse.value, Toast.LENGTH_SHORT
+                activity, signUpViewModel.signUpResponse.value?.message, Toast.LENGTH_SHORT
             ).show()
-            //binding.loginProgressBar.visibility = ProgressBar.VISIBLE todo when real error reply will be available
+            //binding.loginProgressBar.visibility = ProgressBar.VISIBLE todo when real reply error will be available
 
-            if (it.equals(AUTH_OK))
+            if (it.code == SIGN_UP_OK_CODE)
                 findNavController()
                     .navigate(SignUpPasswordFragmentDirections.toMainFragment(true))
         }
