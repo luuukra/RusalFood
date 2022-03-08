@@ -1,29 +1,37 @@
 package com.example.rusalfood.domain.usecases
 
+import android.content.SharedPreferences
+import androidx.security.crypto.MasterKey
 import com.example.rusalfood.domain.irepositories.LoginRepository
+import com.example.rusalfood.domain.models.SignInResponse
+import com.example.rusalfood.domain.models.User
 import javax.inject.Inject
 
+
 interface SignInUseCase {
-    suspend operator fun invoke(login: String, password: String): String
+    suspend operator fun invoke(sharedPref: SharedPreferences, login: String, password: String): SignInResponse
 }
 
 class SignInUseCaseImpl @Inject constructor(private val loginRepository: LoginRepository) :
     SignInUseCase {
 
-    companion object {
-        const val AUTH_OK = "Authentication successful"
-        const val AUTH_ERROR = "Authentication error: incorrect email or login"
-        const val ERROR_CODE = "0"
-    }
+    override suspend operator fun invoke(sharedPref: SharedPreferences, login: String, password: String): SignInResponse {
+        val response = loginRepository.getAuthToken(User(login, password))
+        if(response.isSuccessful) {
+            sharedPref
+                .edit()
+                .putString("token", response.body()?.data?.accessToken)
+                .apply()
+        }
+        return response.body()!!.mapToSignInResponse(response.code())
 
-    override suspend operator fun invoke(login: String, password: String): String {
-        val token = loginRepository.getAuthToken(login, password)
-        return if (token != ERROR_CODE) {
+
+       /* return if (token != ERROR_CODE) {
             //token to encryptedSharedPref
             AUTH_OK
         } else {
             AUTH_ERROR
-        }
+        }*/
 
     }
 }

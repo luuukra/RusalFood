@@ -2,7 +2,7 @@ package com.example.rusalfood.data.models.signUp
 
 import com.example.rusalfood.domain.models.SignUpResponse
 
-data class APISignUpResponse(
+data class ApiSignUpResponse(
     val message: String
 ) {
     fun mapToDomainSignUpResponse(code: Int) =
