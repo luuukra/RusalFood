@@ -7,32 +7,34 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.rusalfood.R
 import com.example.rusalfood.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    private lateinit var binding: ActivityMainBinding
+    private val binding by viewBinding(ActivityMainBinding::bind, R.id.container)
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setupNavigator()
+        with(binding) {
+            fragmentContainerView
+        }
+        initNavigator()
         binding.bottomNav.setupWithNavController(navController)
     }
 
-    private fun setupNavigator() {
+    private fun initNavigator() {
         val navHost =
             supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         navController = navHost.navController
         NavigationUI.setupActionBarWithNavController(this, navController)
-        setDestinationChangeListener()
+        initDestinationChangeListener()
 
     }
 
-    private fun setDestinationChangeListener() {
+    private fun initDestinationChangeListener() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.signInFragment || destination.id == R.id.signUpLoginFragment || destination.id == R.id.signUpPasswordFragment) {
                 binding.bottomNav.visibility = View.GONE

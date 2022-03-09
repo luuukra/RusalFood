@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.transition.Fade
 import android.transition.Transition
 import android.transition.TransitionManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -15,30 +12,21 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ahmadhamwi.tabsync.TabbedListMediator
 import com.example.rusalfood.R
 import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
 
 
-class PlaceFragment : Fragment() {
+class PlaceFragment : Fragment(R.layout.fragment_place) {
 
-    private var _binding: FragmentPlaceBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentPlaceBinding::bind)
     private val args: PlaceFragmentArgs by navArgs()
     private lateinit var placeViewPagerAdapter: PlaceSliderAdapter
     private lateinit var placeFoodListAdapter: PlaceFoodListAdapter
 
     private val placeViewModel: PlaceViewModel by activityViewModels { requireContext().appComponent.placeViewModelFactory() }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentPlaceBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,11 +37,6 @@ class PlaceFragment : Fragment() {
         initFoodListRecyclerView()
         initOnDestinationChangeListener()
         initBasketButton()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun initCurrentPlace() {

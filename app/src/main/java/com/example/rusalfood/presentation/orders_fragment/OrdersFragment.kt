@@ -8,23 +8,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.rusalfood.R
 
 import com.example.rusalfood.databinding.FragmentOrdersBinding
+import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
 
-class OrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener {
+class OrdersFragment : Fragment(R.layout.fragment_orders), OrdersAdapter.OnItemClickListener {
 
-    private var _binding: FragmentOrdersBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentOrdersBinding::bind)
     private lateinit var ordersAdapter: OrdersAdapter
 
     private val ordersViewModel: OrdersViewModel by viewModels { requireContext().appComponent.ordersViewModelFactory() }
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentOrdersBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,8 +49,4 @@ class OrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener {
         ordersViewModel.navToOrderDetailsFragment(orderId, orderAddress)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }
