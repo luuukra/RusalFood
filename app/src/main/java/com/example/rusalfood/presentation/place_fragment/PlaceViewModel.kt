@@ -44,8 +44,7 @@ class PlaceViewModel(
 
 
     // Basket Clicks & Food Amounts
-    private val _countedFoodList = MutableLiveData<List<Food.FoodItem>>()
-    val countedFoodList: LiveData<List<Food.FoodItem>> = _countedFoodList
+
 
     private val _totalAmount = MutableLiveData<Int>()
     val totalAmount: LiveData<Int> = _totalAmount
@@ -58,6 +57,12 @@ class PlaceViewModel(
         _totalSum.value = _countedFoodList.value?.sumOf { it.foodAmount * it.foodPrice }
     }
 
+
+
+
+    private val _countedFoodList = MutableLiveData<List<Food.FoodItem>>()
+    val countedFoodList: LiveData<List<Food.FoodItem>> = _countedFoodList
+
     private fun setCountedList() {
         _countedFoodList.let { list ->
             list.value = _listOfFoodWithCategories.value!!.filterNot { food ->
@@ -67,6 +72,9 @@ class PlaceViewModel(
                 .filter { it.foodAmount > 0 }
         }
     }
+
+
+
 
 
     fun amountIncreaseInPlace(currentPosition: Int) {

@@ -15,8 +15,15 @@ interface VMModule {
     @Binds
     fun bindLoginRepositoryImplToLoginRepository(loginRepositoryImpl: LoginRepositoryImpl): LoginRepository
 
+
+
+
+
+    // Binds Implementation
     @Singleton
     @Binds
-    fun bindMainRepositoryImplToMainRepository(mainRepositoryImpl: MainRepositoryImpl): MainRepository
+    fun bindMainRepositoryImplToMainRepository(
+                mainRepositoryImpl: MainRepositoryImpl
+    ): MainRepository
 
 }

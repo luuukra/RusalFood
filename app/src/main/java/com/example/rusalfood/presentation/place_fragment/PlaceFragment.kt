@@ -61,7 +61,7 @@ class PlaceFragment : Fragment() {
         initFoodListRecyclerView()
         initOnDestinationChangeListener()
         initBasketButton()
-        initBasketAvailability()
+//        initBasketAvailability()
     }
 
     override fun onDestroyView() {
@@ -156,18 +156,18 @@ class PlaceFragment : Fragment() {
     }
 
 
-    private fun initBasketAvailability() {
-        if (!args.authStatus) {
-            binding.basketButtonTemplate.basketButtonInc.run {
-                isEnabled = false
-                isClickable = false
-                setBackgroundColor(Color.parseColor("#BBDEFF"))
-                setOnClickListener {
-                    Toast.makeText(requireContext(), "Please, sign in", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
+//    private fun initBasketAvailability() {
+//        if (!args.authStatus) {
+//            binding.basketButtonTemplate.basketButtonInc.run {
+//                isEnabled = false
+//                isClickable = false
+//                setBackgroundColor(Color.parseColor("#BBDEFF"))
+//                setOnClickListener {
+//                    Toast.makeText(requireContext(), "Please, sign in", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
+//    }
 
     private fun initBasketButton() {
         placeViewModel.countedFoodList.observe(viewLifecycleOwner) {

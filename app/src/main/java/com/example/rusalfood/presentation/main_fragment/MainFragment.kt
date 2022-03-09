@@ -20,7 +20,12 @@ class MainFragment : Fragment(), MainAdapter.OnItemClickListener {
     private val binding get() = _binding!!
     private lateinit var mainAdapter: MainAdapter
 
-    private val mainViewModel: MainViewModel by viewModels { requireContext().appComponent.mainViewModelFactory() }
+
+    // View Model & Factory Injection
+    private val mainViewModel: MainViewModel by viewModels {
+        requireContext().appComponent.mainViewModelFactory()
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,

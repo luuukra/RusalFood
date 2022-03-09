@@ -28,6 +28,7 @@
         android:textColor="@color/rv_item_name_color"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:paddingStart="16dp"
         tools:text="Food Name" />
 
     <TextView
@@ -37,6 +38,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/blue"
         android:textSize="18sp"
+        android:paddingStart="16dp"
         tools:ignore="MissingConstraints"
         tools:text="price" />
 

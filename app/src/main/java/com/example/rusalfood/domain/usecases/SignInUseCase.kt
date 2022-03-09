@@ -3,12 +3,16 @@ package com.example.rusalfood.domain.usecases
 import com.example.rusalfood.domain.irepositories.LoginRepository
 import javax.inject.Inject
 
+//Constructor-Inject
 interface SignInUseCase {
     suspend operator fun invoke(login: String, password: String): String
 }
 
-class SignInUseCaseImpl @Inject constructor(private val loginRepository: LoginRepository) :
-    SignInUseCase {
+class SignInUseCaseImpl @Inject constructor(
+    private val loginRepository: LoginRepository
+    ) : SignInUseCase {
+
+
 
     companion object {
         const val AUTH_OK = "Authentication successful"
