@@ -156,6 +156,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:elevation="5dp"
+        android:indeterminateTint="@color/progress_bar_color"
+        android:progressTintMode="src_over"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline_end"
