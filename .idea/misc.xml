@@ -20,8 +20,8 @@
         <entry key="..\:/Users/01/Desktop/git_hub_gb_homeworks/RusalFood/app/src/main/res/layout/main_activity.xml" value="0.1" />
         <entry key="..\:/Users/01/Desktop/git_hub_gb_homeworks/RusalFood/app/src/main/res/layout/main_fragment_mock.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/01/Desktop/git_hub_gb_homeworks/RusalFood/app/src/main/res/layout/orders_history_fragment.xml" value="0.17552083333333332" />
-        <entry key="..\:/Users/01/Desktop/git_hub_gb_homeworks/RusalFood/app/src/main/res/layout/sign_in_fragment.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/01/Desktop/git_hub_gb_homeworks/RusalFood/app/src/main/res/layout/sign_up_login_fragment.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/01/Desktop/git_hub_gb_homeworks/RusalFood/app/src/main/res/layout/sign_in_fragment.xml" value="0.22" />
+        <entry key="..\:/Users/01/Desktop/git_hub_gb_homeworks/RusalFood/app/src/main/res/layout/sign_up_login_fragment.xml" value="0.22" />
         <entry key="..\:/Users/01/Desktop/git_hub_gb_homeworks/RusalFood/app/src/main/res/layout/sign_up_password_fragment.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/01/Desktop/git_hub_gb_homeworks/RusalFood/app/src/main/res/menu/bottom_nav_menu.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/01/Desktop/git_hub_gb_homeworks/RusalFood/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.107" />
@@ -31,6 +31,7 @@
         <entry key="..\:/Users/01/Desktop/git_hub_gb_homeworks/RusalFood/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.107" />
         <entry key="..\:/Users/01/Desktop/git_hub_gb_homeworks/RusalFood/app/src/main/res/mipmap-anydpi-v26/ic_launcher_rusal.xml" value="0.1025" />
         <entry key="..\:/Users/01/Desktop/git_hub_gb_homeworks/RusalFood/app/src/main/res/mipmap-anydpi-v26/ic_launcher_rusal_green.xml" value="0.1025" />
+        <entry key="..\:/Users/01/Desktop/git_hub_gb_homeworks/RusalFood/app/src/main/res/mipmap-anydpi-v26/ic_launcher_rusal_green_round.xml" value="0.1085" />
         <entry key="app/src/main/res/drawable-v24/ic_button_decrease.xml" value="0.38871794871794874" />
         <entry key="app/src/main/res/drawable/ic_backgroundof_btns.xml" value="0.38871794871794874" />
         <entry key="app/src/main/res/drawable/ic_button_background.xml" value="0.38871794871794874" />

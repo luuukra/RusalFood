@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Rusal Food</string>
+    <string name="app_caption" translatable="false">RUSAL</string>
+
 
     //SignIn\SignUp screens
     <string name="sign_up">Регистрация</string>
@@ -62,5 +64,8 @@
     <string name="hints_gallery_counter" translatable="false">1/22</string>
     <string name="hints_date" translatable="false">15.12.2021, 10:44</string>
     <string name="hints_range">1.8 км.</string>
+
+
+    <string name="null_str" translatable="false">null</string>
 
 </resources>

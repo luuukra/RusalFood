@@ -12,6 +12,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.rusalfood.R
 import com.example.rusalfood.databinding.SignUpPasswordFragmentBinding
@@ -25,6 +27,8 @@ class SignUpPasswordFragment : Fragment(R.layout.sign_up_password_fragment) {
 
     companion object {
         fun newInstance() = SignUpPasswordFragment()
+        const val SIGN_IN_OK_CODE = 200
+        //const val SIGN_IN_ERROR_CODE = 401
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,7 +36,7 @@ class SignUpPasswordFragment : Fragment(R.layout.sign_up_password_fragment) {
         initTextChangedListeners()
         initClickListeners()
         initObserving()
-        initSharedPref()
+        initEncryptedSharedPref()
     }
 
     private fun initTextChangedListeners() {
@@ -81,16 +85,22 @@ class SignUpPasswordFragment : Fragment(R.layout.sign_up_password_fragment) {
                 .show()
             binding.loginProgressBar.visibility = ProgressBar.GONE
             //println(sharedPref.getString("token", null))
+            if(it.code == SIGN_IN_OK_CODE)
+                findNavController().navigate(SignUpPasswordFragmentDirections.toMainFragment(true))
         }
 
-        signUpViewModel.navDirection.observe(viewLifecycleOwner) {
-            findNavController().navigate(it)
-        }
     }
 
-    private fun initSharedPref() {
-        sharedPref =
-            requireContext().getSharedPreferences("encrypted_shared_pref", Context.MODE_PRIVATE)
+    private fun initEncryptedSharedPref() {
+        val masterKey = MasterKey.Builder(requireContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
+        sharedPref = EncryptedSharedPreferences.create(
+            requireContext(),
+            "encrypted_shared_pref",
+            masterKey,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
     }
 
 }

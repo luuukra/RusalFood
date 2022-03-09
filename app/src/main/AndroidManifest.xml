@@ -8,9 +8,9 @@
     <application
         android:name=".di.RusalApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_ra"
+        android:icon="@mipmap/ic_launcher_trident_final"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_ra_round"
+        android:roundIcon="@mipmap/ic_launcher_trident_final_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.RusalFood"

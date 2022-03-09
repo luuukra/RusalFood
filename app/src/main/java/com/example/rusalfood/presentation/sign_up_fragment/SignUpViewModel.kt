@@ -34,13 +34,7 @@ class SignUpViewModel(
     private val _isPasswordInputCorrect = MutableLiveData<Boolean>()
     val isPasswordInputCorrect: LiveData<Boolean> = _isPasswordInputCorrect
 
-    private val _navDirection: MutableLiveData<NavDirections> = MutableLiveData()
-    val navDirection: LiveData<NavDirections> = _navDirection
-
     companion object {
-        const val SIGN_IN_OK_CODE = 200
-
-        //const val SIGN_IN_ERROR_CODE = 401
         const val SIGN_UP_OK_CODE = 200
         //const val SIGN_UP_ERROR_CODE = 422
     }
@@ -75,13 +69,5 @@ class SignUpViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val apiResponse = signInUseCase(sharedPref, login, password)
             _signInResponse.postValue(apiResponse)
-
-            if (apiResponse.code == SIGN_IN_OK_CODE)
-                _navDirection.postValue((SignUpPasswordFragmentDirections.toMainFragment(true)))
         }
-
-    fun navToPasswordFragment(password: String) {
-        _navDirection.postValue(SignUpLoginFragmentDirections.toSignUpPasswordScreen(password))
-    }
-
 }

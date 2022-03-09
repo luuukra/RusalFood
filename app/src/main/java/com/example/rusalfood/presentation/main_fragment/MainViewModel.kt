@@ -25,24 +25,12 @@ class MainViewModel(
     private val _isAuthorized = MutableLiveData<Boolean>()
     val isAuthorized = _isAuthorized
 
-    private val _navDirection: MutableLiveData<NavDirections> = MutableLiveData()
-    val navDirection: LiveData<NavDirections> = _navDirection
-
     private fun displayAllPlaces() = viewModelScope.launch(Dispatchers.IO) {
         val allPlaces = getAllPlacesUseCase()
         _placesList.postValue(allPlaces)
     }
 
-    fun navToPlaceFragment(placeName: String, placeId: Int) {
-        _navDirection.postValue(
-            MainFragmentDirections.actionMainFragmentToPlaceFragment(
-                placeName,
-                getClickedPlace(placeId)
-            )
-        )
-    }
-
-    private fun getClickedPlace(placeId: Int): Place {
+    fun getClickedPlace(placeId: Int): Place {
         var place =
             placesList.value?.data?.single() {
                 it.id == placeId

@@ -27,9 +27,6 @@ class OrdersViewModel(
     private val _currentOrder = MutableLiveData<MockOrder>()
     val currentOrder: LiveData<MockOrder> = _currentOrder
 
-    private val _navDirection: MutableLiveData<NavDirections> = MutableLiveData()
-    val navDirection: LiveData<NavDirections> = _navDirection
-
     private fun displayAllOrders() = viewModelScope.launch(Dispatchers.IO) {
         val orders = getOrdersListUseCase()
         _listOrders.postValue(orders)
@@ -39,11 +36,4 @@ class OrdersViewModel(
         val order = getOrderByIdUseCase(orderId)
         _currentOrder.postValue(order)
     }
-
-    fun navToOrderDetailsFragment(orderId: Int, orderAddress: String) {
-        _navDirection.postValue(
-            OrdersFragmentDirections.actionOrdersFragmentToOrderDetailsFragment(orderId, orderAddress)
-            )
-    }
-
 }

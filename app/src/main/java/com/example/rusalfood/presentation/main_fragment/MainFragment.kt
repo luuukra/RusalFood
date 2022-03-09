@@ -43,10 +43,6 @@ class MainFragment : Fragment(R.layout.fragment_main), MainAdapter.OnItemClickLi
                 }
             }
         }
-
-        mainViewModel.navDirection.observe(viewLifecycleOwner) {
-            findNavController().navigate(it)
-        }
     }
 
     private fun showRecyclerView() {
@@ -65,6 +61,11 @@ class MainFragment : Fragment(R.layout.fragment_main), MainAdapter.OnItemClickLi
     }
 
     override fun onItemClick(position: Int, placeName: String, placeId: Int) {
-        mainViewModel.navToPlaceFragment(placeName, placeId)
+        findNavController().navigate(
+            MainFragmentDirections.actionMainFragmentToPlaceFragment(
+                placeName,
+                mainViewModel.getClickedPlace(placeId)
+            )
+        )
     }
 }
