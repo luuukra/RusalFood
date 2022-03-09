@@ -95,4 +95,7 @@ dependencies {
     // Tab sync with RV
     implementation 'io.github.ahmad-hamwi:tabsync:1.0.1'
 
+    //ViewBindingPropertyDelegate
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3'
+
 }

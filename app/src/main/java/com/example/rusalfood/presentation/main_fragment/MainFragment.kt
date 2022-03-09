@@ -1,47 +1,29 @@
 package com.example.rusalfood.presentation.main_fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.rusalfood.R
 import com.example.rusalfood.databinding.FragmentMainBinding
 import com.example.rusalfood.di.appComponent
 import com.example.rusalfood.domain.models.Resource
 
-class MainFragment : Fragment(), MainAdapter.OnItemClickListener {
+class MainFragment : Fragment(R.layout.fragment_main), MainAdapter.OnItemClickListener {
 
-    private var _binding: FragmentMainBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentMainBinding::bind)
     private lateinit var mainAdapter: MainAdapter
 
     private val mainViewModel: MainViewModel by viewModels { requireContext().appComponent.mainViewModelFactory() }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
         initAuthorizationFlag()
         initObserving()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun initAuthorizationFlag() {

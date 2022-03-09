@@ -5,9 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -15,27 +13,19 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.rusalfood.R
 import com.example.rusalfood.databinding.SignInFragmentBinding
 import com.example.rusalfood.di.appComponent
 
-class SignInFragment : Fragment() {
+class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
-    private var _binding: SignInFragmentBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(SignInFragmentBinding::bind)
     private val signInViewModel: SignInViewModel by viewModels { requireContext().appComponent.signInViewModelFactory() }
     private lateinit var sharedPref: SharedPreferences
 
     companion object {
         fun newInstance() = SignInFragment()
-    }
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = SignInFragmentBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -106,10 +96,5 @@ class SignInFragment : Fragment() {
         signInViewModel.navDirection.observe(viewLifecycleOwner) {
             findNavController().navigate(it)
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

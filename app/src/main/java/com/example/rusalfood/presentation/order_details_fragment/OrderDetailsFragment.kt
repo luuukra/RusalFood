@@ -7,37 +7,25 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.rusalfood.R
 import com.example.rusalfood.databinding.FragmentOrderDetailsBinding
+import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
 import com.example.rusalfood.presentation.orders_fragment.OrdersViewModel
 
-class OrderDetailsFragment : Fragment() {
+class OrderDetailsFragment : Fragment(R.layout.fragment_order_details) {
 
-    private var _binding: FragmentOrderDetailsBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentOrderDetailsBinding::bind)
 
     private val args: OrderDetailsFragmentArgs by navArgs()
 
     private val ordersViewModel: OrdersViewModel by viewModels { requireContext().appComponent.ordersViewModelFactory() }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentOrderDetailsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initCurrentDetails()
         initObserve()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun initObserve() {
