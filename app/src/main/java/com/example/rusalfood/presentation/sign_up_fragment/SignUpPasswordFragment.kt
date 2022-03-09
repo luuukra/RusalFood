@@ -23,7 +23,6 @@ class SignUpPasswordFragment : Fragment(R.layout.sign_up_password_fragment) {
 
     private val binding by viewBinding(SignUpPasswordFragmentBinding::bind)
     private val signUpViewModel: SignUpViewModel by viewModels { requireContext().appComponent.signUpViewModelFactory() }
-    private lateinit var sharedPref: SharedPreferences
 
     companion object {
         fun newInstance() = SignUpPasswordFragment()
@@ -36,7 +35,6 @@ class SignUpPasswordFragment : Fragment(R.layout.sign_up_password_fragment) {
         initTextChangedListeners()
         initClickListeners()
         initObserving()
-        initEncryptedSharedPref()
     }
 
     private fun initTextChangedListeners() {
@@ -57,7 +55,6 @@ class SignUpPasswordFragment : Fragment(R.layout.sign_up_password_fragment) {
         binding.nextButton.setOnClickListener {
             binding.loginProgressBar.visibility = ProgressBar.VISIBLE
             signUpViewModel.signUp(
-                sharedPref,
                 requireArguments().getString("email").toString(),
                 binding.signUpPasswordField.text.toString()
             )
@@ -89,18 +86,6 @@ class SignUpPasswordFragment : Fragment(R.layout.sign_up_password_fragment) {
                 findNavController().navigate(SignUpPasswordFragmentDirections.toMainFragment(true))
         }
 
-    }
-
-    private fun initEncryptedSharedPref() {
-        val masterKey = MasterKey.Builder(requireContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
-        sharedPref = EncryptedSharedPreferences.create(
-            requireContext(),
-            "encrypted_shared_pref",
-            masterKey,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
     }
 
 }

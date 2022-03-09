@@ -22,7 +22,6 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
     private val binding by viewBinding(SignInFragmentBinding::bind)
     private val signInViewModel: SignInViewModel by viewModels { requireContext().appComponent.signInViewModelFactory() }
-    private lateinit var sharedPref: SharedPreferences
 
     companion object {
         fun newInstance() = SignInFragment()
@@ -34,7 +33,6 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         super.onViewCreated(view, savedInstanceState)
         initTextChangedListeners()
         initClickListeners()
-        initEncryptedSharedPref()
         initObserving()
     }
 
@@ -52,23 +50,10 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         })
     }
 
-    private fun initEncryptedSharedPref() {
-        val masterKey = MasterKey.Builder(requireContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
-        sharedPref = EncryptedSharedPreferences.create(
-            requireContext(),
-            "encrypted_shared_pref",
-            masterKey,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-    }
-
     private fun initClickListeners() {
         binding.signInButton.setOnClickListener {
             binding.loginProgressBar.visibility = ProgressBar.VISIBLE
             signInViewModel.signIn(
-                sharedPref,
                 binding.signInLoginField.text.toString(),
                 binding.signInPasswordField.text.toString()
             )
