@@ -45,18 +45,13 @@ class SignUpLoginFragment : Fragment(R.layout.sign_up_login_fragment) {
 
     private fun initClickListeners() {
         binding.nextButton.setOnClickListener {
-            signUpViewModel.navToPasswordFragment(binding.signUpLoginField.text.toString())
+            findNavController().navigate(SignUpLoginFragmentDirections.toSignUpPasswordScreen(binding.signUpLoginField.text.toString()))
         }
     }
 
     private fun initObserving() {
         signUpViewModel.isEmailInputCorrect.observe(viewLifecycleOwner) {
             binding.nextButton.isEnabled = it
-        }
-
-        signUpViewModel.navDirection.observe(viewLifecycleOwner) {
-            //if(findNavController().currentDestination?.id != R.id.signUpLoginFragment)
-            findNavController().navigate(it)
         }
     }
 

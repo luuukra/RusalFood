@@ -22,14 +22,6 @@ class SignInViewModel(private val signInUseCase: SignInUseCase) : ViewModel() {
     private val _isLoginInputCorrect = MutableLiveData<Boolean>()
     val isLoginInputCorrect: LiveData<Boolean> = _isLoginInputCorrect
 
-    private val _navDirection: MutableLiveData<NavDirections> = MutableLiveData()
-    val navDirection: LiveData<NavDirections> = _navDirection
-
-    companion object {
-        const val SIGN_IN_OK_CODE = 200
-        //const val SIGN_IN_ERROR_CODE = 401
-    }
-
     fun checkEmailInput(email: Editable) {
         val pattern: Pattern = Pattern.compile(
             "^([a-z0-9_.-]+)@([a-z0-9_.-]+)\\.([a-z]{2,10})$",
@@ -44,16 +36,6 @@ class SignInViewModel(private val signInUseCase: SignInUseCase) : ViewModel() {
             delay(2000)//todo delete after api implementation
             val apiResponse = signInUseCase(sharedPref, login, password)
             _response.postValue(apiResponse)
-            if (apiResponse.code == SIGN_IN_OK_CODE) _navDirection.postValue(
-                SignInFragmentDirections.toMainFragment(true)
-            )
         }
 
-    fun navToMainFragment() {
-        _navDirection.postValue(SignInFragmentDirections.toMainFragment(false))
-    }
-
-    fun navToSignUpLoginScreen() {
-        _navDirection.postValue(SignInFragmentDirections.toSignUpLoginScreen())
-    }
 }

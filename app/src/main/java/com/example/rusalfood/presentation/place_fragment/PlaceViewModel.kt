@@ -26,9 +26,6 @@ class PlaceViewModel(
     private val _listOfCategories: MutableLiveData<List<Food.FoodCategory>> = MutableLiveData()
     val listOfCategories: LiveData<List<Food.FoodCategory>> = _listOfCategories
 
-    private val _navDirection: MutableLiveData<NavDirections> = MutableLiveData()
-    val navDirection: LiveData<NavDirections> = _navDirection
-
     // Basket Clicks & Food Amounts
     private val _countedFoodList = MutableLiveData<List<Food.FoodItem>>()
     val countedFoodList: LiveData<List<Food.FoodItem>> = _countedFoodList
@@ -130,15 +127,6 @@ class PlaceViewModel(
 
     fun resetListOfFoodWithCategories() {
         _listOfFoodWithCategories.value = emptyList()
-    }
-
-    fun navToBasketFragment(placeName: String, placeAddress: String) {
-        _navDirection.postValue(
-            PlaceFragmentDirections.actionPlaceFragmentToBasketFragment(
-                placeName,
-                placeAddress
-            )
-        )
     }
 
 }

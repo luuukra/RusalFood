@@ -26,6 +26,8 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
     companion object {
         fun newInstance() = SignInFragment()
+            const val SIGN_IN_OK_CODE = 200
+            //const val SIGN_IN_ERROR_CODE = 401
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,11 +75,11 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         }
 
         binding.continueGuestButton.setOnClickListener {
-            signInViewModel.navToMainFragment()
+            findNavController().navigate(SignInFragmentDirections.toMainFragment(false))
         }
 
         binding.signUpButton.setOnClickListener {
-            signInViewModel.navToSignUpLoginScreen()
+            findNavController().navigate(SignInFragmentDirections.toSignUpLoginScreen())
         }
     }
 
@@ -90,11 +92,9 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
             Toast.makeText(activity, signInViewModel.response.value?.message, Toast.LENGTH_SHORT)
                 .show()
             binding.loginProgressBar.visibility = ProgressBar.GONE
-            //println(sharedPref.getString("token", null))
-        }
-
-        signInViewModel.navDirection.observe(viewLifecycleOwner) {
-            findNavController().navigate(it)
+            if (it.code == SIGN_IN_OK_CODE)
+                findNavController().navigate(SignInFragmentDirections.toMainFragment(true))
+        //println(sharedPref.getString("token", null))
         }
     }
 }

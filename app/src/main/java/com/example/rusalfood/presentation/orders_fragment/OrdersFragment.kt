@@ -32,10 +32,6 @@ class OrdersFragment : Fragment(R.layout.fragment_orders), OrdersAdapter.OnItemC
         ordersViewModel.listOrders.observe(viewLifecycleOwner) {
             ordersAdapter.setData(it)
         }
-
-        ordersViewModel.navDirection.observe(viewLifecycleOwner) {
-            findNavController().navigate(it)
-        }
     }
 
     private fun initRecyclerView() {
@@ -46,7 +42,9 @@ class OrdersFragment : Fragment(R.layout.fragment_orders), OrdersAdapter.OnItemC
     }
 
     override fun onItemClick(position: Int, orderId: Int, orderAddress: String) {
-        ordersViewModel.navToOrderDetailsFragment(orderId, orderAddress)
+        findNavController().navigate(
+            OrdersFragmentDirections.actionOrdersFragmentToOrderDetailsFragment(orderId, orderAddress)
+        )
     }
 
 }

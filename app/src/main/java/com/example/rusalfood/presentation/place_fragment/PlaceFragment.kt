@@ -59,10 +59,6 @@ class PlaceFragment : Fragment(R.layout.fragment_place) {
             placeFoodListAdapter.setData(it)// Меню ресторана с категориями
             placeFoodListAdapter.notifyDataSetChanged()
         }
-
-        placeViewModel.navDirection.observe(viewLifecycleOwner) {
-            findNavController().navigate(it)
-        }
     }
 
     private fun initViewPager() {
@@ -151,7 +147,12 @@ class PlaceFragment : Fragment(R.layout.fragment_place) {
             basketButtonInc.setOnClickListener {
                 val placeName = placeViewModel.currentPlace.value?.name
                 val placeAddress = placeViewModel.currentPlace.value?.address
-                placeViewModel.navToBasketFragment(placeName.toString(), placeAddress.toString())
+                findNavController().navigate(
+                    PlaceFragmentDirections.actionPlaceFragmentToBasketFragment(
+                        placeName.toString(),
+                        placeAddress.toString()
+                    )
+                )
             }
         }
     }
