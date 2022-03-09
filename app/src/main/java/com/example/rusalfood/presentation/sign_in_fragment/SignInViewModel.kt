@@ -31,10 +31,10 @@ class SignInViewModel(private val signInUseCase: SignInUseCase) : ViewModel() {
         _isLoginInputCorrect.value = matcher.matches()
     }
 
-    fun signIn(sharedPref: SharedPreferences, login: String, password: String) =
+    fun signIn(login: String, password: String) =
         viewModelScope.launch(Dispatchers.IO) {
             delay(2000)//todo delete after api implementation
-            val apiResponse = signInUseCase(sharedPref, login, password)
+            val apiResponse = signInUseCase(login, password)
             _response.postValue(apiResponse)
         }
 

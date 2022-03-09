@@ -57,17 +57,17 @@ class SignUpViewModel(
         _isPasswordInputCorrect.value = matcher.matches()
     }
 
-    fun signUp(sharedPref: SharedPreferences, login: String, password: String) =
+    fun signUp(login: String, password: String) =
         viewModelScope.launch(Dispatchers.IO) {
             delay(2000)//todo delete after api implementation
             val apiResponse = signUpUseCase(login, password)
             _signUpResponse.postValue(apiResponse)
-            if (apiResponse.code == SIGN_UP_OK_CODE) signIn(sharedPref, login, password)
+            if (apiResponse.code == SIGN_UP_OK_CODE) signIn(login, password)
         }
 
-    private fun signIn(sharedPref: SharedPreferences, login: String, password: String) =
+    private fun signIn(login: String, password: String) =
         viewModelScope.launch(Dispatchers.IO) {
-            val apiResponse = signInUseCase(sharedPref, login, password)
+            val apiResponse = signInUseCase(login, password)
             _signInResponse.postValue(apiResponse)
         }
 }

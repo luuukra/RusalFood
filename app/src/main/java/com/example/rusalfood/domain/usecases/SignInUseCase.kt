@@ -9,19 +9,16 @@ import javax.inject.Inject
 
 
 interface SignInUseCase {
-    suspend operator fun invoke(sharedPref: SharedPreferences, login: String, password: String): SignInResponse
+    suspend operator fun invoke(login: String, password: String): SignInResponse
 }
 
 class SignInUseCaseImpl @Inject constructor(private val loginRepository: LoginRepository) :
     SignInUseCase {
 
-    override suspend operator fun invoke(sharedPref: SharedPreferences, login: String, password: String): SignInResponse {
+    override suspend operator fun invoke(login: String, password: String): SignInResponse {
         val response = loginRepository.getAuthToken(User(login, password))
         if(response.isSuccessful) {
-            sharedPref
-                .edit()
-                .putString("token", response.body()?.data?.accessToken)
-                .apply()
+            loginRepository.putTokenToEncryptedSharedPref(response.body()!!.data.accessToken)
         }
         return response.body()!!.mapToSignInResponse(response.code())
 
@@ -32,7 +29,6 @@ class SignInUseCaseImpl @Inject constructor(private val loginRepository: LoginRe
         } else {
             AUTH_ERROR
         }*/
-
     }
 }
 

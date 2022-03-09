@@ -8,4 +8,6 @@ import retrofit2.Response
 interface LoginRepository {
     suspend fun signUp(userInfo: User): Response<ApiSignUpResponse>
     suspend fun getAuthToken(userInfo: User): Response<ApiUserInfo>
+    suspend fun putTokenToEncryptedSharedPref(token: String)
+    suspend fun getTokenFromEncryptedSharedPref(): String?
 }

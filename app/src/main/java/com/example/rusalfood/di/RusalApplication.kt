@@ -16,6 +16,7 @@ class RusalApplication : Application() {
     private fun setupDagger() {
         appComponent = DaggerAppComponent
             .builder()
+            .appModule(AppModule(this))
             .build()
     }
 }
