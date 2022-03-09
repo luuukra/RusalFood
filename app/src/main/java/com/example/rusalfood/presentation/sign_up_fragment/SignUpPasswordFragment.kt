@@ -1,6 +1,8 @@
 package com.example.rusalfood.presentation.sign_up_fragment
 
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,6 +14,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import com.example.rusalfood.databinding.SignUpPasswordFragmentBinding
 import com.example.rusalfood.di.appComponent
 
@@ -20,6 +24,7 @@ class SignUpPasswordFragment : Fragment() {
     private var _binding: SignUpPasswordFragmentBinding? = null
     private val binding get() = _binding!!
     private val signUpViewModel: SignUpViewModel by viewModels { requireContext().appComponent.signUpViewModelFactory() }
+    private lateinit var sharedPref: SharedPreferences
 
     companion object {
         fun newInstance() = SignUpPasswordFragment()
@@ -38,6 +43,7 @@ class SignUpPasswordFragment : Fragment() {
         initTextChangedListeners()
         initClickListeners()
         initObserving()
+        initSharedPref()
     }
 
     private fun initTextChangedListeners() {
@@ -54,16 +60,17 @@ class SignUpPasswordFragment : Fragment() {
         })
     }
 
-
     private fun initClickListeners() {
         binding.nextButton.setOnClickListener {
             binding.loginProgressBar.visibility = ProgressBar.VISIBLE
             signUpViewModel.signUp(
+                sharedPref,
                 requireArguments().getString("email").toString(),
                 binding.signUpPasswordField.text.toString()
             )
         }
     }
+
 
     private fun initObserving() {
         signUpViewModel.isPasswordInputCorrect.observe(viewLifecycleOwner) {
@@ -74,12 +81,22 @@ class SignUpPasswordFragment : Fragment() {
             Toast.makeText(
                 activity, signUpViewModel.signUpResponse.value?.message, Toast.LENGTH_SHORT
             ).show()
-            //binding.loginProgressBar.visibility = ProgressBar.VISIBLE todo when real reply error will be available
+        }
+
+        signUpViewModel.signInResponse.observe(viewLifecycleOwner) {
+            Toast.makeText(activity, signUpViewModel.signInResponse.value?.message, Toast.LENGTH_SHORT)
+                .show()
+            binding.loginProgressBar.visibility = ProgressBar.GONE
+            //println(sharedPref.getString("token", null))
         }
 
         signUpViewModel.navDirection.observe(viewLifecycleOwner) {
             findNavController().navigate(it)
         }
+    }
+
+    private fun initSharedPref() {
+        sharedPref = requireContext().getSharedPreferences("encrypted_shared_pref", Context.MODE_PRIVATE)
     }
 
     override fun onDestroyView() {

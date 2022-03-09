@@ -7,11 +7,10 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.rusalfood.R
 import com.example.rusalfood.databinding.SignUpLoginFragmentBinding
 import com.example.rusalfood.di.appComponent
 
@@ -23,7 +22,6 @@ class SignUpLoginFragment : Fragment() {
 
     companion object {
         fun newInstance() = SignUpLoginFragment()
-        const val EMAIL_CHECK_ERROR = "Signing up error: email is already signed up"
     }
 
     override fun onCreateView(
@@ -57,7 +55,7 @@ class SignUpLoginFragment : Fragment() {
 
     private fun initClickListeners() {
         binding.nextButton.setOnClickListener {
-            signUpViewModel.navToLoginFragment(binding.signUpLoginField.text.toString())
+            signUpViewModel.navToPasswordFragment(binding.signUpLoginField.text.toString())
         }
     }
 
@@ -67,6 +65,7 @@ class SignUpLoginFragment : Fragment() {
         }
 
         signUpViewModel.navDirection.observe(viewLifecycleOwner) {
+            //if(findNavController().currentDestination?.id != R.id.signUpLoginFragment)
             findNavController().navigate(it)
         }
     }

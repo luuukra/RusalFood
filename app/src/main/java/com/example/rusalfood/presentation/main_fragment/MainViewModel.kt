@@ -8,7 +8,6 @@ import androidx.navigation.NavDirections
 import com.example.rusalfood.domain.models.Place
 import com.example.rusalfood.domain.models.Resource
 import com.example.rusalfood.domain.usecases.GetAllPlacesUseCase
-import com.example.rusalfood.presentation.place_fragment.PlaceFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -30,7 +29,8 @@ class MainViewModel(
     val navDirection: LiveData<NavDirections> = _navDirection
 
     private fun displayAllPlaces() = viewModelScope.launch(Dispatchers.IO) {
-            _placesList.postValue(getAllPlacesUseCase())
+        val allPlaces = getAllPlacesUseCase()
+        _placesList.postValue(allPlaces)
     }
 
     fun navToPlaceFragment(placeName: String, placeId: Int) {
@@ -44,9 +44,9 @@ class MainViewModel(
 
     private fun getClickedPlace(placeId: Int): Place {
         var place =
-        placesList.value?.data?.single() {
-            it.id == placeId
-        } as Place
+            placesList.value?.data?.single() {
+                it.id == placeId
+            } as Place
         return place
     }
 }
