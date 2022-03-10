@@ -21,7 +21,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
     private val binding by viewBinding(FragmentBasketBinding::bind)
     private val args: BasketFragmentArgs by navArgs()
     private lateinit var basketAdapter: BasketAdapter
-    private lateinit var sharedPref: EncryptedSharedPrefImpl
+    private lateinit var sharedPref: EncryptedSharedPrefImpl//fixme provide by DI
 
     private val placeViewModel: PlaceViewModel by activityViewModels { requireContext().appComponent.placeViewModelFactory() }
 
@@ -68,20 +68,26 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         }
 
         placeViewModel.postOrderResponse.observe(viewLifecycleOwner) {
-            val alertDialBuilder = AlertDialog.Builder(requireContext())
             if (it.code == POST_ORDER_OK_CODE) {
-                val dialog = alertDialBuilder
-                    .setMessage("Order created successfully")
-                    .setPositiveButton(
-                        "OK"
-                    ) { dialog, _ -> dialog.dismiss() }
-                    .create()
-                dialog.show()
-
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                    .setTextColor(resources.getColor(R.color.green, null))
+                showAlertDialog("Order created successfully!", R.color.green)
+            } else {
+                showAlertDialog("Creating order failed! Please, try again!", R.color.red)
             }
         }
+    }
+
+    private fun showAlertDialog(message: String, color: Int){
+        val alertDialBuilder = AlertDialog.Builder(requireContext())
+        val dialog = alertDialBuilder
+            .setMessage(message)
+            .setPositiveButton(
+                "OK"
+            ) { dialog, _ -> dialog.dismiss() }
+            .create()
+        dialog.show()
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(resources.getColor(color, null))
     }
 
     private fun initRecyclerView() {
