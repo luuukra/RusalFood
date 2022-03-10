@@ -15,6 +15,6 @@ class PlaceViewModelFactory @Inject constructor(
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return PlaceViewModel(getFoodListUseCase, sendOrdersUseCase, loginRepository) as T
+        return PlaceViewModel(getFoodListUseCase, sendOrdersUseCase) as T
     }
 }

@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rusalfood.data.models.MockOrder
 import com.example.rusalfood.databinding.ItemRecyclerviewOrderBinding
-import com.example.rusalfood.domain.models.OrderMine
+import com.example.rusalfood.domain.models.DomainOrder
 
 class OrdersAdapter (private val listener: OnItemClickListener) : RecyclerView.Adapter<OrdersAdapter.OrdersViewHolder>() {
 
-    fun setData(data: List<OrderMine>) {
+    fun setData(data: List<DomainOrder>) {
         diffUtilOrders.submitList(data)
     }
 
@@ -30,7 +29,6 @@ class OrdersAdapter (private val listener: OnItemClickListener) : RecyclerView.A
             ordersPlaceName.text = currOrder.restaurantName
             ordersPrice.text = currOrder.totalPrice.toString()
             ordersStatus.text = currOrder.orderStatus
-            ordersDate.text = currOrder.orderDate
 
             when (ordersStatus.text) {
                 "Done" -> {
@@ -74,13 +72,13 @@ class OrdersAdapter (private val listener: OnItemClickListener) : RecyclerView.A
 
 
     // Diff Utils
-    private val differCallback = object : DiffUtil.ItemCallback<OrderMine>() {
+    private val differCallback = object : DiffUtil.ItemCallback<DomainOrder>() {
 
-        override fun areItemsTheSame(oldItem: OrderMine, newItem: OrderMine): Boolean {
+        override fun areItemsTheSame(oldItem: DomainOrder, newItem: DomainOrder): Boolean {
             return oldItem.orderId == newItem.orderId
         }
 
-        override fun areContentsTheSame(oldItem: OrderMine, newItem: OrderMine): Boolean {
+        override fun areContentsTheSame(oldItem: DomainOrder, newItem: DomainOrder): Boolean {
             return oldItem == newItem
         }
     }

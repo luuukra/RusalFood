@@ -15,5 +15,5 @@ interface MainRepository {
 
     suspend fun sendOrders(token: String, preparedOrder: PreparedOrder): Response<OrderMessage>
 
-    suspend fun getOrders(authString: String): Response<List<ApiOrderResponse>>
+    suspend fun getOrders(authString: String): Response<ApiOrderResponse>
 }

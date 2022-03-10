@@ -1,7 +1,6 @@
 package com.example.rusalfood.presentation.sign_in_fragment
 
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,12 +10,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.rusalfood.R
 import com.example.rusalfood.databinding.SignInFragmentBinding
 import com.example.rusalfood.di.appComponent
+import com.google.android.material.textfield.TextInputLayout
 
 class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
@@ -25,8 +23,8 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
     companion object {
         fun newInstance() = SignInFragment()
-            const val SIGN_IN_OK_CODE = 200
-            //const val SIGN_IN_ERROR_CODE = 401
+        const val SIGN_IN_OK_CODE = 200
+        const val SIGN_IN_ERROR_CODE = 401
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,12 +40,27 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
             }
 
             override fun afterTextChanged(s: Editable) {
                 signInViewModel.checkEmailInput(s)
             }
         })
+
+        binding.signInPasswordField.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                binding.signInPasswordFieldTextInputLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
+            }
+        })
+
     }
 
     private fun initClickListeners() {
@@ -74,12 +87,16 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         }
 
         signInViewModel.response.observe(viewLifecycleOwner) {
-            Toast.makeText(activity, signInViewModel.response.value?.message, Toast.LENGTH_SHORT)
-                .show()
-            binding.signInProgressBar.visibility = ProgressBar.GONE
-            if (it.code == SIGN_IN_OK_CODE)
+            if (it.code == SIGN_IN_ERROR_CODE) {
+                binding.signInPasswordFieldTextInputLayout.endIconMode = TextInputLayout.END_ICON_NONE
+                binding.signInPasswordField.error = it.message
+                binding.signInProgressBar.visibility = ProgressBar.GONE
+
+            } else if (it.code == SIGN_IN_OK_CODE) {
+                Toast.makeText(activity, it.message, Toast.LENGTH_SHORT)
+                    .show()
                 findNavController().navigate(SignInFragmentDirections.toMainFragment(true))
-        //println(sharedPref.getString("token", null))
+            }
         }
     }
 }

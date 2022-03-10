@@ -73,7 +73,7 @@ class OrdersFragment : Fragment(R.layout.fragment_orders), OrdersAdapter.OnItemC
 
     override fun onItemClick(position: Int, orderId: Int, orderAddress: String) {
         findNavController().navigate(
-            OrdersFragmentDirections.actionOrdersFragmentToOrderDetailsFragment(orderId, orderAddress)
+            OrdersFragmentDirections.actionOrdersFragmentToOrderDetailsFragment(ordersViewModel.getClickedOrder(orderId))
         )
     }
 }

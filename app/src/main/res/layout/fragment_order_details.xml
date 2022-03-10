@@ -97,6 +97,7 @@
         android:layout_marginVertical="4dp"
         android:paddingTop="8dp"
         android:text="@string/orders_date"
+        android:visibility="gone"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -109,6 +110,7 @@
         android:layout_below="@id/detailsDateH"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="4dp"
+        android:visibility="gone"
         android:hint="@string/hints_date"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -188,7 +190,7 @@
         app:layout_constraintTop_toBottomOf="@id/detailsRecycler" />
 
     <TextView
-        android:id="@+id/detailsItogoH"
+        android:id="@+id/total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -200,7 +202,7 @@
         app:layout_constraintTop_toBottomOf="@id/divvv" />
 
     <TextView
-        android:id="@+id/detailsItogo"
+        android:id="@+id/total_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"

@@ -4,13 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavDirections
 import com.example.rusalfood.data.models.MockOrder
-import com.example.rusalfood.domain.models.OrderMine
+import com.example.rusalfood.data.models.orders.Order
+import com.example.rusalfood.domain.models.DomainOrder
 import com.example.rusalfood.domain.models.Place
-import com.example.rusalfood.domain.models.Resource
 import com.example.rusalfood.domain.usecases.GetOrdersUseCase
-import com.example.rusalfood.presentation.place_fragment.PlaceFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -19,14 +17,24 @@ class OrdersViewModel(
 ) : ViewModel() {
 
 
+    private val _currentOrder = MutableLiveData<MockOrder>()
+    val currentOrder: LiveData<MockOrder> = _currentOrder
 
 
-    private val _ordersList: MutableLiveData<List<OrderMine>> = MutableLiveData()
-    val ordersList: LiveData<List<OrderMine>> = _ordersList
+    private val _ordersList: MutableLiveData<List<DomainOrder>> = MutableLiveData()
+    val ordersList: LiveData<List<DomainOrder>> = _ordersList
 
     fun displayOrders(authString: String) = viewModelScope.launch(Dispatchers.IO) {
         val orders = getOrdersUseCase(authString)
         _ordersList.postValue(orders)
     }
 
+
+    fun getClickedOrder(orderId: Int): DomainOrder {
+        var order =
+            ordersList.value?.single() {
+                it.orderId == orderId
+            } as DomainOrder
+        return order
+    }
 }
