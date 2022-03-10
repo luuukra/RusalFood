@@ -3,7 +3,7 @@ package com.example.rusalfood.presentation.basket_fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
@@ -16,8 +16,7 @@ import com.example.rusalfood.domain.models.PreparedOrder
 import com.example.rusalfood.domain.shared_pref.EncryptedSharedPrefImpl
 import com.example.rusalfood.presentation.place_fragment.PlaceViewModel
 
-class  BasketFragment (
-): Fragment(R.layout.fragment_basket) {
+class BasketFragment : Fragment(R.layout.fragment_basket) {
 
     private val binding by viewBinding(FragmentBasketBinding::bind)
     private val args: BasketFragmentArgs by navArgs()
@@ -25,6 +24,11 @@ class  BasketFragment (
     private lateinit var sharedPref: EncryptedSharedPrefImpl
 
     private val placeViewModel: PlaceViewModel by activityViewModels { requireContext().appComponent.placeViewModelFactory() }
+
+    companion object {
+        const val POST_ORDER_OK_CODE = 200
+        const val POST_ORDER_ERROR_CODE = 401
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,6 +66,22 @@ class  BasketFragment (
             basketAdapter.setData(it)
             basketAdapter.notifyDataSetChanged()
         }
+
+        placeViewModel.postOrderResponse.observe(viewLifecycleOwner) {
+            val alertDialBuilder = AlertDialog.Builder(requireContext())
+            if (it.code == POST_ORDER_OK_CODE) {
+                val dialog = alertDialBuilder
+                    .setMessage("Order created successfully")
+                    .setPositiveButton(
+                        "OK"
+                    ) { dialog, _ -> dialog.dismiss() }
+                    .create()
+                dialog.show()
+
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                    .setTextColor(resources.getColor(R.color.green, null))
+            }
+        }
     }
 
     private fun initRecyclerView() {
@@ -79,4 +99,5 @@ class  BasketFragment (
             basketPlaceAddress.text = args.placeAddress
         }
     }
+
 }
