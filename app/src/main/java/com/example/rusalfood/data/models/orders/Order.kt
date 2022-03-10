@@ -1,6 +1,7 @@
 package com.example.rusalfood.data.models.orders
 
-import com.example.rusalfood.domain.models.OrderMine
+import com.example.rusalfood.domain.models.DomainOrder
+import com.example.rusalfood.domain.models.OrderStatus
 
 data class Order(
     val created_at: String,
@@ -14,12 +15,11 @@ data class Order(
     val user: User,
     val user_id: Int
 ) {
-    fun mapToOrderMine() = OrderMine(
+    fun mapToDomainOrder() = DomainOrder(
         orderId = id,
         orderAddress = restaurant.location,
-        orderStatus = "STATUS",
+        orderStatus = OrderStatus.values()[order_status].status,
         totalPrice = total,
-        orderDate = "DELETE",
         restaurantName = restaurant.name
     )
 }

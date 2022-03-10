@@ -4,22 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavDirections
-import com.example.rusalfood.data.repositories.LoginRepositoryImpl
-import com.example.rusalfood.domain.irepositories.LoginRepository
 import com.example.rusalfood.domain.models.Food
 import com.example.rusalfood.domain.models.Place
+import com.example.rusalfood.domain.models.PostOrderResponse
 import com.example.rusalfood.domain.models.PreparedOrder
 import com.example.rusalfood.domain.usecases.GetFoodListUseCase
 import com.example.rusalfood.domain.usecases.SendOrdersUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 
 class PlaceViewModel(
     private val getFoodListUseCase: GetFoodListUseCase,
     private val sendOrdersUseCase: SendOrdersUseCase,
-    private val loginRepository: LoginRepositoryImpl,
 ) : ViewModel() {
 
     private val _currentPlace = MutableLiveData<Place>()
@@ -42,6 +38,9 @@ class PlaceViewModel(
 
     private val _totalSum = MutableLiveData<Int>()
     val totalSum: LiveData<Int> = _totalSum
+
+    private val _postOrderResponse: MutableLiveData<PostOrderResponse> = MutableLiveData()
+    val postOrderResponse: LiveData<PostOrderResponse> = _postOrderResponse
 
     fun getIntoPlace(place: Place) = viewModelScope.launch(Dispatchers.IO) {
         _currentPlace.postValue(place)
@@ -132,19 +131,14 @@ class PlaceViewModel(
             }
     }
 
-
-
     fun resetListOfFoodWithCategories() {
         _listOfFoodWithCategories.value = emptyList()
     }
 
-    fun sendOrders(token: String, preparedOrder: PreparedOrder) = viewModelScope.launch(Dispatchers.IO) {
-        sendOrdersUseCase(token, preparedOrder)
+    fun sendOrders(token: String, preparedOrder: PreparedOrder) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _postOrderResponse.postValue(sendOrdersUseCase(token, preparedOrder))
+        }
     }
 
-
-
-    fun getToken() = viewModelScope.launch(Dispatchers.IO) {
-        loginRepository.getTokenFromEncryptedSharedPref()
-    }
 }

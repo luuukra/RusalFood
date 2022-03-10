@@ -53,4 +53,8 @@
     <string name="hints_status_done">Done</string>
     <string name="hints_status_pending">Pending</string>
     <string name="hints_range">1.8 km.</string>
+    <string name="in_progress_status">In progress</string>
+    <string name="in_kitchen_status">In the kitchen</string>
+    <string name="order_ready_status">Ready</string>
+    <string name="order_completed_status">Completed</string>
 </resources>

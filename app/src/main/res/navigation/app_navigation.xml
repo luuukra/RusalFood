@@ -131,11 +131,9 @@
             android:id="@+id/action_orderDetailsFragment_to_ordersFragment"
             app:destination="@id/ordersFragment" />
         <argument
-            android:name="orderId"
-            app:argType="integer" />
-        <argument
-            android:name="orderAddress"
-            app:argType="string" />
+            android:name="order"
+            app:argType="com.example.rusalfood.domain.models.DomainOrder" />
+
     </fragment>
 
 

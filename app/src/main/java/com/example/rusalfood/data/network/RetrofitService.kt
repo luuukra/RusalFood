@@ -36,5 +36,5 @@ interface RetrofitService {
     @GET("orders")
     suspend fun getOrders(
         @Header("Authorization") authString: String,
-    ): Response<List<ApiOrderResponse>>
+    ): Response<ApiOrderResponse>
 }
