@@ -1,10 +1,12 @@
 package com.example.rusalfood.presentation.place_fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.transition.Fade
 import android.transition.Transition
 import android.transition.TransitionManager
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -15,6 +17,7 @@ import androidx.viewpager2.widget.ViewPager2
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ahmadhamwi.tabsync.TabbedListMediator
 import com.example.rusalfood.R
+import com.example.rusalfood.data.repositories.LoginRepositoryImpl
 import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
 
@@ -37,6 +40,8 @@ class PlaceFragment : Fragment(R.layout.fragment_place) {
         initFoodListRecyclerView()
         initOnDestinationChangeListener()
         initBasketButton()
+        initBasketAvailability()
+
     }
 
     private fun initCurrentPlace() {
@@ -118,6 +123,19 @@ class PlaceFragment : Fragment(R.layout.fragment_place) {
         tabbedListMediator.updateMediatorWithNewIndices(newIndices)
     }
 
+    private fun initBasketAvailability() {
+        if (!args.authStatus) {
+            binding.basketButtonTemplate.basketButtonInc.run {
+                isEnabled = false
+                isClickable = false
+                setBackgroundColor(Color.parseColor("#BBDEFF"))
+                setOnClickListener {
+                    Toast.makeText(requireContext(), "Please, sign in", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     private fun initBasketButton() {
         placeViewModel.countedFoodList.observe(viewLifecycleOwner) {
             val transition: Transition = Fade()
@@ -147,10 +165,12 @@ class PlaceFragment : Fragment(R.layout.fragment_place) {
             basketButtonInc.setOnClickListener {
                 val placeName = placeViewModel.currentPlace.value?.name
                 val placeAddress = placeViewModel.currentPlace.value?.address
+                val placeId = placeViewModel.currentPlace.value?.id
                 findNavController().navigate(
                     PlaceFragmentDirections.actionPlaceFragmentToBasketFragment(
                         placeName.toString(),
-                        placeAddress.toString()
+                        placeAddress.toString(),
+                        placeId!!.toInt(),
                     )
                 )
             }

@@ -3,6 +3,7 @@ package com.example.rusalfood.presentation.main_fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +18,7 @@ class MainFragment : Fragment(R.layout.fragment_main), MainAdapter.OnItemClickLi
     private val binding by viewBinding(FragmentMainBinding::bind)
     private lateinit var mainAdapter: MainAdapter
 
-    private val mainViewModel: MainViewModel by viewModels { requireContext().appComponent.mainViewModelFactory() }
+    private val mainViewModel: MainViewModel by activityViewModels { requireContext().appComponent.mainViewModelFactory() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,10 +62,12 @@ class MainFragment : Fragment(R.layout.fragment_main), MainAdapter.OnItemClickLi
     }
 
     override fun onItemClick(position: Int, placeName: String, placeId: Int) {
+        val authStatus = mainViewModel.isAuthorized.value
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToPlaceFragment(
                 placeName,
-                mainViewModel.getClickedPlace(placeId)
+                mainViewModel.getClickedPlace(placeId),
+                authStatus!!
             )
         )
     }
