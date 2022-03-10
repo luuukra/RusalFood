@@ -9,7 +9,12 @@ sealed class Food {
         val foodDesc: String,
         val foodImage: String,
         var foodAmount: Int = 0,
-    ) : Food()
+    ) : Food() {
+        fun mapToPreparedProduct() = PreparedProduct(
+            id = id,
+            quantity = foodAmount,
+        )
+    }
 
     data class FoodCategory(
         val categoryName: String,

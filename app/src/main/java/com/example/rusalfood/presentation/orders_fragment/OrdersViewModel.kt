@@ -6,34 +6,28 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import com.example.rusalfood.data.models.MockOrder
-import com.example.rusalfood.domain.usecases.GetOrderByIdUseCase
-import com.example.rusalfood.domain.usecases.GetOrdersListUseCase
+import com.example.rusalfood.domain.models.OrderMine
+import com.example.rusalfood.domain.models.Place
+import com.example.rusalfood.domain.models.Resource
 import com.example.rusalfood.presentation.place_fragment.PlaceFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class OrdersViewModel(
-    private val getOrdersListUseCase: GetOrdersListUseCase,
-    private val getOrderByIdUseCase: GetOrderByIdUseCase,
-    ) : ViewModel() {
+) : ViewModel() {
 
-    init {
-        displayAllOrders()
-    }
+//    init {
+//        displayOrders()
+//    }
 
-    private val _listOrders = MutableLiveData<List<MockOrder>>()
-    val listOrders: LiveData<List<MockOrder>> = _listOrders
 
-    private val _currentOrder = MutableLiveData<MockOrder>()
-    val currentOrder: LiveData<MockOrder> = _currentOrder
 
-    private fun displayAllOrders() = viewModelScope.launch(Dispatchers.IO) {
-        val orders = getOrdersListUseCase()
-        _listOrders.postValue(orders)
-    }
+    private val _ordersList: MutableLiveData<List<OrderMine>> = MutableLiveData()
+    val ordersList: LiveData<List<OrderMine>> = _ordersList
 
-    fun getOrderById(orderId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        val order = getOrderByIdUseCase(orderId)
-        _currentOrder.postValue(order)
-    }
+//    private fun displayOrders() = viewModelScope.launch(Dispatchers.IO) {
+//        val orders = getOrdersUseCase()
+//        _ordersList.postValue(orders)
+//    }
+
 }

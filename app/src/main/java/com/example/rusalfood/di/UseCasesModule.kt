@@ -1,7 +1,5 @@
 package com.example.rusalfood.di
 
-import com.example.rusalfood.data.network.IMockOrders
-import com.example.rusalfood.data.network.MockOrders
 import com.example.rusalfood.domain.usecases.*
 import dagger.Binds
 import dagger.Module
@@ -23,18 +21,15 @@ interface UseCasesModule {
 
     @Singleton
     @Binds
-    fun bindGetFoodListUseCaseImplToGetFoodListUseCase(etFoodListUseCaseImpl: GetFoodListUseCaseImpl): GetFoodListUseCase
+    fun bindGetFoodListUseCaseImplToGetFoodListUseCase(getFoodListUseCaseImpl: GetFoodListUseCaseImpl): GetFoodListUseCase
 
     @Singleton
     @Binds
-    fun bindGetOrdersListUseCaseImplToGetOrdersListUseCase(getOrdersListUseCaseImpl: GetOrdersListUseCaseImpl) : GetOrdersListUseCase
+    fun bindSendOrdersUseCaseImplToSendOrdersUseCase(sendOrdersUseCaseImpl: SendOrdersUseCaseImpl): SendOrdersUseCase
 
-    @Singleton
-    @Binds
-    fun bindGetOrderByIdUseCaseImplToGetOrderByIdUseCase(getOrderByIdUseCaseImpl: GetOrderByIdUseCaseImpl) : GetOrderByIdUseCase
+//    @Singleton
+//    @Binds
+//    fun bindGetOrdersUseCaseImplToGetOrdersUseCase(getOrdersUseCaseImpl: GetOrdersUseCaseImpl): GetOrdersUseCase
 
-    @Singleton
-    @Binds
-    fun bindMockOrdersToIMockOrders(mockOrders: MockOrders) : IMockOrders
 
 }
