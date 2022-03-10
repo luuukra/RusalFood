@@ -1,20 +1,25 @@
 package com.example.rusalfood.data.models.orders
 
-
 import com.example.rusalfood.domain.models.OrderMine
-import com.example.rusalfood.domain.models.PreparedProduct
-import com.google.gson.annotations.SerializedName
 
 data class Order(
-    val `data`: Data,
-    val message: String
+    val created_at: String,
+    val id: Int,
+    val order_details: List<OrderDetail>,
+    val order_status: Int,
+    val restaurant: Restaurant,
+    val restaurant_id: Int,
+    val total: Int,
+    val updated_at: String,
+    val user: User,
+    val user_id: Int
 ) {
     fun mapToOrderMine() = OrderMine(
-        orderId = data.orderId,
-        orderAddress = data.restaurant.location,
-        restaurantName = data.restaurant.name,
-        totalPrice = data.total,
-        orderStatus = "Done",
-        orderDate = data.restaurant.updatedAt
+        orderId = id,
+        orderAddress = restaurant.location,
+        orderStatus = "STATUS",
+        totalPrice = total,
+        orderDate = "DELETE",
+        restaurantName = restaurant.name
     )
 }
