@@ -15,6 +15,8 @@ import com.example.rusalfood.R
 import com.example.rusalfood.databinding.FragmentOrdersBinding
 import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
+import com.example.rusalfood.domain.models.PreparedOrder
+import com.example.rusalfood.domain.shared_pref.EncryptedSharedPrefImpl
 import com.example.rusalfood.presentation.main_fragment.MainViewModel
 
 class OrdersFragment : Fragment(R.layout.fragment_orders), OrdersAdapter.OnItemClickListener {
@@ -24,11 +26,13 @@ class OrdersFragment : Fragment(R.layout.fragment_orders), OrdersAdapter.OnItemC
 
     private val ordersViewModel: OrdersViewModel by activityViewModels { requireContext().appComponent.ordersViewModelFactory() }
     private val mainViewModel: MainViewModel by activityViewModels { requireContext().appComponent.mainViewModelFactory() }
+    private lateinit var sharedPref: EncryptedSharedPrefImpl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPref = EncryptedSharedPrefImpl(requireContext())
         initRecyclerView()
-//        initObserving()
+        initObserving()
         initViews()
         initComeBack()
     }
@@ -46,6 +50,11 @@ class OrdersFragment : Fragment(R.layout.fragment_orders), OrdersAdapter.OnItemC
         if (status != true) {
             binding.signInRequirement.visibility = View.VISIBLE
             binding.ordersRecyclerView.visibility = View.GONE
+        } else {
+            val token = sharedPref.getString("token", "hz")
+
+            val authString = "Bearer $token"
+            ordersViewModel.displayOrders(authString)
         }
     }
 

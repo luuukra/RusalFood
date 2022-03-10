@@ -1,11 +1,11 @@
 package com.example.rusalfood.data.network
 
 import com.example.rusalfood.data.models.foodList.ApiFoodListModel
-import com.example.rusalfood.data.models.orders.Order
+import com.example.rusalfood.data.models.orders.ApiOrderResponse
 import com.example.rusalfood.data.models.orders.OrderMessage
 import com.example.rusalfood.data.models.restaurant.ApiRestaurantModel
 import com.example.rusalfood.data.models.signUp.ApiSignUpResponse
-import com.example.rusalfood.data.models.user.ApiUserInfo
+import com.example.rusalfood.data.models.user.ApiSignInResponse
 import com.example.rusalfood.domain.models.PreparedOrder
 import com.example.rusalfood.domain.models.User
 import retrofit2.Response
@@ -18,7 +18,7 @@ interface RetrofitService {
 
     @Headers("Content-Type:application/json")
     @POST("login")
-    suspend fun auth(@Body user: User): Response<ApiUserInfo>
+    suspend fun auth(@Body user: User): Response<ApiSignInResponse>
 
     @GET("restaurants")
     suspend fun getAllPlaces(): Response<List<ApiRestaurantModel>>
@@ -29,10 +29,12 @@ interface RetrofitService {
     @Headers("Content-Type:application/json")
     @POST("orders/")
     suspend fun sendOrders(
-        @Header("token") token: String,
+        @Header("Authorization") authString: String,
         @Body preparedOrder: PreparedOrder
     ): Response<OrderMessage>
 
-//    @GET("orders")
-//    suspend fun getOrders(): Response<List<Order>>
+    @GET("orders")
+    suspend fun getOrders(
+        @Header("Authorization") authString: String,
+    ): Response<List<ApiOrderResponse>>
 }

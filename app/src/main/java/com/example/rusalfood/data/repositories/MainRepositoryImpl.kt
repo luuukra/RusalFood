@@ -17,5 +17,5 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun sendOrders(token: String, preparedOrder: PreparedOrder) = retrofitService.sendOrders(token, preparedOrder)
 
-//    override suspend fun getOrders() = retrofitService.getOrders()
+    override suspend fun getOrders(authString: String) = retrofitService.getOrders(authString)
 }
