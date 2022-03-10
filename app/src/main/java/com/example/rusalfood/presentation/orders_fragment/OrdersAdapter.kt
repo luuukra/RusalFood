@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rusalfood.data.models.MockOrder
 import com.example.rusalfood.databinding.ItemRecyclerviewOrderBinding
+import com.example.rusalfood.domain.models.OrderMine
 
 class OrdersAdapter (private val listener: OnItemClickListener) : RecyclerView.Adapter<OrdersAdapter.OrdersViewHolder>() {
 
-    fun setData(data: List<MockOrder>) {
+    fun setData(data: List<OrderMine>) {
         diffUtilOrders.submitList(data)
     }
 
@@ -73,13 +74,13 @@ class OrdersAdapter (private val listener: OnItemClickListener) : RecyclerView.A
 
 
     // Diff Utils
-    private val differCallback = object : DiffUtil.ItemCallback<MockOrder>() {
+    private val differCallback = object : DiffUtil.ItemCallback<OrderMine>() {
 
-        override fun areItemsTheSame(oldItem: MockOrder, newItem: MockOrder): Boolean {
+        override fun areItemsTheSame(oldItem: OrderMine, newItem: OrderMine): Boolean {
             return oldItem.orderId == newItem.orderId
         }
 
-        override fun areContentsTheSame(oldItem: MockOrder, newItem: MockOrder): Boolean {
+        override fun areContentsTheSame(oldItem: OrderMine, newItem: OrderMine): Boolean {
             return oldItem == newItem
         }
     }

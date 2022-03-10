@@ -4,6 +4,7 @@ import com.example.rusalfood.data.network.RetrofitService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -14,7 +15,7 @@ import javax.net.ssl.SSLSession
 class RetrofitModule {
 
     private val baseURL = "https://142.93.107.238/api/"
-    //private val baseURL = "http://142.93.107.238:8003/api/"
+//    private val baseURL = "http://142.93.107.238:8003/api/"
 
     @Singleton
     @Provides
@@ -34,7 +35,14 @@ class RetrofitModule {
                     return true
                 }
             })
-        val client: OkHttpClient = builder.build()
+
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+
+        val client: OkHttpClient = builder
+//            .addInterceptor(OrdersInterceptor())
+            .addInterceptor(loggingInterceptor)
+            .build()
 
         return Retrofit.Builder()
             .baseUrl(baseURL)
@@ -42,6 +50,5 @@ class RetrofitModule {
             .client(client)
             .build()
     }
-
 
 }

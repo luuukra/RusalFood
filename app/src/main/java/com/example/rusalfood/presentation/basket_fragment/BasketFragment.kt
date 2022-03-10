@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -15,6 +16,7 @@ import com.example.rusalfood.R
 import com.example.rusalfood.databinding.FragmentBasketBinding
 import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
+import com.example.rusalfood.domain.models.PreparedOrder
 import com.example.rusalfood.presentation.place_fragment.PlaceViewModel
 
 class  BasketFragment: Fragment(R.layout.fragment_basket) {
@@ -31,7 +33,27 @@ class  BasketFragment: Fragment(R.layout.fragment_basket) {
         initNameAndAddress()
         initObserving()
         initTotalCounter()
+        initSendOrderButton()
+
     }
+
+
+    private fun initSendOrderButton() {
+        binding.payButton.setOnClickListener {
+            val token = placeViewModel.getToken().toString()
+            val format = "Authorization: Bearer Token "
+//            val newOrder = PreparedOrder(
+//                args.placeId,
+//                placeViewModel.countedFoodList.value!!.map { it.mapToPreparedProduct() }
+//            )
+//            placeViewModel.sendOrders(token, newOrder)
+
+
+            Toast.makeText(requireContext(), token, Toast.LENGTH_SHORT).show()
+
+        }
+    }
+
 
     private fun initTotalCounter() {
         placeViewModel.totalSum.observe(viewLifecycleOwner) {

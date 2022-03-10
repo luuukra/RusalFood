@@ -1,9 +1,12 @@
 package com.example.rusalfood.data.network
 
 import com.example.rusalfood.data.models.foodList.ApiFoodListModel
+import com.example.rusalfood.data.models.orders.Order
+import com.example.rusalfood.data.models.orders.OrderMessage
 import com.example.rusalfood.data.models.restaurant.ApiRestaurantModel
 import com.example.rusalfood.data.models.signUp.ApiSignUpResponse
 import com.example.rusalfood.data.models.user.ApiUserInfo
+import com.example.rusalfood.domain.models.PreparedOrder
 import com.example.rusalfood.domain.models.User
 import retrofit2.Response
 import retrofit2.http.*
@@ -22,4 +25,14 @@ interface RetrofitService {
 
     @GET("menu/{id}")
     suspend fun getFoodListById(@Path("id") id: Int): Response<ApiFoodListModel>
+
+    @Headers("Content-Type:application/json")
+    @POST("orders/")
+    suspend fun sendOrders(
+        @Header("token") token: String,
+        @Body preparedOrder: PreparedOrder
+    ): Response<OrderMessage>
+
+//    @GET("orders")
+//    suspend fun getOrders(): Response<List<Order>>
 }

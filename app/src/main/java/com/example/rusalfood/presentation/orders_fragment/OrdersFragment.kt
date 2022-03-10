@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,22 +15,42 @@ import com.example.rusalfood.R
 import com.example.rusalfood.databinding.FragmentOrdersBinding
 import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
+import com.example.rusalfood.presentation.main_fragment.MainViewModel
 
 class OrdersFragment : Fragment(R.layout.fragment_orders), OrdersAdapter.OnItemClickListener {
 
     private val binding by viewBinding(FragmentOrdersBinding::bind)
     private lateinit var ordersAdapter: OrdersAdapter
 
-    private val ordersViewModel: OrdersViewModel by viewModels { requireContext().appComponent.ordersViewModelFactory() }
+    private val ordersViewModel: OrdersViewModel by activityViewModels { requireContext().appComponent.ordersViewModelFactory() }
+    private val mainViewModel: MainViewModel by activityViewModels { requireContext().appComponent.mainViewModelFactory() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        initObserving()
+//        initObserving()
+        initViews()
+        initComeBack()
+    }
+
+    private fun initComeBack() {
+        binding.btnSignIn.setOnClickListener {
+            findNavController().navigate(
+                OrdersFragmentDirections.actionOrdersFragmentToSignInFragment()
+            )
+        }
+    }
+
+    private fun initViews() {
+        val status = mainViewModel.isAuthorized.value
+        if (status != true) {
+            binding.signInRequirement.visibility = View.VISIBLE
+            binding.ordersRecyclerView.visibility = View.GONE
+        }
     }
 
     private fun initObserving() {
-        ordersViewModel.listOrders.observe(viewLifecycleOwner) {
+        ordersViewModel.ordersList.observe(viewLifecycleOwner) {
             ordersAdapter.setData(it)
         }
     }
@@ -46,5 +67,4 @@ class OrdersFragment : Fragment(R.layout.fragment_orders), OrdersAdapter.OnItemC
             OrdersFragmentDirections.actionOrdersFragmentToOrderDetailsFragment(orderId, orderAddress)
         )
     }
-
 }
