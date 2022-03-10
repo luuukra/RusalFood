@@ -65,7 +65,11 @@
     <string name="hints_date" translatable="false">15.12.2021, 10:44</string>
     <string name="hints_range">1.8 км.</string>
 
+    //Order statuses
+    <string name="in_progress_status">В обработке</string>
+    <string name="in_kitchen_status">На кухне</string>
+    <string name="order_ready_status">Готов</string>
+    <string name="order_completed_status">Завершен</string>
 
-    <string name="null_str" translatable="false">null</string>
 
 </resources>
