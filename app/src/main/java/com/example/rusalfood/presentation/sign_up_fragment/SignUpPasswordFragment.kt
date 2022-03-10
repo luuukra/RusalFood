@@ -53,7 +53,7 @@ class SignUpPasswordFragment : Fragment(R.layout.sign_up_password_fragment) {
 
     private fun initClickListeners() {
         binding.nextButton.setOnClickListener {
-            binding.loginProgressBar.visibility = ProgressBar.VISIBLE
+            binding.signUpProgressBar.visibility = ProgressBar.VISIBLE
             signUpViewModel.signUp(
                 requireArguments().getString("email").toString(),
                 binding.signUpPasswordField.text.toString()
@@ -71,6 +71,7 @@ class SignUpPasswordFragment : Fragment(R.layout.sign_up_password_fragment) {
             Toast.makeText(
                 activity, signUpViewModel.signUpResponse.value?.message, Toast.LENGTH_SHORT
             ).show()
+            binding.signUpProgressBar.visibility = ProgressBar.GONE
         }
 
         signUpViewModel.signInResponse.observe(viewLifecycleOwner) {
@@ -78,10 +79,9 @@ class SignUpPasswordFragment : Fragment(R.layout.sign_up_password_fragment) {
                 activity,
                 signUpViewModel.signInResponse.value?.message,
                 Toast.LENGTH_SHORT
-            )
-                .show()
-            binding.loginProgressBar.visibility = ProgressBar.GONE
-            //println(sharedPref.getString("token", null))
+            ).show()
+            binding.signUpProgressBar.visibility = ProgressBar.GONE
+
             if(it.code == SIGN_IN_OK_CODE)
                 findNavController().navigate(SignUpPasswordFragmentDirections.toMainFragment(true))
         }

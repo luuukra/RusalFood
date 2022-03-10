@@ -15,7 +15,7 @@ import javax.net.ssl.SSLSession
 class RetrofitModule {
 
     private val baseURL = "https://142.93.107.238/api/"
-//    private val baseURL = "http://142.93.107.238:8003/api/"
+    //private val baseURL = "http://142.93.107.238:8003/api/"
 
     @Singleton
     @Provides

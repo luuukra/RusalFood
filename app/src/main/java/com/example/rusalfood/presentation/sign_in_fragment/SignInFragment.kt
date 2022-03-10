@@ -52,7 +52,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
     private fun initClickListeners() {
         binding.signInButton.setOnClickListener {
-            binding.loginProgressBar.visibility = ProgressBar.VISIBLE
+            binding.signInProgressBar.visibility = ProgressBar.VISIBLE
             signInViewModel.signIn(
                 binding.signInLoginField.text.toString(),
                 binding.signInPasswordField.text.toString()
@@ -76,7 +76,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         signInViewModel.response.observe(viewLifecycleOwner) {
             Toast.makeText(activity, signInViewModel.response.value?.message, Toast.LENGTH_SHORT)
                 .show()
-            binding.loginProgressBar.visibility = ProgressBar.GONE
+            binding.signInProgressBar.visibility = ProgressBar.GONE
             if (it.code == SIGN_IN_OK_CODE)
                 findNavController().navigate(SignInFragmentDirections.toMainFragment(true))
         //println(sharedPref.getString("token", null))

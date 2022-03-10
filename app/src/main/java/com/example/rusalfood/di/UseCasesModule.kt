@@ -27,9 +27,9 @@ interface UseCasesModule {
     @Binds
     fun bindSendOrdersUseCaseImplToSendOrdersUseCase(sendOrdersUseCaseImpl: SendOrdersUseCaseImpl): SendOrdersUseCase
 
-//    @Singleton
-//    @Binds
-//    fun bindGetOrdersUseCaseImplToGetOrdersUseCase(getOrdersUseCaseImpl: GetOrdersUseCaseImpl): GetOrdersUseCase
+    @Singleton
+    @Binds
+    fun bindGetOrdersUseCaseImplToGetOrdersUseCase(getOrdersUseCaseImpl: GetOrdersUseCaseImpl): GetOrdersUseCase
 
 
 }
