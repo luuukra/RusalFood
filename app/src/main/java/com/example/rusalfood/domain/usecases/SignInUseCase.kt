@@ -1,38 +1,32 @@
 package com.example.rusalfood.domain.usecases
 
-import android.content.SharedPreferences
-import androidx.security.crypto.MasterKey
 import com.example.rusalfood.domain.irepositories.LoginRepository
+import com.example.rusalfood.domain.models.ErrorResponse
 import com.example.rusalfood.domain.models.SignInResponse
 import com.example.rusalfood.domain.models.User
+import com.google.gson.Gson
 import javax.inject.Inject
 
 
 interface SignInUseCase {
-    suspend operator fun invoke(sharedPref: SharedPreferences, login: String, password: String): SignInResponse
+    suspend operator fun invoke(login: String, password: String): SignInResponse
 }
 
 class SignInUseCaseImpl @Inject constructor(private val loginRepository: LoginRepository) :
     SignInUseCase {
 
-    override suspend operator fun invoke(sharedPref: SharedPreferences, login: String, password: String): SignInResponse {
+    override suspend operator fun invoke(login: String, password: String): SignInResponse {
         val response = loginRepository.getAuthToken(User(login, password))
-        if(response.isSuccessful) {
-            sharedPref
-                .edit()
-                .putString("token", response.body()?.data?.accessToken)
-                .apply()
-        }
-        return response.body()!!.mapToSignInResponse(response.code())
 
+        return if (response.isSuccessful) {
+            loginRepository.putTokenToEncryptedSharedPref(response.body()!!.data.accessToken)
+            response.body()!!.mapToSignInResponse(response.code())
 
-       /* return if (token != ERROR_CODE) {
-            //token to encryptedSharedPref
-            AUTH_OK
         } else {
-            AUTH_ERROR
-        }*/
-
+            val errorResponse =
+                Gson().fromJson(response.errorBody()!!.charStream(), ErrorResponse::class.java)
+            SignInResponse(response.code(), errorResponse.message)
+        }
     }
 }
 

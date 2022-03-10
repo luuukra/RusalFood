@@ -5,36 +5,61 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.rusalfood.R
 
 import com.example.rusalfood.databinding.FragmentOrdersBinding
+import com.example.rusalfood.databinding.FragmentPlaceBinding
 import com.example.rusalfood.di.appComponent
+import com.example.rusalfood.domain.models.PreparedOrder
+import com.example.rusalfood.domain.shared_pref.EncryptedSharedPrefImpl
+import com.example.rusalfood.presentation.main_fragment.MainViewModel
 
-class OrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener {
+class OrdersFragment : Fragment(R.layout.fragment_orders), OrdersAdapter.OnItemClickListener {
 
-    private var _binding: FragmentOrdersBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentOrdersBinding::bind)
     private lateinit var ordersAdapter: OrdersAdapter
 
-    private val ordersViewModel: OrdersViewModel by viewModels { requireContext().appComponent.ordersViewModelFactory() }
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentOrdersBinding.inflate(inflater, container, false)
-        initRecyclerView()
-        initObserving()
-        return binding.root
-    }
+    private val ordersViewModel: OrdersViewModel by activityViewModels { requireContext().appComponent.ordersViewModelFactory() }
+    private val mainViewModel: MainViewModel by activityViewModels { requireContext().appComponent.mainViewModelFactory() }
+    private lateinit var sharedPref: EncryptedSharedPrefImpl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPref = EncryptedSharedPrefImpl(requireContext())
+        initRecyclerView()
+        initObserving()
+        initViews()
+        initComeBack()
+    }
 
+    private fun initComeBack() {
+        binding.btnSignIn.setOnClickListener {
+            findNavController().navigate(
+                OrdersFragmentDirections.actionOrdersFragmentToSignInFragment()
+            )
+        }
+    }
+
+    private fun initViews() {
+        val status = mainViewModel.isAuthorized.value
+        if (status != true) {
+            binding.signInRequirement.visibility = View.VISIBLE
+            binding.ordersRecyclerView.visibility = View.GONE
+        } else {
+            val token = sharedPref.getString("token", "hz")
+
+            val authString = "Bearer $token"
+            ordersViewModel.displayOrders(authString)
+        }
     }
 
     private fun initObserving() {
-        ordersViewModel.listOrders.observe(viewLifecycleOwner) {
+        ordersViewModel.ordersList.observe(viewLifecycleOwner) {
             ordersAdapter.setData(it)
         }
     }
@@ -50,10 +75,5 @@ class OrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener {
         findNavController().navigate(
             OrdersFragmentDirections.actionOrdersFragmentToOrderDetailsFragment(orderId, orderAddress)
         )
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

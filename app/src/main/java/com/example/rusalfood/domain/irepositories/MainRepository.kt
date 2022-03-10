@@ -1,9 +1,10 @@
 package com.example.rusalfood.domain.irepositories
 
-import com.example.rusalfood.data.models.MockOrder
 import com.example.rusalfood.data.models.foodList.ApiFoodListModel
+import com.example.rusalfood.data.models.orders.ApiOrderResponse
+import com.example.rusalfood.data.models.orders.OrderMessage
 import com.example.rusalfood.data.models.restaurant.ApiRestaurantModel
-import com.example.rusalfood.domain.models.Place
+import com.example.rusalfood.domain.models.PreparedOrder
 import retrofit2.Response
 
 interface MainRepository {
@@ -12,7 +13,7 @@ interface MainRepository {
 
     suspend fun getPlaceFoodList(placeId: Int): Response<ApiFoodListModel>
 
-    suspend fun getOrdersList(): List<MockOrder>
+    suspend fun sendOrders(token: String, preparedOrder: PreparedOrder): Response<OrderMessage>
 
-    suspend fun getOrderById(orderId: Int): MockOrder
+    suspend fun getOrders(authString: String): Response<List<ApiOrderResponse>>
 }

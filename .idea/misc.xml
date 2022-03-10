@@ -57,6 +57,7 @@
         <entry key="app/src/main/res/layout/item_recyclerview_place_skeleton.xml" value="0.37864583333333335" />
         <entry key="app/src/main/res/layout/item_viewpager_gallery.xml" value="0.37864583333333335" />
         <entry key="app/src/main/res/layout/sign_in_fragment.xml" value="0.37864583333333335" />
+        <entry key="app/src/main/res/layout/sign_up_password_fragment.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.37864583333333335" />
       </map>
     </option>

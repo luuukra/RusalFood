@@ -1,5 +1,7 @@
 package com.example.rusalfood.di
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.example.rusalfood.data.network.RetrofitService
 import com.example.rusalfood.presentation.main_fragment.MainViewModelFactory
 import com.example.rusalfood.presentation.orders_fragment.OrdersViewModelFactory
@@ -10,7 +12,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [VMModule::class, UseCasesModule::class, RetrofitModule::class])
+@Component(modules = [AppModule::class, EncryptedSharedPrefModule::class, VMModule::class, UseCasesModule::class, RetrofitModule::class])
 interface AppComponent {
 
     fun signInViewModelFactory(): SignInViewModelFactory
@@ -23,5 +25,6 @@ interface AppComponent {
 
     fun ordersViewModelFactory(): OrdersViewModelFactory
 
-    fun retrofitService(): RetrofitService
+    fun getContext() : Context
+
 }

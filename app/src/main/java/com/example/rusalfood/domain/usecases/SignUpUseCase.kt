@@ -1,15 +1,17 @@
 package com.example.rusalfood.domain.usecases
 
 import com.example.rusalfood.domain.irepositories.LoginRepository
+import com.example.rusalfood.domain.models.ErrorResponse
 import com.example.rusalfood.domain.models.SignUpResponse
 import com.example.rusalfood.domain.models.User
+import com.google.gson.Gson
 import javax.inject.Inject
 
 interface SignUpUseCase {
     suspend operator fun invoke(
         login: String,
         password: String
-    ): SignUpResponse//Response<SignUpResponse>//fixme signIn response token
+    ): SignUpResponse
 }
 
 class SignUpUseCaseImpl @Inject constructor(private val loginRepository: LoginRepository) :
@@ -18,17 +20,20 @@ class SignUpUseCaseImpl @Inject constructor(private val loginRepository: LoginRe
     override suspend operator fun invoke(
         login: String,
         password: String
-    ): SignUpResponse {//Response<SignUpResponse> {
-        /*val jsonObject = JsonObject()
-        jsonObject.addProperty("email", login)
-        jsonObject.addProperty("password", password)
-        println(jsonObject.toString())*/
-        //val userInfo = User(login, password)
+    ): SignUpResponse {
 
         val signUpResponse = loginRepository.signUp(User(login, password))
-        //println(signUpResponse.toString())
-        //if(signUpResponse.code() == SIGN_UP_OK_CODE) return signUpResponse.message()
-        return signUpResponse.body()!!.mapToDomainSignUpResponse(signUpResponse.code())
 
+        return if (signUpResponse.isSuccessful) {
+            signUpResponse.body()!!.mapToDomainSignUpResponse(signUpResponse.code())
+        } else {
+            val errorResponse =
+                Gson().fromJson(
+                    signUpResponse.errorBody()!!.charStream(),
+                    ErrorResponse::class.java
+                )
+            SignUpResponse(signUpResponse.code(), errorResponse.message)
+
+        }
     }
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDirections
 import com.example.rusalfood.domain.models.Place
 import com.example.rusalfood.domain.models.Resource
 import com.example.rusalfood.domain.usecases.GetAllPlacesUseCase
@@ -25,14 +26,15 @@ class MainViewModel(
     val isAuthorized = _isAuthorized
 
     private fun displayAllPlaces() = viewModelScope.launch(Dispatchers.IO) {
-            _placesList.postValue(getAllPlacesUseCase())
+        val allPlaces = getAllPlacesUseCase()
+        _placesList.postValue(allPlaces)
     }
 
     fun getClickedPlace(placeId: Int): Place {
         var place =
-        placesList.value?.data?.single() {
-            it.id == placeId
-        } as Place
+            placesList.value?.data?.single() {
+                it.id == placeId
+            } as Place
         return place
     }
 }

@@ -4,14 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDirections
+import com.example.rusalfood.data.repositories.LoginRepositoryImpl
+import com.example.rusalfood.domain.irepositories.LoginRepository
 import com.example.rusalfood.domain.models.Food
 import com.example.rusalfood.domain.models.Place
+import com.example.rusalfood.domain.models.PreparedOrder
 import com.example.rusalfood.domain.usecases.GetFoodListUseCase
+import com.example.rusalfood.domain.usecases.SendOrdersUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 
 class PlaceViewModel(
-    private val getFoodListUseCase: GetFoodListUseCase
+    private val getFoodListUseCase: GetFoodListUseCase,
+    private val sendOrdersUseCase: SendOrdersUseCase,
+    private val loginRepository: LoginRepositoryImpl,
 ) : ViewModel() {
 
     private val _currentPlace = MutableLiveData<Place>()
@@ -24,6 +32,16 @@ class PlaceViewModel(
     //list of categories for horizontal categories rv
     private val _listOfCategories: MutableLiveData<List<Food.FoodCategory>> = MutableLiveData()
     val listOfCategories: LiveData<List<Food.FoodCategory>> = _listOfCategories
+
+    // Basket Clicks & Food Amounts
+    private val _countedFoodList = MutableLiveData<List<Food.FoodItem>>()
+    val countedFoodList: LiveData<List<Food.FoodItem>> = _countedFoodList
+
+    private val _totalAmount = MutableLiveData<Int>()
+    val totalAmount: LiveData<Int> = _totalAmount
+
+    private val _totalSum = MutableLiveData<Int>()
+    val totalSum: LiveData<Int> = _totalSum
 
     fun getIntoPlace(place: Place) = viewModelScope.launch(Dispatchers.IO) {
         _currentPlace.postValue(place)
@@ -41,16 +59,6 @@ class PlaceViewModel(
             it.value is Food.FoodItem
         }.map { it.index }
     }
-
-    // Basket Clicks & Food Amounts
-    private val _countedFoodList = MutableLiveData<List<Food.FoodItem>>()
-    val countedFoodList: LiveData<List<Food.FoodItem>> = _countedFoodList
-
-    private val _totalAmount = MutableLiveData<Int>()
-    val totalAmount: LiveData<Int> = _totalAmount
-
-    private val _totalSum = MutableLiveData<Int>()
-    val totalSum: LiveData<Int> = _totalSum
 
     private fun setAmountSum() {
         _totalAmount.value = _countedFoodList.value?.sumOf { it.foodAmount }
@@ -124,8 +132,19 @@ class PlaceViewModel(
             }
     }
 
+
+
     fun resetListOfFoodWithCategories() {
         _listOfFoodWithCategories.value = emptyList()
     }
 
+    fun sendOrders(token: String, preparedOrder: PreparedOrder) = viewModelScope.launch(Dispatchers.IO) {
+        sendOrdersUseCase(token, preparedOrder)
+    }
+
+
+
+    fun getToken() = viewModelScope.launch(Dispatchers.IO) {
+        loginRepository.getTokenFromEncryptedSharedPref()
+    }
 }
